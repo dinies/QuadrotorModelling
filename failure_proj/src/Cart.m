@@ -2,33 +2,44 @@ classdef Cart < handle
    properties
       M
       D
+      %position , velocity, acceleration
       x =0;
-      x_dot = 0;
-      sx_dot_dot =0;
+      dx = 0;
+      ddx =0;
+      t = 0;
       
    end
    methods
        
        
-      function o = Cart(mass, dump)
-         o.M= mass;
-         o.D= dump;
+      function self = Cart(mass, dump)
+         self.M= mass;
+         self.D= dump;
          
       end
 
 
 
-      function [t, y]  = transition_model(o, u)
+      function [curr_x, curr_dx, curr_ddx, new_t ]  = transition_model(self, u, delta_t)
 
-         %u_t=@(t)  sin(130*t);
+         %dyn model; for now sinusoidal input (change that)
+         new_t= self.t+delta_t;
+         dyn_model = @(t) (u(t) - self.D* self.dx) / self.M ;
+         curr_ddx= dyn_model(self.t);
+         
+         sol_dx = ode45( @(t, unused) dyn_model(t) , [self.t new_t] , self.dx);
+         curr_dx = deval(sol_dx, new_t);
+         
+         sol_x = ode45( @(t,unused) curr_dx, [self.t new_t], self.x );
+         curr_x= deval(sol_x, new_t);
 
-         x_dot_dot = @(t) (sin(10*t) - o.D* o.x_dot) / o.M ;
+      end
 
-
-
-         [t, y] = ode45( @(unused_1, unused_2) x_dot_dot(unused_1) , [0 4] , o.x_dot);
-
-
+      function update_model(self, curr_state, new_t )
+         self.x= curr_state(1);
+         self.dx= curr_state(2);
+         self.ddx= curr_state(3);
+         self.t= new_t;
 
       end
       
