@@ -2,53 +2,38 @@ close all
 clear
 clc
 
-tot_sim_t= 10;
+tot_sim_t= 50;
 delta_t= 0.1;
+num_samples= tot_sim_t/delta_t;
 obj = Cart( 1 , 0.3 );
-%sinusoidal input it doesn't work pproperly because the dynamic
-%model is not ready to process a negative u
-%u = @(t) 2000*sin(10*t);
+                                %sinusoidal input
+                                %u = @(t) 2000*sin(10*t);
 
-%constant input
-u = @(t) 6+( t * 0); %simplify to 3 and it is compatible with the trasition_model call
-
+                                %constant input
+                                %u = @(t) -6;
 
 
-
-
-open_loop_sym( obj, u, 15, 0.1);
-
-
-
-
-
-
-%incremental quadratic input
-%u= @(t) 3*t.^2;
+                                %incremental quadratic input
+                                %u= @(t) 3*t.^2;
 
                                 %logaritmic input
-%u= @(t)  7*log(t); BUGGED
+                                %u= @(t)  7*log(t); BUGGED
 
-%num_of_steps= tot_sim_t/delta_t;
-%data= zeros(num_of_steps, 4);
-%figure(1),hold on;
-%axis([-4 300 0 10]);
-%title( 'world representation'), xlabel('x'), ylabel('z')
-%[ l1 ,l2 ,l3, l4] = drawCart( obj.x);
-%old_draw= [ l1 ,l2, l3, l4];
 
-%for i= 1:num_of_steps
-%	pause(0.01);
-%	data(i,:)= [obj.t, obj.x, obj.dx, obj.ddx];
 
-%	[ l1 ,l2 ,l3, l4] = drawCart( obj.x, old_draw);
-%	old_draw= [ l1 ,l2, l3, l4];
+                                %step input
+u = @(t)  8*(t<2);
 
-%	[x, dx, ddx, t] = transition_model(obj, u, delta_t);
-%	update_model( obj, [x, dx, ddx] , t);
-%end
 
-%figure(2)
-%plot(data(:,1),data(:,2),'-o',data(:,1),data(:,3),'-.', data(:,1),data(:,4),'-x' );
+% COMMENT & UNCOMMENT THIS TWO LINES TO CHANGE BETWEEN OPEN AND CLOSED LOOP 
+%open_loop_sym( obj, u, tot_sim_t, delta_t);
+
+
+gains = [ 0.1, 0.4, 1];
+reference_values= 100* ones( num_samples, 1);
+ff_flag= false;
+
+    % COMMENT & UNCOMMENT THIS TWO LINES TO CHANGE BETWEEN OPEN AND CLOSED LOOP 
+closed_loop_sym( obj, tot_sim_t, delta_t, "position",gains, reference_values, ff_flag  );
 
 
