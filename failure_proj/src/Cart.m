@@ -89,13 +89,13 @@ classdef Cart < handle
         draw(self);
         pause(0.001);
       end
-      draw_statistics( self, data);
+      draw_statistics( self, data, false);
     end
 
 
     function closed_loop_plant(self, tot_t,reference_type, gains, reference_trajectory, feed_forward_flag)
       step_num= tot_t / self.delta_t;
-      data = zeros( step_num, 5);
+      data = zeros( step_num, 6);
       self.t=0;
 
       figure(1),hold on;
@@ -103,9 +103,9 @@ classdef Cart < handle
       title( 'world representation'), xlabel('x'), ylabel('z')
       draw(self);
       for i= 1:step_num
-        u = feedback_controller(self, reference_type , reference_trajectory(i), gains, feed_forward_flag );
+        [u, err] = feedback_controller(self, reference_type , reference_trajectory(i), gains, feed_forward_flag );
         curr_u= u(self.t);
-	      data(i,:)= [self.t, self.x, self.dx, self.ddx , curr_u];
+	      data(i,:)= [self.t, self.x, self.dx, self.ddx , curr_u, err];
 	      plant_evolution(self, u);
         self.x = self.y_plant(1,1);
         self.dx = self.y_plant(2,1);
@@ -116,32 +116,8 @@ classdef Cart < handle
         draw(self);
         pause(0.001);
       end
-      draw_statistics( self, data);
+      draw_statistics( self, data, true);
     end
-
-    function draw_statistics(self, data)
-      figure(2)
-
-
-      ax1 = subplot(2,2,1);
-      plot(data(:,1),data(:,2), '-o');
-      title(ax1,'position');
-
-      ax2 = subplot(2,2,2);
-      plot(data(:,1),data(:,3), '-o');
-      title(ax2,'velocity');
-
-      ax3 = subplot(2,2,3);
-      plot(data(:,1),data(:,4), '-o');
-      title(ax3,'acceleration');
-
-      ax4 = subplot(2,2,4);
-      plot(data(:,1),data(:,5), '-o');
-      title(ax4,'input');
-
-
-    end
-
     function update_model(self, curr_state, new_t )
       self.x= curr_state(1);
       self.dx= curr_state(2);
@@ -169,21 +145,21 @@ classdef Cart < handle
         draw(self);
         pause(0.001);
       end
-      draw_statistics( self, data);
+      draw_statistics( self, data, false);
     end
     function closed_loop_sym(self, tot_t,reference_type, gains, reference_trajectory, feed_forward_flag)
       step_num= tot_t / self.delta_t;
-      data = zeros( step_num, 5);
+      data = zeros( step_num, 6);
       self.t= 0;
 
       figure(1),hold on;
       axis([-10 250 0 180]);
-      title( 'world representation'), xlabel('x'), ylabel('z')
+      title( 'world representation'), xlabel('x'), ylabel('z');
       draw(self);
       for i= 1:step_num
-        u = feedback_controller(self, reference_type , reference_trajectory(i), gains, feed_forward_flag );
+        [u , err] = feedback_controller(self, reference_type , reference_trajectory(i), gains, feed_forward_flag );
         curr_u= u(self.t + self.delta_t);
-	      data(i,:)= [self.t, self.x, self.dx, self.ddx,curr_u];
+	      data(i,:)= [self.t, self.x, self.dx, self.ddx,curr_u,err];
         [x, dx, ddx, t] = transition_model(self, u);
 	      update_model( self, [x, dx, ddx] , t);
         del_lines_drawn(self);
@@ -191,11 +167,11 @@ classdef Cart < handle
         draw(self);
         pause(0.001);
       end
-      draw_statistics( self, data);
+      draw_statistics( self, data, true );
     end
 
 
-    function input = feedback_controller( self, reference_type, reference_value, gains , feed_forward_flag )
+    function [ input , error ] = feedback_controller( self, reference_type, reference_value, gains , feed_forward_flag )
                                 %PD implementation , augment with integral term.
       K_p= gains(1);
       K_d= gains(2);
@@ -226,6 +202,33 @@ classdef Cart < handle
                      % end
 
     end
+
+    function draw_statistics(self, data, flag_error)
+      figure(2)
+
+      ax1 = subplot(2,2,1);
+      plot(data(:,1),data(:,2), '-o');
+      title(ax1,'position');
+
+      ax2 = subplot(2,2,2);
+      plot(data(:,1),data(:,3), '-o');
+      title(ax2,'velocity');
+
+      ax3 = subplot(2,2,3);
+      plot(data(:,1),data(:,4), '-o');
+      title(ax3,'acceleration');
+
+      ax4 = subplot(2,2,4);
+      plot(data(:,1),data(:,5), '-o');
+      title(ax4,'input');
+
+      if flag_error
+        figure(3)
+        p= plot(data(:,1),data(:,6), 'r-o');
+        title( 'error evolution'), xlabel('t'), ylabel('e')
+      end
+    end
+
 
     function bode_plot(self)
       sys= ss(self.A_plant, self.B_plant, self.C_plant, self.D_plant );
@@ -258,9 +261,6 @@ classdef Cart < handle
         delete(self.lines_drawn(i));
       end
     end
-
-
-
 
   end
 end
