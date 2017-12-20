@@ -2,7 +2,7 @@ close all
 clear
 clc
 
-tot_sim_t= 50;
+tot_sim_t= 100;
 delta_t= 0.1;
 num_samples= tot_sim_t/delta_t;
 obj = Cart( 1 , 0.3, delta_t );
@@ -40,18 +40,31 @@ u = @(t)  8*(t<2);
 
 %open_loop_plant(obj, u , tot_sim_t);
 
-closed_loop_plant(obj, tot_sim_t, "position",gains, reference_values, ff_flag );
+%closed_loop_plant(obj, tot_sim_t, "position",gains, reference_values, ff_flag );
+
+
+
+%traj = TrajectoryPlanner();
+%[ ref , time_needed, delta_t_trajectory]= initBCB(traj, 0, 100, 4, 3, delta_t);
+%[ ref , time_needed, delta_t_trajectory]= initBCB(traj, -1000, 1000, 44, 3, delta_t);
+%[ ref , time_needed, delta_t_trajectory]= initBCB(traj, 10, -10, 90, 0.25, delta_t);
 
 
 
 
 
 
+%data trajectory
+x_0= -1000;
+x_goal= 100;
+v_max= 15;
+a_max= 2;
+delta_t_des = 0.1;
+trajectoryPlanner = BangCoastBang(x_0 , x_goal, v_max , a_max, delta_t_des);
+referenceValues= getReferences( trajectoryPlanner);
+%timeScaled_law= scalingInTime(self, law, law.T )
 
-
-
-
-
+plotTrajectory(trajectoryPlanner, referenceValues);
 
 
 

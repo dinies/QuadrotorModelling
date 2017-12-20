@@ -9,22 +9,26 @@ classdef Cart < handle
     C_plant
     D_plant
     delta_t
-                                %position , velocity, acceleration they also wrap the state of the plant "q_plant" 
-    x =0;
-    dx = 0;
-    ddx =0;
-    t = 0;
+    %position , velocity, acceleration they also wrap the state of the plant "q_plant"
+    x ;
+    dx ;
+    ddx;
+    t ;
     vertices= zeros(4,2);
     lines_drawn= zeros(4);
   end
   methods
-    function self = Cart(mass, dump, delta_t)
+    function self = Cart(mass, dump, delta_t, x_0 , dx_0 , ddx_0)
+      self.x = x_0;
+      self.dx = dx_0;
+      self.ddx = ddx_0;
       self.M= mass;
       self.D= dump;
       self.delta_t= delta_t;
       compute_vertices(self);
-                                %plant_modelling
+      %plant_modelling
       self.q_plant= zeros(2,1);
+      self.q_plant= [ x_0 ; dx_0];
       self.y_plant= zeros(3,1);
       self.A_plant= [ 0             1       ;
                       0     -(self.D/self.M)];
@@ -72,9 +76,9 @@ classdef Cart < handle
       data = zeros( step_num, 5);
       self.t= 0;
 
-      figure(1),hold on;
-      axis([-10 250 0 180]);
-      title( 'world representation'), xlabel('x'), ylabel('z')
+      figure('Name','World representation'),hold on;
+      axis([-250 450 0 180]);
+      title('world'), xlabel('x'), ylabel('z')
       draw(self);
       for i= 1:step_num
         curr_u= u(self.t);
@@ -97,15 +101,20 @@ classdef Cart < handle
       step_num= tot_t / self.delta_t;
       data = zeros( step_num, 6);
       self.t=0;
-
-      figure(1),hold on;
-      axis([-10 250 0 180]);
-      title( 'world representation'), xlabel('x'), ylabel('z')
+      refLenght = size(reference_trajectory,1);
+      figure('Name','World representation'),hold on;
+      axis([-250 450 0 180]);
+      title( 'world'), xlabel('x'), ylabel('z')
       draw(self);
       for i= 1:step_num
-        [u, err] = feedback_controller(self, reference_type , reference_trajectory(i), gains, feed_forward_flag );
+        if i <= refLenght
+          reference = reference_trajectory(i);
+        else
+          reference = reference_trajectory(refLenght);
+        end
+        [u, err] = feedback_controller(self, reference_type , reference, gains, feed_forward_flag );
         curr_u= u(self.t);
-	      data(i,:)= [self.t, self.x, self.dx, self.ddx , curr_u, err];
+	      data(i,:)= [self.t, self.x, self.dx, self.ddx , curr_u, abs(err)];
 	      plant_evolution(self, u);
         self.x = self.y_plant(1,1);
         self.dx = self.y_plant(2,1);
@@ -131,9 +140,9 @@ classdef Cart < handle
       data = zeros( step_num, 5);
       self.t= 0;
 
-      figure(1),hold on;
-      axis([-10 250 0 180]);
-      title( 'world representation'), xlabel('x'), ylabel('z')
+      figure('Name','World representation'),hold on;
+      axis([-250 450 0 180]);
+      title('world'), xlabel('x'), ylabel('z')
       draw(self);
       for i= 1:step_num
         curr_u= u(self.t + self.delta_t);
@@ -151,15 +160,20 @@ classdef Cart < handle
       step_num= tot_t / self.delta_t;
       data = zeros( step_num, 6);
       self.t= 0;
-
-      figure(1),hold on;
-      axis([-10 250 0 180]);
-      title( 'world representation'), xlabel('x'), ylabel('z');
+      refLenght = size(reference_trajectory,1);
+      figure('Name','World representation'),hold on;
+      axis([-250 450 0 180]);
+      title('world'), xlabel('x'), ylabel('z');
       draw(self);
       for i= 1:step_num
-        [u , err] = feedback_controller(self, reference_type , reference_trajectory(i), gains, feed_forward_flag );
+        if i <= refLenght
+          reference = reference_trajectory(i);
+        else
+          reference = reference_trajectory(refLenght);
+        end
+        [u , err] = feedback_controller(self, reference_type , reference, gains, feed_forward_flag );
         curr_u= u(self.t + self.delta_t);
-	      data(i,:)= [self.t, self.x, self.dx, self.ddx,curr_u,err];
+	      data(i,:)= [self.t, self.x, self.dx, self.ddx,curr_u,abs(err)];
         [x, dx, ddx, t] = transition_model(self, u);
 	      update_model( self, [x, dx, ddx] , t);
         del_lines_drawn(self);
@@ -185,7 +199,7 @@ classdef Cart < handle
       if reference_type == "velocity"
         error = reference_value - self.dx;
         if feed_forward_flag
-          val = reference_value + error * K_d; %add the proportional term double check in the theory ;
+          val = reference_value; %+ error * K_d; %add the proportional term double check in the theory ;
         else
           val = error * K_d;
         end
@@ -204,7 +218,7 @@ classdef Cart < handle
     end
 
     function draw_statistics(self, data, flag_error)
-      figure(2)
+      figure('Name','Statistics')
 
       ax1 = subplot(2,2,1);
       plot(data(:,1),data(:,2), '-o');
@@ -223,9 +237,9 @@ classdef Cart < handle
       title(ax4,'input');
 
       if flag_error
-        figure(3)
+        figure('Name','Error evoulution')
         p= plot(data(:,1),data(:,6), 'r-o');
-        title( 'error evolution'), xlabel('t'), ylabel('e')
+        title( 'error'), xlabel('t'), ylabel('e')
       end
     end
 
