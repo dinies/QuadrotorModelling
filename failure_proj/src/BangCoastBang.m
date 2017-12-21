@@ -13,7 +13,7 @@ classdef BangCoastBang < handle %TODO   elevate bangcost bang to a subclass of t
       self.delta_t_des= delta_t_des;
       self.x_0= x_0;
       L = abs( x_goal - x_0)
-      computeSymbolicTimingLaw( self, L , v_max, a_max);
+      computeTimingLaw( self, L , v_max, a_max);
       if x_goal - x_0 > 0
         self.positiveDirectionFlag= true;
       else
@@ -21,40 +21,40 @@ classdef BangCoastBang < handle %TODO   elevate bangcost bang to a subclass of t
       end
     end
 
-    % add a similar function that gives anonymous timing law expressions
-    function computeSymbolicTimingLaw(self, L, v_max, a_max)
-      syms  t real;
+     function computeTimingLaw(self, L, v_max, a_max)
       if L > v_max^2 / a_max
         T_s = v_max / a_max ;
         T = ( L * a_max + v_max^2 ) / (a_max * v_max );
         timing_law.coast_phase = true;
-        timing_law.first_bang= (a_max * t^2) / 2 ;
-        timing_law.vel_first_bang= diff( timing_law.first_bang , t);
-        timing_law.acc_first_bang= diff( timing_law.vel_first_bang , t);
-        timing_law.coast = v_max*t -( v_max^2 / (2* a_max)) ;
-        timing_law.vel_coast= diff( timing_law.coast, t);
-        timing_law.acc_coast= diff(timing_law.vel_coast, t);
-        timing_law.second_bang= - a_max * (t - T)^2 /2 + v_max*T - v_max^2/a_max ;
-        timing_law.vel_second_bang= diff( timing_law.second_bang, t);
-        timing_law.acc_second_bang= diff( timing_law.vel_second_bang, t);
+        timing_law.first_bang=@(t) (a_max * t^2) / 2 ;
+        timing_law.vel_first_bang=@(t) a_max * t;
+        timing_law.acc_first_bang=@(t) a_max;
+        timing_law.coast=@(t) v_max*t -( v_max^2 / (2* a_max)) ;
+        timing_law.vel_coast=@(t) v_max;
+        timing_law.acc_coast=@(t) 0;
+        timing_law.second_bang=@(t) - a_max * (t - T)^2 /2 + v_max*T - v_max^2/a_max ;
+        timing_law.vel_second_bang=@(t) - a_max*(t - T);
+        timing_law.acc_second_bang=@(t) - a_max;
         timing_law.T_s = T_s;
       else
         T = 2* sqrt(L / a_max);
         timing_law.coast_phase = false;
-        timing_law.first_bang= (a_max * t^2) / 2 ;
-        timing_law.vel_first_bang= diff( timing_law.first_bang, t);
-        timing_law.acc_first_bang= diff( timing_law.vel_first_bang, t);
-        timing_law.second_bang= (a_max/2)*(  - t^2 + 2*t*T - T^2/2 ) ;
-        timing_law.vel_second_bang= diff( timing_law.second_bang, t);
-        timing_law.acc_second_bang= diff( timing_law.vel_second_bang, t);
+        timing_law.first_bang=@(t) (a_max * t^2) / 2 ;
+        timing_law.vel_first_bang=@(t) a_max*t;
+        timing_law.acc_first_bang=@(t) a_max;
+        timing_law.second_bang=@(t) (a_max/2)*(- t^2 + 2*t*T - T^2/2 ) ;
+        timing_law.vel_second_bang=@(t) a_max *(T - t);
+        timing_law.acc_second_bang=@(t) -a_max;
         timing_law.T_s = T/2;
       end
       timing_law.T= T;
       self.timeLaw = timing_law;
     end
 
+
+
+
     function ref = getReferences(self)
-      syms  t  real;
       law= self.timeLaw;
       ideal_step_num = law.T/self.delta_t_des;
       rounded_step_num = round(ideal_step_num);
@@ -66,27 +66,27 @@ classdef BangCoastBang < handle %TODO   elevate bangcost bang to a subclass of t
       for i= 1:rounded_step_num+1
         if law.coast_phase
           if curr_t < law.T_s
-            ref.positions(i,1)= subs( law.first_bang , curr_t);
-            ref.velocities(i,1)= subs( law.vel_first_bang , curr_t);
-            ref.accelerations(i,1)= subs( law.acc_first_bang , curr_t);
+            ref.positions(i,1)= law.first_bang(curr_t);
+            ref.velocities(i,1)= law.vel_first_bang(curr_t);
+            ref.accelerations(i,1)= law.acc_first_bang(curr_t);
           elseif curr_t < (law.T - law.T_s)
-            ref.positions(i,1)= subs( law.coast, curr_t);
-            ref.velocities(i,1)= subs( law.vel_coast, curr_t);
-            ref.accelerations(i,1)= subs( law.acc_coast, curr_t);
+            ref.positions(i,1)= law.coast(curr_t);
+            ref.velocities(i,1)= law.vel_coast(curr_t);
+            ref.accelerations(i,1)= law.acc_coast(curr_t);
           elseif curr_t <= law.T
-            ref.positions(i,1)= subs( law.second_bang , curr_t);
-            ref.velocities(i,1)= subs( law.vel_second_bang , curr_t);
-            ref.accelerations(i,1)= subs( law.acc_second_bang , curr_t);
+            ref.positions(i,1)= law.second_bang(curr_t);
+            ref.velocities(i,1)= law.vel_second_bang(curr_t);
+            ref.accelerations(i,1)= law.acc_second_bang(curr_t);
           end
         else
           if curr_t < law.T_s
-            ref.positions(i,1)= subs( law.first_bang , curr_t);
-            ref.velocities(i,1)= subs( law.vel_first_bang , curr_t);
-            ref.accelerations(i,1)= subs( law.acc_first_bang , curr_t);
+            ref.positions(i,1)= law.first_bang(curr_t);
+            ref.velocities(i,1)= law.vel_first_bang(curr_t);
+            ref.accelerations(i,1)= law.acc_first_bang(curr_t);
           elseif curr_t <= law.T
-            ref.positions(i,1)= subs( law.second_bang , curr_t);
-            ref.velocities(i,1)= subs( law.vel_second_bang , curr_t);
-            ref.accelerations(i,1)= subs( law.acc_second_bang , curr_t);
+            ref.positions(i,1)= law.second_bang(curr_t);
+            ref.velocities(i,1)= law.vel_second_bang(curr_t);
+            ref.accelerations(i,1)= law.acc_second_bang(curr_t);
           end
         end
         curr_t = curr_t + self.delta_t;
@@ -97,11 +97,6 @@ classdef BangCoastBang < handle %TODO   elevate bangcost bang to a subclass of t
       ref.positions = ref.positions + self.x_0 ;
     end
 
-
-    function scaleInTime(self,time_desired )
-      %ratio = ... %TODO
-
-    end
 
     function plotTrajectory(self, ref)
       figure('Name', 'Trajectory planned')

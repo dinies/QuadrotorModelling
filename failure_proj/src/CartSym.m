@@ -1,15 +1,8 @@
-classdef Cart < handle
+classdef CartSym < handle
   properties
     M
     D
-    q_plant
-    y_plant
-    A_plant
-    B_plant
-    C_plant
-    D_plant
     delta_t
-    %position , velocity, acceleration they also wrap the state of the plant "q_plant"
     x ;
     dx ;
     ddx;
@@ -18,7 +11,7 @@ classdef Cart < handle
     lines_drawn= zeros(4);
   end
   methods
-    function self = Cart(mass, dump, delta_t, x_0 , dx_0 , ddx_0)
+    function self = CartSym(mass, dump, delta_t, x_0 , dx_0 , ddx_0)
       self.x = x_0;
       self.dx = dx_0;
       self.ddx = ddx_0;
@@ -26,17 +19,6 @@ classdef Cart < handle
       self.D= dump;
       self.delta_t= delta_t;
       compute_vertices(self);
-      %plant_modelling
-      self.q_plant= zeros(2,1);
-      self.q_plant= [ x_0 ; dx_0];
-      self.y_plant= zeros(3,1);
-      self.A_plant= [ 0             1       ;
-                      0     -(self.D/self.M)];
-      self.B_plant= [ 0  ;  1/self.M  ];
-      self.C_plant= [1  0;
-                     0  1;
-                     0 -(self.D/self.M) ];
-      self.D_plant= [ 0 ; 0 ; 1/self.M  ];
     end
 
 
@@ -51,81 +33,6 @@ classdef Cart < handle
       sol_x = ode45( @(t,unused) curr_dx, [self.t new_t], self.x );
       curr_x= deval(sol_x, new_t);
 
-    end
-
-       %this would be an alternative to the couple transition_model update_model
-    function plant_evolution(self, u)
-
-      u_plant = u(self.t);
-      q_dot = self.A_plant * self.q_plant + self.B_plant * u_plant;
-
-      self.y_plant = self.C_plant * self.q_plant + self.D_plant * u_plant;
-
-      new_t= self.t+self.delta_t;
-
-      x1_integr = ode45( @(t, unused) q_dot(1,1) , [ self.t  new_t], self.q_plant(1,1));
-      self.q_plant(1,1) = deval( x1_integr , new_t);
-
-      x2_integr = ode45( @(t, unused) q_dot(2,1), [ self.t new_t], self.q_plant(2,1));
-      self.q_plant(2,1) = deval( x2_integr , new_t);
-
-    end
-
-    function open_loop_plant(self, u, tot_t )
-      step_num= tot_t / self.delta_t;
-      data = zeros( step_num, 5);
-      self.t= 0;
-
-      figure('Name','World representation'),hold on;
-      axis([-250 450 0 180]);
-      title('world'), xlabel('x'), ylabel('z')
-      draw(self);
-      for i= 1:step_num
-        curr_u= u(self.t);
-	      data(i,:)= [self.t, self.x, self.dx, self.ddx , curr_u];
-	      plant_evolution(self, u);
-        self.x = self.y_plant(1,1);
-        self.dx = self.y_plant(2,1);
-        self.ddx = self.y_plant(3,1);
-        self.t = self.t + self.delta_t;
-        del_lines_drawn(self);
-        compute_vertices(self);
-        draw(self);
-        pause(0.001);
-      end
-      draw_statistics( self, data, false);
-    end
-
-
-    function closed_loop_plant(self, tot_t,reference_type, gains, reference_trajectory, feed_forward_flag)
-      step_num= tot_t / self.delta_t;
-      data = zeros( step_num, 6);
-      self.t=0;
-      refLenght = size(reference_trajectory,1);
-      figure('Name','World representation'),hold on;
-      axis([-250 450 0 180]);
-      title( 'world'), xlabel('x'), ylabel('z')
-      draw(self);
-      for i= 1:step_num
-        if i <= refLenght
-          reference = reference_trajectory(i);
-        else
-          reference = reference_trajectory(refLenght);
-        end
-        [u, err] = feedback_controller(self, reference_type , reference, gains, feed_forward_flag );
-        curr_u= u(self.t);
-	      data(i,:)= [self.t, self.x, self.dx, self.ddx , curr_u, abs(err)];
-	      plant_evolution(self, u);
-        self.x = self.y_plant(1,1);
-        self.dx = self.y_plant(2,1);
-        self.ddx = self.y_plant(3,1);
-        self.t = self.t + self.delta_t;
-        del_lines_drawn(self);
-        compute_vertices(self);
-        draw(self);
-        pause(0.001);
-      end
-      draw_statistics( self, data, true);
     end
     function update_model(self, curr_state, new_t )
       self.x= curr_state(1);
@@ -201,7 +108,7 @@ classdef Cart < handle
         if feed_forward_flag
           val = reference_value; %+ error * K_d; %add the proportional term double check in the theory ;
         else
-          val = error * K_d;
+          val = error*K_p;
         end
         input = @(t) val ;
       end
@@ -240,17 +147,6 @@ classdef Cart < handle
         figure('Name','Error evoulution')
         p= plot(data(:,1),data(:,6), 'r-o');
         title( 'error'), xlabel('t'), ylabel('e')
-      end
-    end
-
-
-    function bode_plot(self)
-      sys= ss(self.A_plant, self.B_plant, self.C_plant, self.D_plant );
-      bode(sys);
-      if isstable(sys)
-        disp("the plant is stable");
-      else
-        disp("the plant is UNSTABLE");
       end
     end
 
