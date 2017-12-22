@@ -85,7 +85,8 @@ classdef CartPlant < handle
         else
           reference = reference_trajectory(refLenght);
         end
-        [u, err] = feedback_controller(self, reference_type , reference, gains, feed_forward_flag );
+        integrError = computeSaturatedIntegrator( self, data(:,8), i);
+        [u, err] = feedback_controller(self, reference_type , reference, gains, feed_forward_flag,0);
 	      plant_evolution(self, u);
         curr_u= u(self.t);
 	      data(i,:)=[self.t,self.q_plant(1,1),self.q_plant(2,1),self.y_plant(1,1),self.y_plant(2,1),self.y_plant(3,1),curr_u,abs(err)];
@@ -98,8 +99,11 @@ classdef CartPlant < handle
       draw_statistics( self, data, true);
     end
 
+    function err = computeSaturateIntegratorErr( self , ){
+                                               }
 
-    function [ input , error ] = feedback_controller( self, reference_type, reference_value, gains , feed_forward_flag )
+
+      function [input,error] = feedback_controller(self,reference_type,reference_value,gains,feed_forward_flag,integrError )
                                 %PD implementation , augment with integral term.
       K_p= gains(1);
       K_d= gains(2);
@@ -119,7 +123,13 @@ classdef CartPlant < handle
         end
         input = @(t) val ;
       end
-
+      if reference_type == "total"
+        error_pos = reference_value.pos - self.q_plant(1,1);
+        error_vel = reference_value.vel - self.q_plant(2,1);
+        ff= reference_value.accel;
+        val = error_pos * K_p - error_vel * K_d + integrError * K_i + ff;
+        input = @(t) val;
+      end
                      % if reference_type == "acceleration"
                      %   error = reference_value - self.ddx;
                      %   if feed_forward_flag
