@@ -104,16 +104,16 @@ classdef BangCoastBang < handle %TODO   elevate bangcost bang to a subclass of t
       time = linspace( 0 , self.timeLaw.T, n_steps);
 
 
-      ax1 = subplot(2,2,1);
-      plot(time,ref.positions, 'Color',[0,0.7,0.9]);
+      ax1 = subplot(1,3,1);
+      plot(time,ref.positions, 'Color',[1.0,0.7,0.9]);
       title(ax1,'position');
 
-      ax2 = subplot(2,2,2);
-      plot(time,ref.velocities,'Color',[0,0.7,0.9]);
+      ax2 = subplot(1,3,2);
+      plot(time,ref.velocities,'Color',[0.5,0.2,0.9]);
       title(ax2,'velocity');
 
-      ax3 = subplot(2,2,3);
-      plot(time,ref.accelerations, 'Color',[0,0.7,0.9]);
+      ax3 = subplot(1,3,3);
+      plot(time,ref.accelerations, 'Color',[0.1,0.9,0.2]);
       title(ax3,'acceleration');
     end
 

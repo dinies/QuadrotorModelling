@@ -69,45 +69,94 @@ classdef CartPlant < handle
       draw_statistics( self, data, false);
     end
 
+    function err = saturIntegrErr(self , errArray , currStep)
+      totSteps = size( errArray, 1);
+      meaningfullInterval= round(totSteps/10);
+      if currStep - meaningfullInterval < 1
+        startIntegration = 1;
+      else
+        startIntegration = currStep - meaningfullInterval;
+      end
+      err = 0.0;
+      for i= startIntegration:currStep
+        increment = tanh( errArray(i,1));
+        err = err+ increment;
+      end
+    end
+
+
 
     function closed_loop_plant(self, tot_t,reference_type, gains, reference_trajectory, feed_forward_flag)
       step_num= tot_t / self.delta_t;
-      data = zeros( step_num, 8);
+      data = zeros( step_num, 7);
       self.t=0;
-      refLenght = size(reference_trajectory,1);
+      if reference_type == "total"
+        refLenght = size(reference_trajectory.positions,1);
+        error.prop = zeros( step_num, 1);
+        error.deriv= zeros( step_num, 1);
+        error.integr= zeros( step_num, 1);
+      else
+        refLenght = size(reference_trajectory,1);
+        error = zeros(step_num,1);
+      end
       figure('Name','World representation'),hold on;
       axis([-250 450 0 180]);
       title( 'world'), xlabel('x'), ylabel('z')
       draw(self);
       for i= 1:step_num
-        if i <= refLenght
-          reference = reference_trajectory(i);
+        if reference_type == "total"
+          if i <= refLenght
+            reference.pos = reference_trajectory.positions(i);
+            reference.vel = reference_trajectory.velocities(i);
+            reference.accel = reference_trajectory.accelerations(i);
+          else
+            reference.pos = reference_trajectory.positions(refLenght);
+            reference.vel = reference_trajectory.velocities(refLenght);
+            reference.accel = reference_trajectory.accelerations(refLenght);
+          end
         else
-          reference = reference_trajectory(refLenght);
+          if i <= refLenght
+            reference = reference_trajectory(i);
+          else
+            reference = reference_trajectory(refLenght);
+          end
         end
-        integrError = computeSaturatedIntegrator( self, data(:,8), i);
-        [u, err] = feedback_controller(self, reference_type , reference, gains, feed_forward_flag,0);
+
+        if reference_type == "total"
+          integrError = saturIntegrErr( self, error.prop, i);
+        else
+          integrError = saturIntegrErr( self, error, i);
+        end
+        [u, err] = feedback_controller(self, reference_type , reference, gains, feed_forward_flag,integrError);
 	      plant_evolution(self, u);
         curr_u= u(self.t);
-	      data(i,:)=[self.t,self.q_plant(1,1),self.q_plant(2,1),self.y_plant(1,1),self.y_plant(2,1),self.y_plant(3,1),curr_u,abs(err)];
+	      data(i,:)=[self.t,self.q_plant(1,1),self.q_plant(2,1),self.y_plant(1,1),self.y_plant(2,1),self.y_plant(3,1),curr_u];
+        if reference_type =="total"
+          error.prop(i,1) = err.prop;
+          error.deriv(i,1)= err.deriv;
+          error.integr(i,1)= err.integr;
+        else
+          error(i,1)= err;
+        end
         self.t = self.t + self.delta_t;
         del_lines_drawn(self);
         compute_vertices(self);
         draw(self);
         pause(0.001);
       end
-      draw_statistics( self, data, true);
+      if reference_type =="total"
+        draw_statistics( self, data, error, true, true);
+      else
+        draw_statistics( self, data, error, true, false);
+      end
     end
 
-    function err = computeSaturateIntegratorErr( self , ){
-                                               }
 
-
-      function [input,error] = feedback_controller(self,reference_type,reference_value,gains,feed_forward_flag,integrError )
+    function [input,error] = feedback_controller(self,reference_type,reference_value,gains,feed_forward_flag,integrError )
                                 %PD implementation , augment with integral term.
       K_p= gains(1);
       K_d= gains(2);
-      k_i= gains(3);
+      K_i= gains(3);
       input= NaN;
       if reference_type == "position"
         error = reference_value - self.q_plant(1,1);
@@ -127,21 +176,16 @@ classdef CartPlant < handle
         error_pos = reference_value.pos - self.q_plant(1,1);
         error_vel = reference_value.vel - self.q_plant(2,1);
         ff= reference_value.accel;
-        val = error_pos * K_p - error_vel * K_d + integrError * K_i + ff;
+        val = error_pos * K_p - self.q_plant(2,1)*K_d %+ integrError * K_i;% + ff;%- error_vel * K_d;
         input = @(t) val;
-      end
-                     % if reference_type == "acceleration"
-                     %   error = reference_value - self.ddx;
-                     %   if feed_forward_flag
-                     %     input = reference_value + error * K_p + self.ddx*K_d;
-                     %   else
-                     %     input = error * K_p + self.ddx*K_d;
-                     %   end
-                     % end
+        error.prop = error_pos;
+        error.deriv = error_vel;
+        error.integr = integrError;
 
+      end
     end
 
-    function draw_statistics(self, data, flag_error)
+    function draw_statistics(self, data, error, flag_error, flagErrAsStruct)
       figure('Name','Statistics')
 
       ax1 = subplot(2,3,1);
@@ -170,8 +214,24 @@ classdef CartPlant < handle
 
       if flag_error
         figure('Name','Error evoulution')
-        p= plot(data(:,1),data(:,8), 'r-o');
-        title( 'error'), xlabel('t'), ylabel('e')
+
+
+        if flagErrAsStruct
+          ax1 = subplot(1,3,1);
+          plot(data(:,1),error.prop(:,1), 'r-o');
+          title(ax1,'proportional');
+
+          ax2 = subplot(1,3,2);
+          plot(data(:,1),error.deriv(:,1), 'r-o');
+          title(ax2,'derivative');
+
+          ax3 = subplot(1,3,3);
+          plot(data(:,1),error.integr(:,1), 'r-o');
+          title(ax3,'integrative');
+        else
+          p= plot(data(:,1),error(:,1), 'r-o');
+          title( 'error'), xlabel('t'), ylabel('e')
+        end
       end
     end
 
