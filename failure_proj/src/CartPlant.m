@@ -1,14 +1,14 @@
 classdef CartPlant < handle
   properties
-    M
-    D
-    q_plant
-    y_plant
-    A_plant
-    B_plant
-    C_plant
-    D_plant
-    delta_t
+    M;
+    D;
+    q_plant;
+    y_plant;
+    A_plant;
+    B_plant;
+    C_plant;
+    D_plant;
+    delta_t;
     vertices= zeros(4,2);
     lines_drawn= zeros(4);
     t;
@@ -176,7 +176,7 @@ classdef CartPlant < handle
         error_pos = reference_value.pos - self.q_plant(1,1);
         error_vel = reference_value.vel - self.q_plant(2,1);
         ff= reference_value.accel;
-        val = error_pos * K_p - self.q_plant(2,1)*K_d %+ integrError * K_i;% + ff;%- error_vel * K_d;
+        val = error_pos * K_p + integrError * K_i + ff + error_vel * K_d;%- self.q_plant(2,1)
         input = @(t) val;
         error.prop = error_pos;
         error.deriv = error_vel;
@@ -238,6 +238,7 @@ classdef CartPlant < handle
 
     function bode_plot(self)
       sys= ss(self.A_plant, self.B_plant, self.C_plant, self.D_plant );
+      figure('Name','Bode')
       bode(sys);
       if isstable(sys)
         disp("the plant is stable");

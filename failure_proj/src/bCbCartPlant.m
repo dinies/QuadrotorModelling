@@ -1,11 +1,11 @@
 close all
 clear
 clc
-gains = [ 4.0, 0.5, 0.05];
-x_0= -100;
+gains = [ 0.8, 0.6, 0.01];
+x_0= 100;
 dx_0= 0;
 ddx_0= 0;
-x_goal= 100;
+x_goal= -100;
 v_max= 15;
 a_max= 2;
 delta_t_des = 0.1;
@@ -23,7 +23,8 @@ totSim_t= trajectoryPlanner.timeLaw.T;
 totSim_t= totSim_t * 2.5;
 realDelta_t = trajectoryPlanner.delta_t;
 obj = CartPlant( 1 , 0.0, realDelta_t,x_0,dx_0);
+%bode_plot(obj);
 
 %closed_loop_plant(obj, totSim_t, "position",gains, referenceValues.positions, false);
-%closed_loop_plant(obj, totSim_t, "total",gains, referenceValues, false);
-closed_loop_plant(obj, totSim_t, "velocity",gains, referenceValues.velocities, false);
+closed_loop_plant(obj, totSim_t, "total",gains, referenceValues, false);
+%closed_loop_plant(obj, totSim_t, "velocity",gains, referenceValues.velocities, false);

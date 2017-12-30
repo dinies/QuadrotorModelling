@@ -93,6 +93,8 @@ classdef BangCoastBang < handle %TODO   elevate bangcost bang to a subclass of t
       end
       if ~self.positiveDirectionFlag
         ref.positions = ref.positions * -1;
+        ref.velocities= ref.velocities* -1;
+        ref.accelerations= ref.accelerations* -1;
       end
       ref.positions = ref.positions + self.x_0 ;
     end
