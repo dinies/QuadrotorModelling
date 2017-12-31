@@ -1,7 +1,8 @@
 close all
 clear
 clc
-gains = [ 0.8, 0.6, 0.01];
+
+gains = [ 3.4 , 0.9, 0.05];
 x_0= 100;
 dx_0= 0;
 ddx_0= 0;
@@ -20,11 +21,11 @@ referenceValues= getReferences( trajectoryPlanner);
 plotTrajectory(trajectoryPlanner, referenceValues);
 
 totSim_t= trajectoryPlanner.timeLaw.T;
-totSim_t= totSim_t * 2.5;
+totSim_t= totSim_t * 4;
 realDelta_t = trajectoryPlanner.delta_t;
 obj = CartPlant( 1 , 0.0, realDelta_t,x_0,dx_0);
 %bode_plot(obj);
 
-%closed_loop_plant(obj, totSim_t, "position",gains, referenceValues.positions, false);
+%closed_loop_plant(obj, totSim_t, "position",gains, referenceValues, false);
 closed_loop_plant(obj, totSim_t, "total",gains, referenceValues, false);
-%closed_loop_plant(obj, totSim_t, "velocity",gains, referenceValues.velocities, false);
+%closed_loop_plant(obj, totSim_t, "velocity",gains, referenceValues, false);

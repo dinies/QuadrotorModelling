@@ -78,8 +78,8 @@ classdef CartPlant < handle
         startIntegration = currStep - meaningfullInterval;
       end
       err = 0.0;
-      for i= startIntegration:currStep
-        increment = tanh( errArray(i,1));
+      for j= startIntegration:currStep
+        increment = tanh( errArray(j,1));
         err = err+ increment;
       end
     end
@@ -90,21 +90,15 @@ classdef CartPlant < handle
       step_num= tot_t / self.delta_t;
       data = zeros( step_num, 7);
       self.t=0;
-      if reference_type == "total"
-        refLenght = size(reference_trajectory.positions,1);
-        error.prop = zeros( step_num, 1);
-        error.deriv= zeros( step_num, 1);
-        error.integr= zeros( step_num, 1);
-      else
-        refLenght = size(reference_trajectory,1);
-        error = zeros(step_num,1);
-      end
+      refLenght = size(reference_trajectory.positions,1);
+      error.prop = zeros( step_num, 1);
+      error.deriv= zeros( step_num, 1);
+      error.integr= zeros( step_num, 1);
       figure('Name','World representation'),hold on;
       axis([-250 450 0 180]);
       title( 'world'), xlabel('x'), ylabel('z')
       draw(self);
       for i= 1:step_num
-        if reference_type == "total"
           if i <= refLenght
             reference.pos = reference_trajectory.positions(i);
             reference.vel = reference_trajectory.velocities(i);
@@ -112,80 +106,63 @@ classdef CartPlant < handle
           else
             reference.pos = reference_trajectory.positions(refLenght);
             reference.vel = reference_trajectory.velocities(refLenght);
-            reference.accel = reference_trajectory.accelerations(refLenght);
+            reference.accel = 0.0;
           end
-        else
-          if i <= refLenght
-            reference = reference_trajectory(i);
-          else
-            reference = reference_trajectory(refLenght);
-          end
-        end
-
-        if reference_type == "total"
           integrError = saturIntegrErr( self, error.prop, i);
-        else
-          integrError = saturIntegrErr( self, error, i);
-        end
-        [u, err] = feedback_controller(self, reference_type , reference, gains, feed_forward_flag,integrError);
-	      plant_evolution(self, u);
-        curr_u= u(self.t);
-	      data(i,:)=[self.t,self.q_plant(1,1),self.q_plant(2,1),self.y_plant(1,1),self.y_plant(2,1),self.y_plant(3,1),curr_u];
-        if reference_type =="total"
+
+          [u, err] = feedback_controller(self, reference_type , reference, gains, feed_forward_flag,integrError);
+	        plant_evolution(self, u);
+          curr_u= u(self.t);
+	        data(i,:)=[self.t,self.q_plant(1,1),self.q_plant(2,1),self.y_plant(1,1),self.y_plant(2,1),self.y_plant(3,1),curr_u];
           error.prop(i,1) = err.prop;
           error.deriv(i,1)= err.deriv;
           error.integr(i,1)= err.integr;
-        else
-          error(i,1)= err;
-        end
-        self.t = self.t + self.delta_t;
-        del_lines_drawn(self);
-        compute_vertices(self);
-        draw(self);
-        pause(0.001);
+          self.t = self.t + self.delta_t;
+          del_lines_drawn(self);
+          compute_vertices(self);
+          draw(self);
+          pause(0.001);
       end
-      if reference_type =="total"
-        draw_statistics( self, data, error, true, true);
-      else
-        draw_statistics( self, data, error, true, false);
-      end
+      draw_statistics( self, data, error, true);
     end
 
 
     function [input,error] = feedback_controller(self,reference_type,reference_value,gains,feed_forward_flag,integrError )
-                                %PD implementation , augment with integral term.
+                                %PID implementation
       K_p= gains(1);
       K_d= gains(2);
       K_i= gains(3);
       input= NaN;
       if reference_type == "position"
-        error = reference_value - self.q_plant(1,1);
-        val = error * K_p - self.q_plant(2,1)*K_d;
+        error.prop = reference_value.pos - self.q_plant(1,1);
+        val = error.prop * K_p - self.q_plant(2,1)*K_d;
         input = @(t) val;
+        error.deriv = 0.0;
+        error.integr = 0.0;
       end
       if reference_type == "velocity"
-        error = reference_value - self.q_plant(2,1);
+        error.prop = reference_value.vel - self.q_plant(2,1);
         if feed_forward_flag
-          val = reference_value; %+ error * K_d; %add the proportional term double check in the theory ;
+          val = reference_value.accel + error.prop * K_p; %add the deriv term, double check in the theory ;
         else
-          val = error*K_p;
+          val = error.prop*K_p;
         end
         input = @(t) val ;
+        error.deriv = 0.0;
+        error.integr = 0.0;
       end
       if reference_type == "total"
-        error_pos = reference_value.pos - self.q_plant(1,1);
-        error_vel = reference_value.vel - self.q_plant(2,1);
+        error.prop = reference_value.pos - self.q_plant(1,1);
+        error.deriv = reference_value.vel - self.q_plant(2,1);
         ff= reference_value.accel;
-        val = error_pos * K_p + integrError * K_i + ff + error_vel * K_d;%- self.q_plant(2,1)
+        val = error.prop * K_p + integrError * K_i + ff + error.deriv * K_d;%- self.q_plant(2,1)  ;
         input = @(t) val;
-        error.prop = error_pos;
-        error.deriv = error_vel;
         error.integr = integrError;
 
       end
     end
 
-    function draw_statistics(self, data, error, flag_error, flagErrAsStruct)
+    function draw_statistics(self, data, error, flag_error)
       figure('Name','Statistics')
 
       ax1 = subplot(2,3,1);
@@ -216,7 +193,6 @@ classdef CartPlant < handle
         figure('Name','Error evoulution')
 
 
-        if flagErrAsStruct
           ax1 = subplot(1,3,1);
           plot(data(:,1),error.prop(:,1), 'r-o');
           title(ax1,'proportional');
@@ -228,10 +204,6 @@ classdef CartPlant < handle
           ax3 = subplot(1,3,3);
           plot(data(:,1),error.integr(:,1), 'r-o');
           title(ax3,'integrative');
-        else
-          p= plot(data(:,1),error(:,1), 'r-o');
-          title( 'error'), xlabel('t'), ylabel('e')
-        end
       end
     end
 
