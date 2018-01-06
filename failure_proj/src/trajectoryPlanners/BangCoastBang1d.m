@@ -1,4 +1,4 @@
-classdef BangCoastBang < handle %TODO   elevate bangcost bang to a subclass of trajectory, make also the superclass trajectory, probably abstract. Then populate with connection of linear paths and splines and third and quintic order polinomials.
+classdef BangCoastBang1d < handle %TODO   elevate bangcost bang to a subclass of trajectory, make also the superclass trajectory, probably abstract. Then populate with connection of linear paths and splines and third and quintic order polinomials.
   properties
     delta_t
     delta_t_des
@@ -8,7 +8,7 @@ classdef BangCoastBang < handle %TODO   elevate bangcost bang to a subclass of t
   end
 
   methods
-    function self = BangCoastBang( x_0 , x_goal, v_max , a_max, delta_t_des)
+    function self = BangCoastBang1d( x_0 , x_goal, v_max , a_max, delta_t_des)
       self.delta_t = 0;
       self.delta_t_des= delta_t_des;
       self.x_0= x_0;

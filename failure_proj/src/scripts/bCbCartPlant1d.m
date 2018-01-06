@@ -10,7 +10,7 @@ x_goal= -100;
 v_max= 15;
 a_max= 2;
 delta_t_des = 0.1;
-trajectoryPlanner = BangCoastBang(x_0 , x_goal, v_max , a_max, delta_t_des);
+trajectoryPlanner = BangCoastBang1d(x_0 , x_goal, v_max , a_max, delta_t_des);
 referenceValues= getReferences( trajectoryPlanner);
 
         %mock references for tuning of pid controller, creating a step reference
@@ -23,7 +23,7 @@ plotTrajectory(trajectoryPlanner, referenceValues);
 totSim_t= trajectoryPlanner.timeLaw.T;
 totSim_t= totSim_t * 4;
 realDelta_t = trajectoryPlanner.delta_t;
-obj = CartPlant( 1 , 0.0, realDelta_t,x_0,dx_0);
+obj = CartPlant1d( 1 , 0.0, realDelta_t,x_0,dx_0);
 %bode_plot(obj);
 
 %closed_loop_plant(obj, totSim_t, "position",gains, referenceValues, false);

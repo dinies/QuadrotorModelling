@@ -1,4 +1,4 @@
-classdef CartPlant < handle
+classdef CartPlant1d < handle
   properties
     M;
     D;
@@ -14,7 +14,7 @@ classdef CartPlant < handle
     t;
   end
   methods
-    function self = CartPlant(mass, dump, delta_t, x_0 , dx_0)
+    function self = CartPlant1d(mass, dump, delta_t, x_0 , dx_0)
       self.M= mass;
       self.D= dump;
       self.delta_t= delta_t;

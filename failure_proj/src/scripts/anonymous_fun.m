@@ -5,7 +5,8 @@ clear
 clc
 
                                 % simple step function
-u = @(t)  3*(t<5);
+                                %vectorized
+u = @(t)  [3*(t<5);3*(t<2)];
 
 
 time_tot = 10;
