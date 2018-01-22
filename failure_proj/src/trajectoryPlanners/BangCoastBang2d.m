@@ -14,6 +14,7 @@ classdef BangCoastBang2d < handle %TODO   elevate bangcost bang to a subclass of
       self.q_0= q_0;
       L = sqrt( (q_goal(1,1) - q_0(1,1))^2 +(q_goal(2,1) - q_0(2,1))^2 );
       computeTimingLaw( self, L , v_max, a_max);
+      computeRealDeltaT(self);
       analyzeDirection( self,q_goal, q_0)
     end
 
@@ -52,18 +53,22 @@ classdef BangCoastBang2d < handle %TODO   elevate bangcost bang to a subclass of
     end
 
 
-
-
-    function ref = getReferences(self)
+    function computeRealDeltaT(self)
       law= self.timeLaw;
       ideal_step_num = law.T/self.delta_t_des;
       rounded_step_num = round(ideal_step_num);
       self.delta_t = law.T/rounded_step_num;
+    end
+
+
+    function ref = getReferences(self)
+      law= self.timeLaw;
+      stepNum = law.T/self.delta_t;
       curr_t=0;
-      ref.positions = zeros(rounded_step_num,2);
-      ref.velocities= zeros(rounded_step_num,2);
-      ref.accelerations= zeros(rounded_step_num,2);
-      for i= 1:rounded_step_num+1
+      ref.positions = zeros(stepNum,2);
+      ref.velocities= zeros(stepNum,2);
+      ref.accelerations= zeros(stepNum,2);
+      for i= 1:stepNum+1
         if law.coast_phase
           if curr_t < law.T_s
             ref.positions(i,1)= cos(self.theta)*law.first_bang(curr_t);

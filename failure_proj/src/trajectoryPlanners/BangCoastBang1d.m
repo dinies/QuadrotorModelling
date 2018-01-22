@@ -12,8 +12,9 @@ classdef BangCoastBang1d < handle %TODO   elevate bangcost bang to a subclass of
       self.delta_t = 0;
       self.delta_t_des= delta_t_des;
       self.x_0= x_0;
-      L = abs( x_goal - x_0)
+      L = abs( x_goal - x_0);
       computeTimingLaw( self, L , v_max, a_max);
+      computeRealDeltaT(self);
       if x_goal - x_0 > 0
         self.positiveDirectionFlag= true;
       else
@@ -51,19 +52,23 @@ classdef BangCoastBang1d < handle %TODO   elevate bangcost bang to a subclass of
       self.timeLaw = timing_law;
     end
 
+     function computeRealDeltaT(self)
+       law= self.timeLaw;
+       ideal_step_num = law.T/self.delta_t_des;
+       rounded_step_num = round(ideal_step_num);
+       self.delta_t = law.T/rounded_step_num;
+     end
 
 
 
     function ref = getReferences(self)
       law= self.timeLaw;
-      ideal_step_num = law.T/self.delta_t_des;
-      rounded_step_num = round(ideal_step_num);
-      self.delta_t = law.T/rounded_step_num;
+      stepNum = law.T/self.delta_t;
       curr_t=0;
-      ref.positions = zeros(rounded_step_num,1);
-      ref.velocities= zeros(rounded_step_num,1);
-      ref.accelerations= zeros(rounded_step_num,1);
-      for i= 1:rounded_step_num+1
+      ref.positions = zeros(stepNum,1);
+      ref.velocities= zeros(stepNum,1);
+      ref.accelerations= zeros(stepNum,1);
+      for i= 1:stepNum+1
         if law.coast_phase
           if curr_t < law.T_s
             ref.positions(i,1)= law.first_bang(curr_t);
