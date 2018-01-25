@@ -19,7 +19,6 @@ classdef FeedbackLinearizator < handle
       s_psi = sin(q(6,1));
       c_psi = cos(q(6,1));
       zeta = q(10);
-      ksi = q(11);
       m = self.M;
       Ix = self.I(1,1);
       Iy = self.I(2,1);
@@ -27,27 +26,30 @@ classdef FeedbackLinearizator < handle
 
 
       y =  zeros(4);
-      y(1,:)= [ -( c_psi*s_theta*c_phi + s_psi*s_phi)/m ,
-                zeta*( c_psi*s_theta*s_phi - s_psi*c_phi)/(m*Ix) ,
-                -zeta*( c_psi*c_theta*c_phi)/(m*Iy) ,
-                zeta*( s_psi*s_theta*c_phi - c_psi*s_phi)/(m*Iz)
-              ];
-      y(2,:)= [ -( s_psi*s_theta*c_phi - c_psi*s_phi)/m ,
-                zeta*( s_psi*s_theta*s_phi + c_psi*c_phi)/(m*Ix) ,
-                -zeta*( s_psi*c_theta*c_phi)/(m*Iy) ,
-                -zeta*( c_psi*s_theta*c_phi + s_psi*s_phi)/(m*Iz)
-              ];
-      y(3,:)= [ -( c_theta*c_phi)/m ,
-                zeta*( c_theta*s_phi)/(m*Ix) ,
-                zeta*( s_theta*c_phi)/(m*Iy) ,
-                0.0
-              ];
+      y(1,:)= [
+               -( c_psi*s_theta*c_phi + s_psi*s_phi)/m ;
+                zeta*( c_psi*s_theta*s_phi - s_psi*c_phi)/(m*Ix) ;
+                -zeta*( c_psi*c_theta*c_phi)/(m*Iy) ;
+                zeta*( s_psi*s_theta*c_phi - c_psi*s_phi)/(m*Iz);
+      ]';
+      y(2,:)= [
+               -( s_psi*s_theta*c_phi - c_psi*s_phi)/m ;
+                zeta*( s_psi*s_theta*s_phi + c_psi*c_phi)/(m*Ix) ;
+                -zeta*( s_psi*c_theta*c_phi)/(m*Iy) ;
+                -zeta*( c_psi*s_theta*c_phi + s_psi*s_phi)/(m*Iz);
+      ]';
+      y(3,:)= [
+               -( c_theta*c_phi)/m ;
+                zeta*( c_theta*s_phi)/(m*Ix) ;
+                zeta*( s_theta*c_phi)/(m*Iy) ;
+                0.0;
+      ]';
       y(4,:)= [
-               0.0,
-               0.0,
-               0.0,
-               1/Iz
-      ];
+               0.0;
+               0.0;
+               0.0;
+               1/Iz;
+      ]';
     end
 
     function y = bVec( self, state )
@@ -57,7 +59,7 @@ classdef FeedbackLinearizator < handle
       c_theta = cos(state(5,1));
       s_psi = sin(state(6,1));
       c_psi = cos(state(6,1));
-      zeta = state(10);I
+      zeta = state(10);
       ksi = state(11);
       p = state(12);
       q = state(13);
@@ -81,3 +83,4 @@ classdef FeedbackLinearizator < handle
       input = alfa + beta * v;
     end
   end
+end

@@ -146,8 +146,10 @@ classdef QuadRotor < handle
                 0,0,1,1;
               ];
       gains= [ PDgains, Igains];
-      trajectoryPlanner= XXX("TODO");
-      references= getRef(trajectoryPlanner);
+      %trajectoryPlanner= XXX("TODO");
+      %references= getRef(trajectoryPlanner);
+      % stub references
+      references =  zeros(4,5,numOfSteps);
       controller= PID( gains, numOfSteps );
       FBlin = FeedbackLinearizator( self.M, self.I);
 
@@ -164,7 +166,7 @@ classdef QuadRotor < handle
         differentiate( DiffBlock_y, self.y(2,1))';
         differentiate( DiffBlock_z, self.y(3,1))';
         ];
-        outputDeriv_psi= differentiate( DiffBlock, self.y(6,1));
+        outputDeriv_psi= differentiate( DiffBlock_psi, self.y(6,1));
 
         stateDiff = [ self.y(1:3,1), outputDeriv_xyz;
                       self.y(6,1), [ 0 , 0 , outputDeriv_psi];

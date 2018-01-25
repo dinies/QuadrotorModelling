@@ -12,7 +12,7 @@ classdef PID < handle
       self.gains= gains;
                                 % errors : [ e_q1, e_dq1 ]
                                 % gains : [ K0, K1, Ki]
-      self.errors= zeros(size(gains,1), (size(gains,2)-1), numOfIter )
+      self.errors= zeros(size(gains,1), (size(gains,2)-1), numOfIter );
       self.totIterNum= numOfIter;
     end
 
@@ -22,16 +22,16 @@ classdef PID < handle
                                 %           q2, dq2]
     function input = computeInput( self, state, references ,iterNum)
 
-      input = zeros(size(gains,1),1);
+      input = zeros(size(self.gains,1),1);
       for i = 1:size(self.gains,1)
         val = references(i,size(references,2));
         for j= 1:(size(references,2)-1)
           err = references(i,j) - state(i,j);
           self.errors(i,j,iterNum) = err;
-          val+= self.gains(i,j)*err;
+          val= val+ self.gains(i,j)*err;
         end
         integrErr= saturIntegrErr( self,iterNum ,i);
-        val+= self.gains(i,size(references,2))* integrErr;
+        val= val+ self.gains(i,size(references,2))* integrErr;
         input(i,1)= val;
       end
     end
@@ -50,3 +50,4 @@ classdef PID < handle
         end
     end
   end
+end
