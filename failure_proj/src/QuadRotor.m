@@ -85,8 +85,8 @@ classdef QuadRotor < handle
     end
 
     function openLoop(self, u, tot_t )
-      step_num= tot_t / self.delta_t;
-      data = zeros( step_num, self.stateDim + 11);
+      numOfSteps= tot_t / self.delta_t;
+      data = zeros( numOfSteps , self.stateDim + 11);
       self.t= 0;
 
       figure('Name','World representation'),hold on;
@@ -99,7 +99,7 @@ classdef QuadRotor < handle
 
 
 
-      for i= 1:step_num
+      for i= 1:numOfSteps
         curr_u= u(self.t);
         oldPos = self.q(1:3,1);
         q_dot = plantEvolution(self, curr_u);
@@ -123,6 +123,78 @@ classdef QuadRotor < handle
       draw_statistics( self, data, 0 , false);
     end
 
+
+
+
+    function closedLoop(self, tot_t )
+      numOfSteps = tot_t / self.delta_t;
+      data = zeros( numOfSteps, self.stateDim + 11);
+      self.t= 0;
+
+      figure('Name','World representation'),hold on;
+      az = 135;
+      el = 45;
+      view(az, el);
+      axis([-50 50 -50 50 0 350 ]);
+      title('world'), xlabel('x'), ylabel('y'), zlabel('z')
+      draw(self);
+
+      Igains= [1;1;1;1];
+      PDgains = [ 1,1,1,1;
+                1,1,1,1;
+                1,1,1,1;
+                0,0,1,1;
+              ];
+      gains= [ PDgains, Igains];
+      trajectoryPlanner= XXX("TODO");
+      references= getRef(trajectoryPlanner);
+      controller= PID( gains, numOfSteps );
+      FBlin = FeedbackLinearizator( self.M, self.I);
+
+      DiffBlock_x = DifferentiatorBlock(self.delta_t, 3 );
+      DiffBlock_y = DifferentiatorBlock(self.delta_t, 3 );
+      DiffBlock_z = DifferentiatorBlock(self.delta_t, 3 );
+      DiffBlock_psi = DifferentiatorBlock(self.delta_t, 1 );
+
+      for i= 1:numOfSteps
+
+
+        outputDeriv_xyz= [
+        differentiate( DiffBlock_x, self.y(1,1))';
+        differentiate( DiffBlock_y, self.y(2,1))';
+        differentiate( DiffBlock_z, self.y(3,1))';
+        ];
+        outputDeriv_psi= differentiate( DiffBlock, self.y(6,1));
+
+        stateDiff = [ self.y(1:3,1), outputDeriv_xyz;
+                      self.y(6,1), [ 0 , 0 , outputDeriv_psi];
+                    ];
+        v_input = computeInput( controller, references(:,:,i), stateDiff , i);
+
+
+        curr_u = computeInput( FBlin, v_input, self.q );
+
+        oldPos = self.q(1:3,1);
+        q_dot = plantEvolution(self, curr_u);
+        updateState(self, q_dot);
+        newPos = self.q(1:3,1);
+        data(i , 1:self.stateDim)= self.q;
+        data(i, self.stateDim+1) = self.t;
+        data(i, self.stateDim+2:self.stateDim+5)= curr_u';
+        data(i, self.stateDim+6:self.stateDim+8)= q_dot(7:9,1)';
+        data(i, self.stateDim+9:self.stateDim+11)= q_dot(12:14,1)';
+
+
+        self.t = self.t + self.delta_t;
+        del_lines_drawn(self);
+        compute_vertices(self);
+        draw(self);
+
+        line( [oldPos(1,1),newPos(1,1) ],[oldPos(2,1),newPos(2,1) ],[oldPos(3,1),newPos(3,1) ],'LineWidth', 2,'Color',[0.1,0.9,0.2]);
+        pause(0.0001);
+      end
+      draw_statistics( self, data, 0 , false);
+    end
 
 
     function draw_statistics(self, data, error, flag_error)
