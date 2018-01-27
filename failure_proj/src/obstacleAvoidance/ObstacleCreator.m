@@ -59,8 +59,6 @@ classdef ObstacleCreator  < handle
       end
     end
 
-                                %  mat :    [ x1, y1, r1
-                                %             x2, y2, r2 ]
 
     function generateObsFromMat(self, env, mat )
 
@@ -78,10 +76,6 @@ classdef ObstacleCreator  < handle
           obsInsertedNum = obsInsertedNum +1;
         end
       end
-
-      %if obsInsertedNum > 0
-      %  setObstacles(self, self.obstacles(1:obsInsertedNum));
-      %end
     end
 
     function setObstacles( self, obstacles)
@@ -98,20 +92,20 @@ classdef ObstacleCreator  < handle
 
       if currObsNum > 0
         for i=1:currObsNum
-          obstacle= self.obstacles(currObsNum,1);
+          obstacle= self.obstacles(i,1);
           distFromObs= sqrt((coord.x -obstacle.coords.x)^2 +(coord.y -obstacle.coords.y)^2);
           if  distFromObs - ( radius + obstacle.radius) <= 0
             collision = 1;
           end
         end
-
-        robot = env.robot;
-        distFromRobot= sqrt((coord.x -robot.coords.x)^2 +(coord.y -robot.coords.y)^2);
-        if distFromRobot - ( radius + robot.radius) <= 0
-          collision= 1;
-        end
-
       end
+
+      robot = env.robot;
+      distFromRobot= sqrt((coord.x -robot.coords.x)^2 +(coord.y -robot.coords.y)^2);
+      if distFromRobot - ( radius + robot.radius) <= 0
+        collision= 1;
+      end
+
 
 
 
