@@ -23,17 +23,20 @@ classdef Environment2D < handle
       self.colors.yellow= [1.0, 1.0, 0.0];
 
       self.unitaryDim = length * 0.02;
-      self.start= [ self.unitaryDim*2; self.unitaryDim*2];
-      self.robot= Robot( self.start(1,1), self.start(2,1), self.unitaryDim, self.colors.blue);
+      self.start= StartPos(self.unitaryDim*2,self.unitaryDim*2,self.unitaryDim, self.colors.green);
+      self.robot= Robot( self.start.coords.x, self.start.coords.y, self.unitaryDim, self.colors.blue);
 
-      self.goal= [length - self.unitaryDim*2;length - self.unitaryDim*2];
+      self.goal = GoalPos(length - self.unitaryDim*2,length - self.unitaryDim*2,self.unitaryDim, self.colors.red);
       self.drawer= Drawer();
     end
 
     function setMission(self, start, goal)
-      self.start = start;
-      self.robot= Robot( self.start(1,1), self.start(2,1), self.unitaryDim, self.colors.blue);
-      self.goal = goal;
+      self.start.coords.x = start(1,1);
+      self.start.coords.y = start(2,1);
+      self.robot.coords.x = start(1,1);
+      self.robot.coords.y = start(2,1);
+      self.goal.coords.x = goal(1,1);
+      self.goal.coords.y = goal(2,1);
     end
 
     function addObstacles( self, obstacles)
@@ -62,14 +65,9 @@ classdef Environment2D < handle
       for i = 1:size(self.obstacles,1)
         draw(self.obstacles(i,1));
       end
-
-      drawCoords(self);
+      draw(self.start);
       draw(self.robot);
-    end
-    function drawCoords(self)
-      drawCircle2D( self.drawer,self.start(1,1) ,self.start(2,1), self.unitaryDim, self.colors.green);
-      drawCircle2D( self.drawer,self.goal(1,1) ,self.goal(2,1), self.unitaryDim, self.colors.red);
-
+      draw(self.goal);
     end
   end
 end

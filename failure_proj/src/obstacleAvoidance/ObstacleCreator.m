@@ -17,13 +17,13 @@ classdef ObstacleCreator  < handle
       end
     end
 
-    function coord = createRandCoord(~,env)
+    function coords = createRandCoord(~,env)
       length = env.length;
       offset= env.unitaryDim;
       extension= length - 2*offset;
 
-      coord.x = offset + rand()*extension;
-      coord.y = offset + rand()*extension;
+      coords.x = offset + rand()*extension;
+      coords.y = offset + rand()*extension;
     end
 
 
@@ -47,15 +47,17 @@ classdef ObstacleCreator  < handle
 
     function generateRandomObs(self,env,number)
       obsInsertedNum = 0;
-      while obsInsertedNum < number
-        coord= createRandCoord(self,env);
+      iterNum= 0;
+      while obsInsertedNum < number && iterNum < number*10
+        coords= createRandCoord(self,env);
         radius = createRandRadius(self,env);
-        collision = collisionCheck(self,coord,radius, obsInsertedNum, env);
+        collision = collisionCheck(self,coords,radius, obsInsertedNum, env);
         if ~collision
-          obs = Obstacle(coord.x, coord.y, radius, self.color);
+          obs = Obstacle(coords.x, coords.y, radius, self.color);
           self.obstacles= [ self.obstacles ; obs];
           obsInsertedNum = obsInsertedNum +1;
         end
+        iterNum= iterNum + 1;
       end
     end
 
@@ -66,12 +68,12 @@ classdef ObstacleCreator  < handle
 
       for i= 1:size(mat,1)
 
-        coord.x=  mat(i,1);
-        coord.y=  mat(i,2);
+        coords.x=  mat(i,1);
+        coords.y=  mat(i,2);
         radius= mat(i,3);
-        collision = collisionCheck(self,coord,radius, obsInsertedNum, env);
+        collision = collisionCheck(self,coords,radius, obsInsertedNum, env);
         if ~collision
-          obs = Obstacle(coord.x, coord.y, radius, self.color);
+          obs = Obstacle(coords.x, coords.y, radius, self.color);
           self.obstacles= [ self.obstacles ; obs];%(obsInsertedNum+1,1)
           obsInsertedNum = obsInsertedNum +1;
         end
@@ -83,32 +85,28 @@ classdef ObstacleCreator  < handle
     end
 
 
-    function collision = collisionCheck(self,coord,radius,currObsNum, env)
+    function collision = collisionCheck(self,coords,radius,currObsNum, env)
       collision = 0;
 
-      if coord.x <= radius || coord.x >= env.length - radius || coord.y <= radius || coord.y >= env.length - radius
+      if coords.x <= radius || coords.x >= env.length - radius || coords.y <= radius || coords.y >= env.length - radius
         collision = 1;
       end
 
       if currObsNum > 0
         for i=1:currObsNum
           obstacle= self.obstacles(i,1);
-          distFromObs= sqrt((coord.x -obstacle.coords.x)^2 +(coord.y -obstacle.coords.y)^2);
+          distFromObs= sqrt((coords.x - obstacle.coords.x)^2 +(coords.y - obstacle.coords.y)^2);
           if  distFromObs - ( radius + obstacle.radius) <= 0
             collision = 1;
           end
         end
       end
 
-      robot = env.robot;
-      distFromRobot= sqrt((coord.x -robot.coords.x)^2 +(coord.y -robot.coords.y)^2);
-      if distFromRobot - ( radius + robot.radius) <= 0
+      distFromRobot = sqrt((coords.x - env.robot.coords.x)^2 +(coords.y - env.robot.coords.y)^2);
+      distFromGoal  = sqrt((coords.x - env.goal.coords.x)^2  +(coords.y - env.goal.coords.y )^2);
+      if distFromRobot - ( radius + env.robot.radius) <= 0 || distFromGoal - ( radius + env.robot.radius) <= 0
         collision= 1;
       end
-
-
-
-
     end
   end
 end
