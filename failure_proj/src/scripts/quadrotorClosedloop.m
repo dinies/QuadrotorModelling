@@ -5,7 +5,7 @@ clc
 q_0= zeros(14,1);
 q_0(1,1)= 0;
 q_0(2,1)= 0;
-q_0(3,1)= 10;
+q_0(3,1)= 0;
 
 q_0(10,1)= 9.81; %to avoid singularities in feedback lin invertion
 
@@ -28,7 +28,7 @@ j_f=0;
 s_0=0; %snap
 s_f=0;
 t_0=0; %time
-t_f=40;
+t_f=10;
 
 timeSim= t_f - t_0;
 
@@ -51,5 +51,14 @@ delta_t = xPlanner.delta_t;
 
 planners = [  xPlanner; yPlanner; zPlanner; psiPlanner ];
 
+Igains= [0.0;0.0;0.0;0.0];
+PDgains = [ 0,0.0,0.0,0.0;
+            0,0.0,0.0,0.0;
+            0,01.0,0.0,0.0;
+            0,0,0,0
+          ];
+gains= [ PDgains, Igains];
+
+
 obj = QuadRotor( m , [Ix , Iy, Iz]' , d , delta_t, q_0);
-closedLoop(obj,timeSim, planners);
+closedLoop(obj,timeSim, planners, gains);
