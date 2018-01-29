@@ -126,7 +126,7 @@ classdef QuadRotor < handle
 
 
 
-    function closedLoop(self, tot_t )
+    function closedLoop(self, tot_t , trajPlanners)
       numOfSteps = tot_t / self.delta_t;
       data = zeros( numOfSteps, self.stateDim + 11);
       self.t= 0;
@@ -135,21 +135,26 @@ classdef QuadRotor < handle
       az = 135;
       el = 45;
       view(az, el);
-      axis([-50 50 -50 50 0 350 ]);
+      axis([-550 550 -550 550 -550 550 ]);
       title('world'), xlabel('x'), ylabel('y'), zlabel('z')
       draw(self);
 
-      Igains= [1;1;1;1];
-      PDgains = [ 1,1,1,1;
-                1,1,1,1;
-                1,1,1,1;
-                0,0,1,1;
+      Igains= [0.1;0.1;0.1;0.1];
+      PDgains = [ 1,0.6,0.4,0.2;
+                  1,0.6,0.4,0.2;
+                  1,0.6,0.4,0.2;
+                  0,0,1,1;
               ];
       gains= [ PDgains, Igains];
-      %trajectoryPlanner= XXX("TODO");
-      %references= getRef(trajectoryPlanner);
+
+      self.y = [self.q(1,1), self.q(2,1), self.q(3,1), self.q(4,1), self.q(5,1), self.q(6,1)]';
+
+
+      for j= 1:size(trajPlanners,1)
+        references(j,1)= getReferences( trajPlanners(j,1));
+      end
       % stub references
-      references =  zeros(4,5,numOfSteps);
+      %references =  zeros(4,5,numOfSteps);
       controller= PID( gains, numOfSteps );
       FBlin = FeedbackLinearizator( self.M, self.I);
 
@@ -171,7 +176,10 @@ classdef QuadRotor < handle
         stateDiff = [ self.y(1:3,1), outputDeriv_xyz;
                       self.y(6,1), [ 0 , 0 , outputDeriv_psi];
                     ];
-        v_input = computeInput( controller, references(:,:,i), stateDiff , i);
+
+        referenceMat = extractCurrRefs(self, references, i);
+
+        v_input = computeInput( controller, referenceMat, stateDiff , i);
 
 
         curr_u = computeInput( FBlin, v_input, self.q );
@@ -198,6 +206,18 @@ classdef QuadRotor < handle
       draw_statistics( self, data, 0 , false);
     end
 
+    function  ref = extractCurrRefs(~, refs, iterNum)
+      ref = zeros( size(refs,1), 5);
+      for i = 1:size(refs,1)
+        ref(i,:) = [
+                    refs(i,1).positions(iterNum);
+                    refs(i,1).velocities(iterNum);
+                    refs(i,1).accelerations(iterNum);
+                    refs(i,1).jerks(iterNum);
+                    refs(i,1).snaps(iterNum)
+        ]';
+      end
+    end
 
     function draw_statistics(self, data, error, flag_error)
       figure('Name','Pose')

@@ -20,7 +20,7 @@ classdef PID < handle
                                 %                q2_d, dq2_d, ddq2_d]
                                 % state : [ q1, dq1;
                                 %           q2, dq2]
-    function input = computeInput( self, state, references ,iterNum)
+    function input = computeInput( self, references , state ,iterNum)
 
       input = zeros(size(self.gains,1),1);
       for i = 1:size(self.gains,1)
