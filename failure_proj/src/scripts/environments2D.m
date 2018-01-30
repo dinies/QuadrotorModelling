@@ -1,22 +1,24 @@
 close all
 clear
 clc
+totTime= 50;
+obsNum= 10;
 
 
-env  = Environment2D( 20);
-setMission(env, [2;2], [18;17]);
+env  = Environment2D( 20, 0.1);
+
+setMission(env, [2;1], [17; 17]);
+
+
 mat = [
-       3, 3, 2;
-       5, 5, 2;
-       7, 7, 2;
-       9, 9, 2;
-       11, 10, 2;
-       13, 13, 2;
-       15, 15, 2;
-       17, 17, 2
+       12,   9,   1.4;
+       9,   12,   1.4;
+
 ];
 
 
-addObstacles(env, 20);
+addObstacles(env, mat);
 
-draw(env);
+planner =  MotionPlanner( env);
+runSimulation( env,planner,totTime);
+

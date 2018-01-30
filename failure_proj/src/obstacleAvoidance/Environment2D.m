@@ -8,10 +8,13 @@ classdef Environment2D < handle
     unitaryDim
     colors
     robot
+    clock
+    vertices
+    borders
 
   end
   methods
-    function self = Environment2D( length )
+    function self = Environment2D( length, delta_t )
       self.length= length;
       self.colors.violet= [0.5,0.2,0.9];
       self.colors.black= [0.0,0.0,0.0];
@@ -21,13 +24,26 @@ classdef Environment2D < handle
       self.colors.red= [1.0, 0.0, 0.0];
       self.colors.green= [0.0, 1.0, 0.0];
       self.colors.yellow= [1.0, 1.0, 0.0];
+      self.clock = Clock(delta_t);
 
       self.unitaryDim = length * 0.02;
-      self.start= StartPos(self.unitaryDim*2,self.unitaryDim*2,self.unitaryDim, self.colors.green);
-      self.robot= Robot( self.start.coords.x, self.start.coords.y, self.unitaryDim, self.colors.blue);
+      self.start= Position(self.unitaryDim*2,self.unitaryDim*2,self.unitaryDim, self.colors.green);
+      self.robot= Agent( self.start.coords.x, self.start.coords.y, self.unitaryDim, self.colors.blue);
 
-      self.goal = GoalPos(length - self.unitaryDim*2,length - self.unitaryDim*2,self.unitaryDim, self.colors.red);
+      self.goal = Position(length - self.unitaryDim*2,length - self.unitaryDim*2,self.unitaryDim, self.colors.red);
       self.drawer= Drawer();
+      self.vertices= [
+                      0,0;
+                      0,length;
+                      length,length;
+                      length, 0;
+      ];
+      self.borders= [
+                     self.vertices(1,1), self.vertices(2,1);
+                     self.vertices(2,1), self.vertices(3,1);
+                     self.vertices(3,1), self.vertices(4,1);
+                     self.vertices(4,1), self.vertices(1,1);
+      ];
     end
 
     function setMission(self, start, goal)
@@ -44,23 +60,33 @@ classdef Environment2D < handle
       self.obstacles = obsCreator.obstacles;
     end
 
-    function draw(self)
-      border= self.length* 0.05;
-      minAxis= 0 - border;
-      maxAxis= self.length + border;
+    function runSimulation( self, planner, timeTot)
+
+
+
+      frame= self.length* 0.05;
+      minAxis= 0 - frame;
+      maxAxis= self.length + frame;
       figure('Name','Environment'),hold on;
       axis([minAxis maxAxis minAxis maxAxis ]);
       title('world'), xlabel('x'), ylabel('y')
+      drawRectangle2D(self.drawer,self.vertices,self.colors.black);
 
+      draw(self);
+      pause(0.7);
+      while self.clock.curr_t <= timeTot
+        dynamicDeleteDrawing(self.robot);
+        oldPos = self.robot.coords;
+        doAction(self.robot, planner, self.clock);
+        newPos = self.robot.coords;
+        dynamicDraw(self.robot, planner);
+        pause(0.04);
+        tick(self.clock);
 
-
-      pointsRect = [
-                    0,0;
-                    0,self.length;
-                    self.length,self.length;
-                    self.length, 0;
-      ];
-      drawRectangle2D(self.drawer,pointsRect,self.colors.black);
+        line( [oldPos.x,newPos.x ],[oldPos.y,newPos.y ],'LineWidth', 2,'Color',[0.1,0.9,0.2]);
+      end
+    end
+    function draw(self)
 
       for i = 1:size(self.obstacles,1)
         draw(self.obstacles(i,1));
@@ -68,6 +94,7 @@ classdef Environment2D < handle
       draw(self.start);
       draw(self.robot);
       draw(self.goal);
+
     end
   end
 end

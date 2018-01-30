@@ -4,6 +4,7 @@ classdef Entity < handle
     radius
     coords
     color
+    drawing
   end
 
   methods
@@ -14,9 +15,13 @@ classdef Entity < handle
       self.color= color;
     end
 
+    function deleteDrawing(self)
+      delete(self.drawing);
+    end
+
     function draw(self)
       drawer = Drawer();
-      drawCircle2D(drawer , self.coords.x, self.coords.y, self.radius, self.color);
+      self.drawing= drawCircle2D(drawer , self.coords.x, self.coords.y, self.radius, self.color);
     end
   end
 end
