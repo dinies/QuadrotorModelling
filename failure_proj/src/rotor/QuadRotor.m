@@ -19,7 +19,7 @@ classdef QuadRotor < handle
       self.M = M;
       self.I = I;
       self.d= d; % distance of the center of mass from the rotors
-      self.g = +9.81;
+      self.g = -9.81;
       self.q = q_0;
       self.delta_t = delta_t;
       self.stateDim = size(self.q , 1);
@@ -93,7 +93,7 @@ classdef QuadRotor < handle
       az = 135;
       el = 45;
       view(az, el);
-      axis([-500 500 -500 500 -500 1500 ]);
+      axis([-50 50 -50 50 -30 150 ]);
       title('world'), xlabel('x'), ylabel('y'), zlabel('z')
       draw(self);
 

@@ -44,26 +44,29 @@ classdef ObstacleCreator  < handle
       end
     end
 
+    function insertObstacle( self, coords,radius, env)
+      epsilon = env.unitaryDim/1000;
+      obs = Obstacle(coords.x, coords.y, radius, self.color);
+      distFromGoal= sqrt( (obs.coords.x - env.goal.coords.x)^2 + (obs.coords.y - env.goal.coords.y)^2);
+      if distFromGoal <= (env.robot.radius + obs.influenceRange + obs.radius)
+        obs.influenceRange= distFromGoal - (env.robot.radius + obs.radius + epsilon);
+      end
+      if obs.influenceRange < 0
+        obs.influenceRange = epsilon;
+      end
+      self.obstacles= [ self.obstacles ; obs];
+    end
+
 
     function generateRandomObs(self,env,number)
       obsInsertedNum = 0;
       iterNum= 0;
-      epsilon = env.unitaryDim/1000;
       while obsInsertedNum < number && iterNum < number*10
         coords= createRandCoord(self,env);
         radius = createRandRadius(self,env);
         collision = collisionCheck(self,coords,radius, obsInsertedNum, env);
         if ~collision
-          obs = Obstacle(coords.x, coords.y, radius, self.color);
-          distFromGoal= sqrt( (obs.coords.x - env.goal.coords.x)^2 + (obs.coords.y - env.goal.coords.y)^2);
-                                %  TODO   make a function for this 2 ifs
-          if distFromGoal <= (env.robot.radius + obs.influenceRange + obs.radius)
-            obs.influenceRange= distFromGoal - (env.robot.radius + obs.radius + epsilon);
-          end
-          if obs.influenceRange < 0
-            obs.influenceRange = epsilon;
-          end
-          self.obstacles= [ self.obstacles ; obs];
+          insertObstacle(self, coords, radius, env);
           obsInsertedNum = obsInsertedNum +1;
         end
         iterNum= iterNum + 1;
@@ -74,7 +77,6 @@ classdef ObstacleCreator  < handle
     function generateObsFromMat(self, env, mat )
 
       obsInsertedNum= 0;
-      epsilon = env.unitaryDim/1000;
       for i= 1:size(mat,1)
 
         coords.x=  mat(i,1);
@@ -82,17 +84,7 @@ classdef ObstacleCreator  < handle
         radius= mat(i,3);
         collision = collisionCheck(self,coords,radius, obsInsertedNum, env);
         if ~collision
-          obs = Obstacle(coords.x, coords.y, radius, self.color);
-          distFromGoal= sqrt( (obs.coords.x - env.goal.coords.x)^2 + (obs.coords.y - env.goal.coords.y)^2);
-
-                                %  TODO   make a function for this 2 ifs
-          if distFromGoal <= (env.robot.radius + obs.influenceRange + obs.radius)
-            obs.influenceRange= distFromGoal - (env.robot.radius + obs.radius + epsilon);
-          end
-          if obs.influenceRange < 0
-            obs.influenceRange = epsilon;
-          end
-          self.obstacles= [ self.obstacles ; obs];%(obsInsertedNum+1,1)
+          insertObstacle(self, coords, radius, env);
           obsInsertedNum = obsInsertedNum +1;
         end
       end

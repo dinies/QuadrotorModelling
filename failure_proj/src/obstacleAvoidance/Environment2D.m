@@ -28,7 +28,8 @@ classdef Environment2D < handle
 
       self.unitaryDim = length * 0.02;
       self.start= Position(self.unitaryDim*2,self.unitaryDim*2,self.unitaryDim, self.colors.green);
-      self.robot= Agent( self.start.coords.x, self.start.coords.y, self.unitaryDim, self.colors.blue);
+
+      self.robot= UAV( [ self.start.coords.x;self.start.coords.y;45*pi/180;0],self.unitaryDim, self.colors.blue,self.clock);
 
       self.goal = Position(length - self.unitaryDim*2,length - self.unitaryDim*2,self.unitaryDim, self.colors.red);
       self.drawer= Drawer();
@@ -51,6 +52,9 @@ classdef Environment2D < handle
       self.start.coords.y = start(2,1);
       self.robot.coords.x = start(1,1);
       self.robot.coords.y = start(2,1);
+
+      %TODO  solve redundancy with state q and coords in UAV
+      self.robot.q(1:2,1)= start(:,1);
       self.goal.coords.x = goal(1,1);
       self.goal.coords.y = goal(2,1);
     end
@@ -76,14 +80,14 @@ classdef Environment2D < handle
       pause(0.7);
       while self.clock.curr_t <= timeTot
         dynamicDeleteDrawing(self.robot);
-        oldPos = self.robot.coords;
-        doAction(self.robot, planner, self.clock);
-        newPos = self.robot.coords;
+
+        doAction(self.robot, planner);
+
         dynamicDraw(self.robot, planner);
         pause(0.04);
         tick(self.clock);
 
-        line( [oldPos.x,newPos.x ],[oldPos.y,newPos.y ],'LineWidth', 2,'Color',[0.1,0.9,0.2]);
+        scatter( self.robot.coords.x , self.robot.coords.y,1 ,[0.1,0.9,0.2]);
       end
     end
     function draw(self)

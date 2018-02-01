@@ -17,7 +17,7 @@ mat = [
 ];
 
 
-addObstacles(env, mat);
+addObstacles(env, 10);
 
 planner =  MotionPlanner( env);
 runSimulation( env,planner,totTime);

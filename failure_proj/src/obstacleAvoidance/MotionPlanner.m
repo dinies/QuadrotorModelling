@@ -75,18 +75,17 @@ classdef MotionPlanner < handle
                self.env.robot.coords.x, self.env.length;
                0, self.env.robot.coords.y
       ];
-      % TODO    clean the mess, substitute coord variable name
-      coords = self.coordsWallPotentials;
-      for i= 1:size(coords,1)
 
-        dist =sqrt( (coords(i,1) - self.env.robot.coords.x)^2 + (coords(i,2) - self.env.robot.coords.y)^2 );
+      coordsWalls = self.coordsWallPotentials;
+      for i= 1:size(coordsWalls,1)
+
+        dist =sqrt( (coordsWalls(i,1) - self.env.robot.coords.x)^2 + (coordsWalls(i,2) - self.env.robot.coords.y)^2 );
         clearance = dist - ( self.env.robot.radius);
         if clearance <= self.wallInfluenceRange
-          vec=[  self.env.robot.coords.x - coords(i,1);
-                 self.env.robot.coords.y - coords(i,2)
+          vec=[  self.env.robot.coords.x - coordsWalls(i,1);
+                 self.env.robot.coords.y - coordsWalls(i,2)
               ];
-
-          gradientClearance =  (  1/sqrt((coords(i,1) - self.env.robot.coords.x)^2 +(coords(i,2) - self.env.robot.coords.y)^2) )*vec;
+          gradientClearance =  (  1/sqrt((coordsWalls(i,1) - self.env.robot.coords.x)^2 +(coordsWalls(i,2) - self.env.robot.coords.y)^2) )*vec;
           force = (self.Kwall/clearance^2) * ( 1/clearance - 1/self.wallInfluenceRange)^(self.gamma-1) * gradientClearance;
         else
           force = zeros(2,1);

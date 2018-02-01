@@ -35,7 +35,7 @@ timeSim= t_f - t_0;
 q_f= zeros(14,1);
 q_f(1,1)= 0;
 q_f(2,1)= 0;
-q_f(3,1)= 10;
+q_f(3,1)= 100;
 q_f(6,1)= 0;
 
 
@@ -52,10 +52,10 @@ delta_t = xPlanner.delta_t;
 planners = [  xPlanner; yPlanner; zPlanner; psiPlanner ];
 
 Igains= [0.0;0.0;0.0;0.0];
-PDgains = [ 0,0.0,0.0,0.0;
-            0,0.0,0.0,0.0;
-            0,01.0,0.0,0.0;
-            0,0,0,0
+PDgains = [ 0.0,0.0,0.0,0.0;
+            0.0,0.0,0.0,0.0;
+            0.0,0.0,0.0,0.0;
+            0.0,0.0,0.0,0.0
           ];
 gains= [ PDgains, Igains];
 
