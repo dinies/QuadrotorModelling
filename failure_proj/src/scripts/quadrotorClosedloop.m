@@ -51,10 +51,10 @@ delta_t = xPlanner.delta_t;
 
 planners = [  xPlanner; yPlanner; zPlanner; psiPlanner ];
 
-Igains= [0.0;0.0;0.0;0.0];
+Igains= [0.0;0.0;0.04;0.0];
 PDgains = [ 0.0,0.0,0.0,0.0;
             0.0,0.0,0.0,0.0;
-            0.0,0.0,0.0,0.0;
+            0.1,0.0,0.0,0.0;
             0.0,0.0,0.0,0.0
           ];
 gains= [ PDgains, Igains];

@@ -29,7 +29,7 @@ classdef Environment2D < handle
       self.unitaryDim = length * 0.02;
       self.start= Position(self.unitaryDim*2,self.unitaryDim*2,self.unitaryDim, self.colors.green);
 
-      self.robot= UAV( [ self.start.coords.x;self.start.coords.y;45*pi/180;0],self.unitaryDim, self.colors.blue,self.clock);
+      self.robot= UAV( [ self.start.coords.x;self.start.coords.y;45*pi/180;0;2;0],self.unitaryDim, self.colors.blue,self.clock);
 
       self.goal = Position(length - self.unitaryDim*2,length - self.unitaryDim*2,self.unitaryDim, self.colors.red);
       self.drawer= Drawer();
@@ -64,7 +64,7 @@ classdef Environment2D < handle
       self.obstacles = obsCreator.obstacles;
     end
 
-    function runSimulation( self, planner, timeTot)
+    function runSimulation( self, planner , polynomials, timeTot)
 
 
 
@@ -72,7 +72,8 @@ classdef Environment2D < handle
       minAxis= 0 - frame;
       maxAxis= self.length + frame;
       figure('Name','Environment'),hold on;
-      axis([minAxis maxAxis minAxis maxAxis ]);
+      %axis([minAxis maxAxis minAxis maxAxis ]);
+      axis([-100 140  -100 140]);
       title('world'), xlabel('x'), ylabel('y')
       drawRectangle2D(self.drawer,self.vertices,self.colors.black);
 
@@ -81,7 +82,7 @@ classdef Environment2D < handle
       while self.clock.curr_t <= timeTot
         dynamicDeleteDrawing(self.robot);
 
-        doAction(self.robot, planner);
+        doAction(self.robot, planner , polynomials);
 
         dynamicDraw(self.robot, planner);
         pause(0.04);

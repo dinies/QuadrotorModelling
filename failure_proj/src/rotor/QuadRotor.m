@@ -68,7 +68,6 @@ classdef QuadRotor < handle
     end
     function q_dot = plantEvolution(self, u)
 
-      %u_plant = u(self.t);
 
       q_dot = fFun(self) + gFun(self) * u;
 
@@ -136,7 +135,7 @@ classdef QuadRotor < handle
       numOfSteps = tot_t / self.delta_t;
       data = zeros( numOfSteps, self.stateDim + 15);
       self.t= 0;
-     self.y = [self.q(1,1), self.q(2,1), self.q(3,1), self.q(4,1), self.q(5,1), self.q(6,1)]';
+      self.y = [self.q(1,1), self.q(2,1), self.q(3,1), self.q(4,1), self.q(5,1), self.q(6,1)]';
 
 
       for j= 1:size(trajPlanners,1)
@@ -146,7 +145,7 @@ classdef QuadRotor < handle
       % stub references
       %references =  zeros(4,5,numOfSteps);
       controller= PID( gains, numOfSteps );
-      FBlin = FeedbackLinearizator( self.M, self.I);
+      FBlin = FeedbackLinearizator( self.M, self.I ,self.d);
 
       DiffBlock_x = DifferentiatorBlock(self.delta_t, 3 );
       DiffBlock_y = DifferentiatorBlock(self.delta_t, 3 );

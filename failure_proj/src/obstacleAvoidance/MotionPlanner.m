@@ -16,10 +16,10 @@ classdef MotionPlanner < handle
       self.gamma= 2;
       self.env=env;
       self.Ka = 0.4;
-      self.Kb = 0.7;
+      self.Kb = 4.0;
       self.rho= env.unitaryDim*3;
-      self.wallInfluenceRange = env.unitaryDim*2;
-      self.Kwall = 0.5;
+      self.wallInfluenceRange = env.unitaryDim*4;
+      self.Kwall = 1.5;
     end
 
     function f = computeArtificialForce( self)

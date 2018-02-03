@@ -1,13 +1,35 @@
 close all
 clear
 clc
-totTime= 50;
+totTime= 10;
 obsNum= 10;
 
 
-env  = Environment2D( 20, 0.1);
+v_0=0; %vel
+v_f=0;
 
-setMission(env, [2;1], [17; 17]);
+t_0=0; %time
+t_f=10;
+
+timeSim= t_f - t_0;
+
+delta_t_des = 0.1;
+
+
+q_0 = [ 12;17];
+q_f = [3;1];
+
+
+xPlanner = CubicPoly(q_0(1,1), v_0, q_f(1,1), v_f, t_0, t_f, delta_t_des);
+yPlanner = CubicPoly(q_0(2,1), v_0, q_f(2,1), v_f, t_0, t_f, delta_t_des);
+
+u_poly_x= getPolynomial(xPlanner);
+u_poly_y= getPolynomial(yPlanner);
+
+delta_t = xPlanner.delta_t;
+env  = Environment2D( 20, delta_t);
+
+setMission(env, q_0, q_f );
 
 
 mat = [
@@ -17,8 +39,8 @@ mat = [
 ];
 
 
-addObstacles(env, 10);
+addObstacles(env, 0);
 
 planner =  MotionPlanner( env);
-runSimulation( env,planner,totTime);
+runSimulation( env,planner, { u_poly_x , u_poly_y},totTime);
 
