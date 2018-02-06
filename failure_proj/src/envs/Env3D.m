@@ -1,7 +1,7 @@
 classdef Env3D < Env
 
   methods
-    function self = Env3D( length, delta_t, agent )
+    function self = Env3D( length, delta_t, agent, clock )
       self@Env( length, delta_t )
 
       self.start= Position(self.unitaryDim*2,self.unitaryDim*2,self.unitaryDim*2, self.colors.green);
@@ -9,6 +9,7 @@ classdef Env3D < Env
       self.goal = Position(length - self.unitaryDim*2,length - self.unitaryDim*2,length - self.unitaryDim*2,self.unitaryDim, self.colors.red);
 
       self.agent = agent;
+      self.clock = clock;
 
       self.vertices= [
                       0,0,0;
@@ -66,7 +67,7 @@ classdef Env3D < Env
       self.goal.coords.z = goal(3,1);
     end
 
-    function runSimulation( self, planner , polynomials, timeTot)
+    function runSimulation( self, polynomials, timeTot)
 
       frame= self.length* 0.05;
       minAxis= 0 - frame;
@@ -90,7 +91,7 @@ classdef Env3D < Env
       while self.clock.curr_t <= timeTot
         deleteDrawing(self.agent);
 
-        agentData=  doAction(self.agent, planner );
+        agentData=  doAction(self.agent, polynomials);
         draw(agent);
 
         agentStateDim = size( agentData.state,1);

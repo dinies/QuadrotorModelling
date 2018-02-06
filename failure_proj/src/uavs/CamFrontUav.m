@@ -9,8 +9,8 @@ classdef CamFrontUav  < Uav
   methods
 
 
-    function self = CamFrontUav(q_0, radius, color, clock )
-      self@Uav(q_0, radius, color, clock )
+    function self = CamFrontUav(q_0, color, clock )
+      self@Uav(q_0, color, clock )
       self.m = 1;    %[kg]
       self.I = 1.0e-2;     %body             %[kg*m^2]
       self.J = 1.0e-3;     %camera           %[kg*m^2]

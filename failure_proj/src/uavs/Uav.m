@@ -1,6 +1,5 @@
 classdef Uav  < handle
   properties
-    radius
     color
     clock
     q   %  x  y  psi phi v ksi
@@ -17,8 +16,7 @@ classdef Uav  < handle
   methods
 
 
-    function self = Uav(q_0, radius, color, clock )
-      self.radius = radius;
+    function self = Uav(q_0, color, clock )
       self.color= color;
       self.clock= clock;
       self.q= q_0;
