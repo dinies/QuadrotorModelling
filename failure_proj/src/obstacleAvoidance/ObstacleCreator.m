@@ -49,7 +49,7 @@ classdef ObstacleCreator  < handle
 
     function insertObstacle( self, coords,radius, env)
       epsilon = env.unitaryDim/1000;
-      obs = Obstacle(coords.x, coords.y, radius, self.color);
+      obs = Obstacle(coords.x, coords.y,0,  radius, self.color);
       distFromGoal= sqrt( (obs.coords.x - env.goal.coords.x)^2 + (obs.coords.y - env.goal.coords.y)^2);
       if distFromGoal <= (env.agent.radius + obs.influenceRange + obs.radius)
         obs.influenceRange= distFromGoal - (env.agent.radius + obs.radius + epsilon);

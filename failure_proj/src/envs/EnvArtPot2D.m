@@ -6,12 +6,12 @@ classdef EnvArtPot2D < Env
   methods
     function self = EnvArtPot2D( length, delta_t )
       self@Env(length, delta_t)
-      self.start= Position(self.unitaryDim*2,self.unitaryDim*2,self.unitaryDim, self.colors.green);
+      self.start= Position(self.unitaryDim*5,self.unitaryDim*5,0 ,self.unitaryDim, self.colors.green);
 
-      self.goal = Position(length - self.unitaryDim*2,length - self.unitaryDim*2,self.unitaryDim, self.colors.red);
+      self.goal = Position(length - self.unitaryDim*5,length - self.unitaryDim*5,0 ,self.unitaryDim, self.colors.red);
 
 
-      self.agent=  Agent( self.start.coords.x,self.start.coords.y, self.unitaryDim, self.colors.blue,self.clock);
+      self.agent=  Agent( self.start.coords.x,self.start.coords.y,0, self.unitaryDim, self.colors.blue);
 
 
       self.vertices= [
@@ -32,8 +32,8 @@ classdef EnvArtPot2D < Env
     function setMission(self, start, goal)
       self.start.coords.x = start(1,1);
       self.start.coords.y = start(2,1);
-      self.robot.coords.x = start(1,1);
-      self.robot.coords.y = start(2,1);
+      self.agent.coords.x = start(1,1);
+      self.agent.coords.y = start(2,1);
       self.goal.coords.x = goal(1,1);
       self.goal.coords.y = goal(2,1);
     end
@@ -54,12 +54,11 @@ classdef EnvArtPot2D < Env
       drawRectangle2D(self.drawer,self.vertices,self.colors.black);
 
 
-      numSteps = timeTot/self.clock.delta_t;
       draw(self);
       pause(0.7);
       while self.clock.curr_t <= timeTot
         dynamicDeleteDrawing(self.agent);
-        doAction(self.agent, planner);
+        doAction(self.agent, planner, self.clock);
         dynamicDraw(self.agent, planner);
         pause(0.04);
         tick(self.clock);

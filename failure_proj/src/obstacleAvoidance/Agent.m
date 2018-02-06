@@ -1,9 +1,9 @@
 classdef Agent < Entity
   methods
-    function self= Agent(x,y,r,color)
-      self@Entity(x,y,r,color )
+    function self= Agent(x,y,z,r,color)
+      self@Entity(x,y,z,r,color )
     end
-  
+
     function doAction(self , planner , clock)
 
       f = computeArtificialForce(planner);

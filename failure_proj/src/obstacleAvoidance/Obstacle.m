@@ -4,10 +4,10 @@ classdef Obstacle < Entity
     Kr
   end
   methods
-    function self= Obstacle(x, y, r, color )
-      self@Entity( x, y, r, color );
-      self.influenceRange= 3*r;
-      self.Kr= 0.2;
+    function self= Obstacle(x, y, z , r, color )
+      self@Entity( x, y, z, r, color );
+      self.influenceRange= 5*r;
+      self.Kr= 0.8;
     end
 
     function draw(self)

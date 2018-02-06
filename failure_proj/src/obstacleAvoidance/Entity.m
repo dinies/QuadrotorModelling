@@ -9,6 +9,7 @@ classdef Entity < handle
 
   methods
     function self= Entity( x_coord, y_coord, z_coord, radius, color)
+
       self.coords.x= x_coord;
       self.coords.y= y_coord;
       self.coords.z= z_coord;
