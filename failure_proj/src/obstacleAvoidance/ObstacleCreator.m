@@ -5,10 +5,13 @@ classdef ObstacleCreator  < handle
   end
 
   methods
-    function self= ObstacleCreator(env, arg)
+    function self= ObstacleCreator(env, arg ,currObs)
 
-
-      self.obstacles= [];
+      if nargin > 2
+        self.obstacles= currObs;
+      else
+        self.obstacles= [] ;
+      end
       self.color = [0.3, 0.84, 0.8 ];
       if isscalar(arg)
         generateRandomObs(self, env, arg);
@@ -48,8 +51,8 @@ classdef ObstacleCreator  < handle
       epsilon = env.unitaryDim/1000;
       obs = Obstacle(coords.x, coords.y, radius, self.color);
       distFromGoal= sqrt( (obs.coords.x - env.goal.coords.x)^2 + (obs.coords.y - env.goal.coords.y)^2);
-      if distFromGoal <= (env.robot.radius + obs.influenceRange + obs.radius)
-        obs.influenceRange= distFromGoal - (env.robot.radius + obs.radius + epsilon);
+      if distFromGoal <= (env.agent.radius + obs.influenceRange + obs.radius)
+        obs.influenceRange= distFromGoal - (env.agent.radius + obs.radius + epsilon);
       end
       if obs.influenceRange < 0
         obs.influenceRange = epsilon;
@@ -59,7 +62,7 @@ classdef ObstacleCreator  < handle
 
 
     function generateRandomObs(self,env,number)
-      obsInsertedNum = 0;
+      obsInsertedNum= size(self.obstacles,1);
       iterNum= 0;
       while obsInsertedNum < number && iterNum < number*10
         coords= createRandCoord(self,env);
@@ -76,7 +79,7 @@ classdef ObstacleCreator  < handle
 
     function generateObsFromMat(self, env, mat )
 
-      obsInsertedNum= 0;
+      obsInsertedNum= size(self.obstacles,1);
       for i= 1:size(mat,1)
 
         coords.x=  mat(i,1);
@@ -114,9 +117,9 @@ classdef ObstacleCreator  < handle
         end
       end
 
-      distFromRobot = sqrt((coords.x - env.robot.coords.x)^2 +(coords.y - env.robot.coords.y)^2);
+      distFromAgent = sqrt((coords.x - env.agent.coords.x)^2 +(coords.y - env.agent.coords.y)^2);
       distFromGoal  = sqrt((coords.x - env.goal.coords.x)^2  +(coords.y - env.goal.coords.y )^2);
-      if distFromRobot - ( radius + env.robot.radius) <= 0 || distFromGoal - ( radius + env.robot.radius) <= 0
+      if distFromAgent - ( radius + env.agent.radius) <= 0 || distFromGoal - ( radius + env.agent.radius) <= 0
         collision= 1;
       end
     end

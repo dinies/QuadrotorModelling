@@ -1,9 +1,9 @@
 close all
 clear
 clc
+
+
 obsNum= 10;
-
-
 v_0=0; %vel
 v_f=0;
 
@@ -15,15 +15,8 @@ timeSim= t_f - t_0;
 delta_t_des = 0.05;
 
 
-x_0 = [ -1800;2500];
-x_f = [ 100;-20];
-
-
-xPlanner = CubicPoly(x_0(1,1), v_0, x_f(1,1), v_f, t_0, t_f, delta_t_des);
-yPlanner = CubicPoly(x_0(2,1), v_0, x_f(2,1), v_f, t_0, t_f, delta_t_des);
-
-u_poly_x= getPolynomial(xPlanner);
-u_poly_y= getPolynomial(yPlanner);
+x_0 = [ 10;20];
+x_f = [ 30;20];
 
 
 delta_t = xPlanner.delta_t;
@@ -39,7 +32,8 @@ mat = [
 ];
 
 
-addObstacles(env, 0);
+addObstacles(env, obsNum);
+addObstacles(env, mat);
 
 planner =  MotionPlanner( env);
 runSimulation( env,planner, { u_poly_x , u_poly_y},t_f);

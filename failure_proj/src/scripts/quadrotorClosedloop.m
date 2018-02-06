@@ -28,7 +28,7 @@ j_f=0;
 s_0=0; %snap
 s_f=0;
 t_0=0; %time
-t_f=10;
+t_f=100;
 
 timeSim= t_f - t_0;
 

@@ -179,11 +179,12 @@ classdef QuadRotor < handle
         v_input = computeInput( controller, referenceMat, stateDiff , i);
 
         curr_u = computeInput( FBlin, v_input, self.q );
-
         oldPos = self.q(1:3,1);
+
         q_dot = plantEvolution(self, curr_u);
         updateState(self, q_dot);
         newPos = self.q(1:3,1);
+
         data(i , 1:self.stateDim)= self.q;
         data(i, self.stateDim+1) = self.t;
         data(i, self.stateDim+2:self.stateDim+5)= curr_u';

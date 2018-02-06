@@ -29,8 +29,8 @@ classdef MotionPlanner < handle
     end
 
     function f = computeAttrForce(self )
-      err= [ self.env.goal.coords.x - self.env.robot.coords.x ;
-             self.env.goal.coords.y - self.env.robot.coords.y
+      err= [ self.env.goal.coords.x - self.env.agent.coords.x ;
+             self.env.goal.coords.y - self.env.agent.coords.y
            ];
 
       normErr= sqrt( err(1,1)^2 + err(2,1)^2 );
@@ -45,16 +45,16 @@ classdef MotionPlanner < handle
       f = zeros(2,1);
       for i = 1:size(obs,1)
         obstacle = obs(i);
-        dist =sqrt( (obstacle.coords.x - self.env.robot.coords.x)^2 + (obstacle.coords.y - self.env.robot.coords.y)^2 );
+        dist =sqrt( (obstacle.coords.x - self.env.agent.coords.x)^2 + (obstacle.coords.y - self.env.agent.coords.y)^2 );
 
-        clearance = dist - ( self.env.robot.radius + obstacle.radius);
+        clearance = dist - ( self.env.agent.radius + obstacle.radius);
 
         if clearance <= obstacle.influenceRange
-          vec=[  self.env.robot.coords.x - obstacle.coords.x ;
-                 self.env.robot.coords.y - obstacle.coords.y
+          vec=[  self.env.agent.coords.x - obstacle.coords.x ;
+                 self.env.agent.coords.y - obstacle.coords.y
               ];
 
-          gradientClearance =  (  1/sqrt((obstacle.coords.x - self.env.robot.coords.x)^2 +(obstacle.coords.y - self.env.robot.coords.y)^2) )*vec;
+          gradientClearance =  (  1/sqrt((obstacle.coords.x - self.env.agent.coords.x)^2 +(obstacle.coords.y - self.env.agent.coords.y)^2) )*vec;
           force = (obstacle.Kr/clearance^2) * ( 1/clearance - 1/obstacle.influenceRange)^(self.gamma-1) * gradientClearance;
         else
           force = zeros(2,1);
@@ -70,22 +70,22 @@ classdef MotionPlanner < handle
 
       f = zeros(2,1);
       self.coordsWallPotentials= [
-               self.env.robot.coords.x, 0;
-               self.env.length, self.env.robot.coords.y;
-               self.env.robot.coords.x, self.env.length;
-               0, self.env.robot.coords.y
+               self.env.agent.coords.x, 0;
+               self.env.length, self.env.agent.coords.y;
+               self.env.agent.coords.x, self.env.length;
+               0, self.env.agent.coords.y
       ];
 
       coordsWalls = self.coordsWallPotentials;
       for i= 1:size(coordsWalls,1)
 
-        dist =sqrt( (coordsWalls(i,1) - self.env.robot.coords.x)^2 + (coordsWalls(i,2) - self.env.robot.coords.y)^2 );
-        clearance = dist - ( self.env.robot.radius);
+        dist =sqrt( (coordsWalls(i,1) - self.env.agent.coords.x)^2 + (coordsWalls(i,2) - self.env.agent.coords.y)^2 );
+        clearance = dist - ( self.env.agent.radius);
         if clearance <= self.wallInfluenceRange
-          vec=[  self.env.robot.coords.x - coordsWalls(i,1);
-                 self.env.robot.coords.y - coordsWalls(i,2)
+          vec=[  self.env.agent.coords.x - coordsWalls(i,1);
+                 self.env.agent.coords.y - coordsWalls(i,2)
               ];
-          gradientClearance =  (  1/sqrt((coordsWalls(i,1) - self.env.robot.coords.x)^2 +(coordsWalls(i,2) - self.env.robot.coords.y)^2) )*vec;
+          gradientClearance =  (  1/sqrt((coordsWalls(i,1) - self.env.agent.coords.x)^2 +(coordsWalls(i,2) - self.env.agent.coords.y)^2) )*vec;
           force = (self.Kwall/clearance^2) * ( 1/clearance - 1/self.wallInfluenceRange)^(self.gamma-1) * gradientClearance;
         else
           force = zeros(2,1);
