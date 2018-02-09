@@ -53,7 +53,7 @@ classdef CartPlant1d < handle
       self.t= 0;
 
       figure('Name','World representation'),hold on;
-      axis([-250 450 0 180]);
+      axis([-250 250 0 80]);
       title('world'), xlabel('x'), ylabel('z')
       draw(self);
       for i= 1:step_num
@@ -64,7 +64,7 @@ classdef CartPlant1d < handle
         del_lines_drawn(self);
         compute_vertices(self);
         draw(self);
-        pause(0.001);
+        pause(0.0001);
       end
       draw_statistics( self, data, false);
     end
@@ -95,7 +95,7 @@ classdef CartPlant1d < handle
       error.deriv= zeros( step_num, 1);
       error.integr= zeros( step_num, 1);
       figure('Name','World representation'),hold on;
-      axis([-250 450 0 180]);
+      axis([-250 250 0 80]);
       title( 'world'), xlabel('x'), ylabel('z')
       draw(self);
       for i= 1:step_num
@@ -121,7 +121,7 @@ classdef CartPlant1d < handle
           del_lines_drawn(self);
           compute_vertices(self);
           draw(self);
-          pause(0.001);
+          pause(0.0001);
       end
       draw_statistics( self, data, error, true);
     end

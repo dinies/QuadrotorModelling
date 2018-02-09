@@ -19,7 +19,7 @@ classdef QuadRotor < handle
       self.M = M;
       self.I = I;
       self.d= d; % distance of the center of mass from the rotors
-      self.g = +9.81;
+      self.g = -9.81;
       self.q = q_0;
       self.delta_t = delta_t;
       self.stateDim = size(self.q , 1);
@@ -68,7 +68,6 @@ classdef QuadRotor < handle
     end
     function q_dot = plantEvolution(self, u)
 
-      %u_plant = u(self.t);
 
       q_dot = fFun(self) + gFun(self) * u;
 
@@ -84,23 +83,29 @@ classdef QuadRotor < handle
       end
     end
 
-    function openLoop(self, u, tot_t )
-      step_num= tot_t / self.delta_t;
-      data = zeros( step_num, self.stateDim + 11);
+    function openLoop(self, u, tot_t , timeTraj )
+      numOfSteps= tot_t / self.delta_t;
+      data = zeros( numOfSteps , self.stateDim + 11);
       self.t= 0;
 
       figure('Name','World representation'),hold on;
       az = 135;
       el = 45;
       view(az, el);
-      axis([-50 50 -50 50 0 350 ]);
+      axis([-50 50 -50 50 -30 150 ]);
       title('world'), xlabel('x'), ylabel('y'), zlabel('z')
       draw(self);
 
 
 
-      for i= 1:step_num
-        curr_u= u(self.t);
+      for i= 1:numOfSteps
+
+        eval = u(self.t);
+        if self.t <= timeTraj
+          curr_u = zeros(4,1);
+          curr_u(1,1)= eval(3,1);
+        end
+
         oldPos = self.q(1:3,1);
         q_dot = plantEvolution(self, curr_u);
         updateState(self, q_dot);
@@ -124,6 +129,93 @@ classdef QuadRotor < handle
     end
 
 
+
+
+    function closedLoop(self, tot_t , trajPlanners, gains)
+      numOfSteps = tot_t / self.delta_t;
+      data = zeros( numOfSteps, self.stateDim + 15);
+      self.t= 0;
+      self.y = [self.q(1,1), self.q(2,1), self.q(3,1), self.q(4,1), self.q(5,1), self.q(6,1)]';
+
+
+      for j= 1:size(trajPlanners,1)
+        references(j,1)= getReferences( trajPlanners(j,1));
+      end
+      plotTrajectory(trajPlanners(3,1), references(3,1));
+      % stub references
+      %references =  zeros(4,5,numOfSteps);
+      controller= PID( gains, numOfSteps );
+      FBlin = FeedbackLinearizator( self.M, self.I ,self.d);
+
+      DiffBlock_x = DifferentiatorBlock(self.delta_t, 3 );
+      DiffBlock_y = DifferentiatorBlock(self.delta_t, 3 );
+      DiffBlock_z = DifferentiatorBlock(self.delta_t, 3 );
+      DiffBlock_psi = DifferentiatorBlock(self.delta_t, 1 );
+
+      figure('Name','World representation'),hold on;
+      az = 135;
+      el = 45;
+      view(az, el);
+      axis([-550 550 -550 550 -2550 2550 ]);
+      title('world'), xlabel('x'), ylabel('y'), zlabel('z')
+      draw(self);
+
+      for i= 1:numOfSteps
+
+
+        outputDeriv_xyz= [
+        differentiate( DiffBlock_x, self.y(1,1))';
+        differentiate( DiffBlock_y, self.y(2,1))';
+        differentiate( DiffBlock_z, self.y(3,1))';
+        ];
+        outputDeriv_psi= differentiate( DiffBlock_psi, self.y(6,1));
+
+        stateDiff = [ self.y(1:3,1), outputDeriv_xyz;
+                      self.y(6,1), [ outputDeriv_psi 0 0];
+                    ];
+
+        referenceMat = extractCurrRefs(self, references, i);
+
+        v_input = computeInput( controller, referenceMat, stateDiff , i);
+
+        curr_u = computeInput( FBlin, v_input, self.q );
+        oldPos = self.q(1:3,1);
+
+        q_dot = plantEvolution(self, curr_u);
+        updateState(self, q_dot);
+        newPos = self.q(1:3,1);
+
+        data(i , 1:self.stateDim)= self.q;
+        data(i, self.stateDim+1) = self.t;
+        data(i, self.stateDim+2:self.stateDim+5)= curr_u';
+        data(i, self.stateDim+6:self.stateDim+8)= q_dot(7:9,1)';
+        data(i, self.stateDim+9:self.stateDim+11)= q_dot(12:14,1)';
+        data(i, self.stateDim+12:self.stateDim+15)= v_input';
+
+
+        self.t = self.t + self.delta_t;
+        del_lines_drawn(self);
+        compute_vertices(self);
+        draw(self);
+
+        line( [oldPos(1,1),newPos(1,1) ],[oldPos(2,1),newPos(2,1) ],[oldPos(3,1),newPos(3,1) ],'LineWidth', 2,'Color',[0.1,0.9,0.2]);
+        pause(0.0001);
+      end
+      draw_statistics( self, data, controller.errors , true);
+    end
+
+    function  ref = extractCurrRefs(~, refs, iterNum)
+      ref = zeros( size(refs,1), 5);
+      for i = 1:size(refs,1)
+        ref(i,:) = [
+                    refs(i,1).positions(iterNum);
+                    refs(i,1).velocities(iterNum);
+                    refs(i,1).accelerations(iterNum);
+                    refs(i,1).jerks(iterNum);
+                    refs(i,1).snaps(iterNum)
+        ]';
+      end
+    end
 
     function draw_statistics(self, data, error, flag_error)
       figure('Name','Pose')
@@ -205,8 +297,28 @@ classdef QuadRotor < handle
       plot(data(:,self.stateDim+1),data(:,self.stateDim+11), 'r-o');
       title(ax6,'psi (yaw)');
 
-      figure('Name','Inputs')
+      if size(data,2) > self.stateDim+11
+        figure('Name','Inputs to feedback linearizator')
 
+        ax1 = subplot(2,2,1);
+        plot(data(:,self.stateDim+1),data(:,self.stateDim+12), '-o');
+        title(ax1,'v1  (ddddx)');
+
+        ax2 = subplot(2,2,2);
+        plot(data(:,self.stateDim+1),data(:,self.stateDim+13), '-o');
+        title(ax2,'v2  (ddddy)');
+
+        ax3 = subplot(2,2,3);
+        plot(data(:,self.stateDim+1),data(:,self.stateDim+14), '-o');
+        title(ax3,'v3  (ddddz)');
+
+        ax4 = subplot(2,2,4);
+        plot(data(:,self.stateDim+1),data(:,self.stateDim+15), '-o');
+        title(ax4,'v4  (ddpsi)');
+
+      end
+
+      figure('Name','Inputs to the plant')
       ax1 = subplot(2,3,1);
       plot(data(:,self.stateDim+1),data(:,10), '-o');
       title(ax1,'zeta');
@@ -231,21 +343,97 @@ classdef QuadRotor < handle
       plot(data(:,self.stateDim+1),data(:,self.stateDim+5), '-o');
       title(ax6,'u4 (tau z)');
 
+
       if flag_error
-        figure('Name','Error evoulution')
 
-        %TODO
-          ax1 = subplot(1,3,1);
-          plot(data(:,1),error.prop(:,1), 'r-o');
-          title(ax1,'proportional');
+        figure('Name','Proportional Error positions')
+        ax1 = subplot(2,2,1);
+        plot(data(:,self.stateDim+1),reshape( error( 1,1,:),size(data,1),1), 'r-o');
+        title(ax1,'x');
 
-          ax2 = subplot(1,3,2);
-          plot(data(:,1),error.deriv(:,1), 'r-o');
-          title(ax2,'derivative');
+        ax2 = subplot(2,2,2);
+        plot(data(:,self.stateDim+1),reshape( error( 2,1,:),size(data,1),1), 'r-o');
+        title(ax2,'y');
 
-          ax3 = subplot(1,3,3);
-          plot(data(:,1),error.integr(:,1), 'r-o');
-          title(ax3,'integrative');
+        ax3 = subplot(2,2,3);
+        plot(data(:,self.stateDim+1),reshape( error( 3,1,:),size(data,1),1), 'r-o');
+        title(ax3,'z');
+
+        ax4 = subplot(2,2,4);
+        plot(data(:,self.stateDim+1),reshape( error( 4,1,:),size(data,1),1), 'r-o');
+        title(ax4,'psi');
+
+
+        figure('Name','Proportional Error velocities')
+        ax1 = subplot(2,2,1);
+        plot(data(:,self.stateDim+1),reshape( error( 1,2,:),size(data,1),1), 'r-o');
+        title(ax1,'x');
+
+        ax2 = subplot(2,2,2);
+        plot(data(:,self.stateDim+1),reshape( error( 2,2,:),size(data,1),1), 'r-o');
+        title(ax2,'y');
+
+        ax3 = subplot(2,2,3);
+        plot(data(:,self.stateDim+1),reshape( error( 3,2,:),size(data,1),1), 'r-o');
+        title(ax3,'z');
+
+        ax4 = subplot(2,2,4);
+        plot(data(:,self.stateDim+1),reshape( error( 4,2,:),size(data,1),1), 'r-o');
+        title(ax4,'psi');
+
+        figure('Name','Proportional Error accelerations')
+        ax1 = subplot(2,2,1);
+        plot(data(:,self.stateDim+1),reshape( error( 1,3,:),size(data,1),1), 'r-o');
+        title(ax1,'x');
+
+        ax2 = subplot(2,2,2);
+        plot(data(:,self.stateDim+1),reshape( error( 2,3,:),size(data,1),1), 'r-o');
+        title(ax2,'y');
+
+        ax3 = subplot(2,2,3);
+        plot(data(:,self.stateDim+1),reshape( error( 3,3,:),size(data,1),1), 'r-o');
+        title(ax3,'z');
+
+        ax4 = subplot(2,2,4);
+        plot(data(:,self.stateDim+1),reshape( error( 4,3,:),size(data,1),1), 'r-o');
+        title(ax4,'psi');
+
+
+
+        figure('Name','Proportional Error jerks')
+        ax1 = subplot(2,2,1);
+        plot(data(:,self.stateDim+1),reshape( error( 1,4,:),size(data,1),1), 'r-o');
+        title(ax1,'x');
+
+        ax2 = subplot(2,2,2);
+        plot(data(:,self.stateDim+1),reshape( error( 2,4,:),size(data,1),1), 'r-o');
+        title(ax2,'y');
+
+        ax3 = subplot(2,2,3);
+        plot(data(:,self.stateDim+1),reshape( error( 3,4,:),size(data,1),1), 'r-o');
+        title(ax3,'z');
+
+        ax4 = subplot(2,2,4);
+        plot(data(:,self.stateDim+1),reshape( error( 4,4,:),size(data,1),1), 'r-o');
+        title(ax4,'psi');
+
+        figure('Name','Integrative Error position')
+        ax1 = subplot(2,2,1);
+        plot(data(:,self.stateDim+1),reshape( error( 1,5,:),size(data,1),1), 'r-o');
+        title(ax1,'x');
+
+        ax2 = subplot(2,2,2);
+        plot(data(:,self.stateDim+1),reshape( error( 2,5,:),size(data,1),1), 'r-o');
+        title(ax2,'y');
+
+        ax3 = subplot(2,2,3);
+        plot(data(:,self.stateDim+1),reshape( error( 3,5,:),size(data,1),1), 'r-o');
+        title(ax3,'z');
+
+        ax4 = subplot(2,2,4);
+        plot(data(:,self.stateDim+1),reshape( error( 4,5,:),size(data,1),1), 'r-o');
+        title(ax4,'psi');
+
       end
     end
 
