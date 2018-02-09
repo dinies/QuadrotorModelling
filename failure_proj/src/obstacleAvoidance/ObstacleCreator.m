@@ -54,6 +54,11 @@ classdef ObstacleCreator  < handle
       if distFromGoal <= (env.agent.radius + obs.influenceRange + obs.radius)
         obs.influenceRange= distFromGoal - (env.agent.radius + obs.radius + epsilon);
       end
+      distFromStart= sqrt( (obs.coords.x - env.start.coords.x)^2 + (obs.coords.y - env.start.coords.y)^2);
+      if distFromStart <= (env.agent.radius + obs.influenceRange + obs.radius)
+        obs.influenceRange= distFromStart- (env.agent.radius + obs.radius + epsilon);
+      end
+
       if obs.influenceRange < 0
         obs.influenceRange = epsilon;
       end

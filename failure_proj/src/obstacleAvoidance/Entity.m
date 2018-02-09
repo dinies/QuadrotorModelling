@@ -26,8 +26,7 @@ classdef Entity < handle
       self.drawing= drawCircle2D(drawer , self.coords.x, self.coords.y, self.radius, self.color);
     end
     function draw3D(self)
-      drawer = Drawer();
-      self.drawing= drawSphere3D(drawer , self.coords.x, self.coords.y, self.coords.z, self.radius, self.color);
+      self.drawing= scatter3(self.coords.x, self.coords.y, self.coords.z, self.radius*10, self.color);
     end
   end
 end

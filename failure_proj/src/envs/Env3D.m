@@ -4,7 +4,7 @@ classdef Env3D < Env
     function self = Env3D( length, delta_t, agent, clock )
       self@Env( length, delta_t )
 
-      self.start= Position(self.unitaryDim*2,self.unitaryDim*2,self.unitaryDim*2, self.colors.green);
+      self.start= Position(self.unitaryDim*2,self.unitaryDim*2,self.unitaryDim*2, self.unitaryDim, self.colors.green);
 
       self.goal = Position(length - self.unitaryDim*2,length - self.unitaryDim*2,length - self.unitaryDim*2,self.unitaryDim, self.colors.red);
 
@@ -22,35 +22,35 @@ classdef Env3D < Env
                       length, 0, length;
       ];
       self.borders= [
-                     self.vertices(1,1), self.vertices(2,1);
-                     self.vertices(2,1), self.vertices(3,1);
-                     self.vertices(3,1), self.vertices(4,1);
-                     self.vertices(4,1), self.vertices(1,1);
+                     self.vertices(1,:), self.vertices(2,:);
+                     self.vertices(2,:), self.vertices(3,:);
+                     self.vertices(3,:), self.vertices(4,:);
+                     self.vertices(4,:), self.vertices(1,:);
 
-                     self.vertices(2,1), self.vertices(3,1);
-                     self.vertices(3,1), self.vertices(7,1);
-                     self.vertices(7,1), self.vertices(6,1);
-                     self.vertices(6,1), self.vertices(2,1);
+                     self.vertices(2,:), self.vertices(3,:);
+                     self.vertices(3,:), self.vertices(7,:);
+                     self.vertices(7,:), self.vertices(6,:);
+                     self.vertices(6,:), self.vertices(2,:);
 
-                     self.vertices(3,1), self.vertices(4,1);
-                     self.vertices(4,1), self.vertices(8,1);
-                     self.vertices(8,1), self.vertices(7,1);
-                     self.vertices(7,1), self.vertices(3,1);
+                     self.vertices(3,:), self.vertices(4,:);
+                     self.vertices(4,:), self.vertices(8,:);
+                     self.vertices(8,:), self.vertices(7,:);
+                     self.vertices(7,:), self.vertices(3,:);
 
-                     self.vertices(4,1), self.vertices(1,1);
-                     self.vertices(1,1), self.vertices(5,1);
-                     self.vertices(5,1), self.vertices(8,1);
-                     self.vertices(8,1), self.vertices(4,1);
+                     self.vertices(4,:), self.vertices(1,:);
+                     self.vertices(1,:), self.vertices(5,:);
+                     self.vertices(5,:), self.vertices(8,:);
+                     self.vertices(8,:), self.vertices(4,:);
 
-                     self.vertices(1,1), self.vertices(2,1);
-                     self.vertices(2,1), self.vertices(6,1);
-                     self.vertices(6,1), self.vertices(5,1);
-                     self.vertices(5,1), self.vertices(1,1);
+                     self.vertices(1,:), self.vertices(2,:);
+                     self.vertices(2,:), self.vertices(6,:);
+                     self.vertices(6,:), self.vertices(5,:);
+                     self.vertices(5,:), self.vertices(1,:);
 
-                     self.vertices(5,1), self.vertices(6,1);
-                     self.vertices(6,1), self.vertices(7,1);
-                     self.vertices(7,1), self.vertices(8,1);
-                     self.vertices(8,1), self.vertices(5,1);
+                     self.vertices(5,:), self.vertices(6,:);
+                     self.vertices(6,:), self.vertices(7,:);
+                     self.vertices(7,:), self.vertices(8,:);
+                     self.vertices(8,:), self.vertices(5,:);
       ];
 
     end
@@ -60,7 +60,7 @@ classdef Env3D < Env
       self.start.coords.y = start(2,1);
       self.start.coords.z = start(3,1);
 
-      self.agent.q(1:3,1)= start(:,1);
+      self.agent.q(1:2,1)= start(1:2,1);
 
       self.goal.coords.x = goal(1,1);
       self.goal.coords.y = goal(2,1);
@@ -73,14 +73,16 @@ classdef Env3D < Env
       minAxis= 0 - frame;
       maxAxis= self.length + frame;
       figure('Name','Environment'),hold on;
-      %axis([minAxis maxAxis minAxis maxAxis ]);
-      axis([-100 100  -100 100] -100 100);
+      axis([minAxis maxAxis minAxis maxAxis minAxis maxAxis]);
       title('world'), xlabel('x'), ylabel('y'), zlabel('z')
+      az = 20;
+      el = 45;
+      view(az, el);
 
       for i= 1:size(self.borders,1)
-        first=  self.borders(i,1);
-        second=  self.borders(i,2);
-        drawLine3d(self.drawer,first,second,self.colors.black);
+        first=  self.borders(i,1:3);
+        second=  self.borders(i,4:6);
+        drawLine3D(self.drawer,first,second,self.colors.black);
       end
 
       numSteps = timeTot/self.clock.delta_t;
@@ -92,7 +94,7 @@ classdef Env3D < Env
         deleteDrawing(self.agent);
 
         agentData=  doAction(self.agent, polynomials);
-        draw(agent);
+        draw(self.agent);
 
         agentStateDim = size( agentData.state,1);
         data(index , 1:agentStateDim)= agentData.state';
@@ -105,7 +107,6 @@ classdef Env3D < Env
         tick(self.clock);
         index = index +1;
 
-        scatter3( self.agent.q(1,1), self.agent.q(2,1), self.agent.q(3,1), 8 ,[0.1,0.9,0.2]);
       end
       drawStatistics( self, data);
     end

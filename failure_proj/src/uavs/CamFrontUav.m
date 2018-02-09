@@ -46,15 +46,6 @@ classdef CamFrontUav  < Uav
     end
 
 
-
-    function updateState(self, q_dot)
-      new_t= self.clock.curr_t+self.clock.delta_t;
-      for i= 1:size(self.q,1)
-        integral = ode45( @(t, unused) q_dot(i,1) , [ self.clock.curr_t new_t], self.q(i,1));
-        self.q(i,1)= deval( integral, new_t);
-      end
-    end
-
     function u = feedBackLin(self,ref)
       q3 = self.q(3,1);
       q4 = self.q(4,1);
@@ -78,21 +69,36 @@ classdef CamFrontUav  < Uav
       u = B\ref - B\A ;
     end
 
-
     function ref = chooseReference(self,polys)
-      ref = [100; -20 ; 500];
+                               %TODO think to something more robust
+
+      poly_x= polys(1,1);
+      poly_x= poly_x{:};
+      poly_y= polys(1,2);
+      poly_y= poly_y{:};
+      poly_z= polys(1,3);
+      poly_z= poly_z{:};
+      refs(1,:)= poly_x( self.clock.curr_t)';
+      refs(2,:)= poly_y( self.clock.curr_t)';
+      refs(3,:)= poly_z( self.clock.curr_t)';
+      ref = [ refs(1,1); refs(2,1); refs(3,1)];
+
     end
 
     function draw(self)
       drawer = Drawer();
-      scale = 0.4;
+      scale = 0.9;
+
       vertices = [
-                  self.q(1,1) - 1.0*scale, self.q(2,1)+ 0.6*scale, self.q(3,1)-0.2*scale ;
-                  self.q(1,1) - 1.0*scale, self.q(2,1)- 0.6*scale, self.q(3,1)-0.2*scale ;
-                  self.q(1,1) + 3.5*scale, self.q(2,1), self.q(3,1)-0.2*scale ;
-                  self.q(1,1), self.q(2,1), self.q(3,1)+0.8*scale ;
-                  self.q(1,1) + 5*scale, self.q(2,1), self.q(3,1) ;
+                  - 1.0*scale, 0.6*scale, -0.2*scale ;
+                  - 1.0*scale, -0.6*scale, -0.2*scale ;
+                  3.5*scale, 0, -0.2*scale ;
+                  0, 0 , 0.8*scale
+                  5*scale, 0, 0 ;
       ];
+      transl = [ self.q(1,1);self.q(2,1);self.q(5,1)];
+
+
 
       rotTheta = [
              cos(self.q(3,1)) , -sin(self.q(3,1)), 0;
@@ -106,25 +112,31 @@ classdef CamFrontUav  < Uav
                - sin(self.q(7,1)),    0    ,  cos(self.q(7,1));
       ];
 
-      for i = 1:size(vertices,1)
+      for i = 1:size(vertices,1)-1
         newVertex = rotTheta*vertices(i,:)';
-        vertices(i,:)= newVertex';
+        vertices(i,:)= (newVertex+transl)';
       end
-      newCamEnd = rotPhi* vertices( size(vertices, 1),:)';
-      vertices(size(vertices,1),:) = newCamEnd';
+      newCamEnd = rotTheta*rotPhi* vertices( size(vertices, 1),:)';
+      vertices(size(vertices,1),:) = (newCamEnd+transl)';
 
-      d1= drawLine3D(drawer, vertices(1,:) , vertices(2,:), self.color);
-      d2= drawLine3D(drawer, vertices(2,:) , vertices(3,:), self.color);
-      d3= drawLine3D(drawer, vertices(3,:) , vertices(1,:), self.color);
+
+
+      oppositeColor = 1 - self.color;
+
+      d1= drawLine3D(drawer, vertices(1,:) , vertices(2,:), oppositeColor);
+      d2= drawLine3D(drawer, vertices(2,:) , vertices(3,:), oppositeColor);
+      d3= drawLine3D(drawer, vertices(3,:) , vertices(1,:), oppositeColor);
       d4= drawLine3D(drawer, vertices(1,:) , vertices(4,:), self.color);
       d5= drawLine3D(drawer, vertices(2,:) , vertices(4,:), self.color);
       d6= drawLine3D(drawer, vertices(3,:) , vertices(4,:), self.color);
-      d7= drawLine3D(drawer, self.q(1:3,1) , vertices(5,:), self.color);
+      d7= drawLine3D(drawer, transl' , vertices(5,:), self.color);
 
       self.drawing= [ d1;d2;d3;d4;d5;d6;d7];
+
+      scatter3( self.q(1,1), self.q(2,1), self.q(5,1), 3 ,[0.8,0.2,0.8]);
     end
 
-    function drawStatistics(self, data)
+    function drawStatistics(~, data)
       figure('Name','State')
 
       ax1 = subplot(2,4,1);

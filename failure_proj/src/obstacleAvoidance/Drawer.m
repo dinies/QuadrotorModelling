@@ -6,11 +6,6 @@ classdef Drawer < handle
     function self= Drawer()
     end
 
-
-    function drawing = drawSphere3D(~, x, y,z, ~,~)
-      sphere( x, y, z);
-    end
- 
     function drawing = drawCircle2D(~, x, y, r,color)
       resolution = 720;
       delta = 2*pi/resolution;
@@ -34,12 +29,21 @@ classdef Drawer < handle
       l4= drawLine2d(self, points(4,:), points(1,:), color);
       drawing = [ l1 ; l2 ; l3 ; l4];
     end
-    function drawing= drawLine2d(~, first, second, color)
+    function drawing= drawLine2D(~, first, second, color)
       drawing= line( [ first(1,1), second(1,1)],[ first(1,2), second(1,2)], 'Color', color , 'LineWidth',4);
     end
 
-    function drawing= drawLine3d(~, first, second, color)
+    function drawing= drawLine3D(~, first, second, color)
       drawing= line( [ first(1,1), second(1,1)],[ first(1,2), second(1,2)],[ first(1,3), second(1,3)], 'Color', color , 'LineWidth',4);
+    end
+
+    function drawing = drawSphere3D(~,xCoord,yCoord,zCoord,size,color)
+      [X,Y,Z] = sphere();
+      x = [0.5*X(:); 0.75*X(:); X(:)];
+      y = [0.5*Y(:); 0.75*Y(:); Y(:)];
+      z = [0.5*Z(:); 0.75*Z(:); Z(:)];
+                                %TODO  add color and size to the representation
+      drawing= scatter3(x + xCoord,y + yCoord,z+zCoord, size, color);
     end
   end
 end

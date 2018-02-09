@@ -23,13 +23,11 @@ env  = EnvArtPot2D( 40, delta_t);
 
 mat = [
        12,   9,   1.4;
-       9,   12,   1.4;
-
+        9,   12,   1.4;
 ];
 
 
-addObstacles(env, obsNum);
-addObstacles(env, obsNum);
+addObstacles(env, mat);
 
 planner =  MotionPlanner( env);
 runSimulation( env,planner,t_f);
