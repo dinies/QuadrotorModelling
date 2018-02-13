@@ -73,17 +73,18 @@ classdef Env3D < Env
       minAxis= 0 - frame;
       maxAxis= self.length + frame;
       figure('Name','Environment'),hold on;
-      axis([minAxis maxAxis minAxis maxAxis minAxis maxAxis]);
+%      axis([minAxis maxAxis minAxis maxAxis minAxis maxAxis]);
       title('world'), xlabel('x'), ylabel('y'), zlabel('z')
+      grid on
       az = 20;
       el = 45;
       view(az, el);
 
-      for i= 1:size(self.borders,1)
-        first=  self.borders(i,1:3);
-        second=  self.borders(i,4:6);
-        drawLine3D(self.drawer,first,second,self.colors.black);
-      end
+     % for i= 1:size(self.borders,1)
+     %   first=  self.borders(i,1:3);
+     %   second=  self.borders(i,4:6);
+     %   drawLine3D(self.drawer,first,second,self.colors.black);
+     % end
 
       numSteps = timeTot/self.clock.delta_t;
       data = zeros(numSteps, self.agent.dimState + 1 + self.agent.dimRef + self.agent.dimInput);

@@ -75,17 +75,17 @@ classdef CamSideUav  < Uav
     function ref = chooseReference(self,polys)
                                 %TODO think to something more robust
 
-      poly_x= polys(1,1);
-      poly_x= poly_x{:};
-      poly_y= polys(1,2);
-      poly_y= poly_y{:};
-      poly_z= polys(1,3);
-      poly_z= poly_z{:};
-      refs(1,:)= poly_x( self.clock.curr_t)';
-      refs(2,:)= poly_y( self.clock.curr_t)';
-      refs(3,:)= poly_z( self.clock.curr_t)';
-      ref = [ refs(1,1); refs(2,1); refs(3,1)];
-
+%      poly_x= polys(1,1);
+%      poly_x= poly_x{:};
+%      poly_y= polys(1,2);
+%      poly_y= poly_y{:};
+%      poly_z= polys(1,3);
+%      poly_z= poly_z{:};
+%      refs(1,:)= poly_x( self.clock.curr_t)';
+%      refs(2,:)= poly_y( self.clock.curr_t)';
+%      refs(3,:)= poly_z( self.clock.curr_t)';
+%      ref = [ refs(1,1); refs(2,1); refs(3,1)];
+      ref = [ -50; -50 ; 500];
     end
 
 
@@ -95,11 +95,11 @@ classdef CamSideUav  < Uav
       scale = 0.9;
 
       vertices = [
-                  - 1.0*scale, 0.6*scale, -0.2*scale ;
-                  - 1.0*scale, -0.6*scale, -0.2*scale ;
-                  3.5*scale, 0, -0.2*scale ;
-                  0, 0 , 0.8*scale
-                  0,5*scale, 0 ;
+                  - 100.0*scale, 60.0*scale  , -20.0*scale ;
+                  - 100.0*scale, -60.0*scale , -20.0*scale ;
+                  350.0*scale  ,        0   , -20.0*scale ;
+                  0          ,     0      , 80.0*scale
+                  0          ,    1000.0*scale , 0 ;
       ];
       transl = [ self.q(1,1);self.q(2,1);self.q(5,1)];
 
@@ -134,7 +134,7 @@ classdef CamSideUav  < Uav
       d4= drawLine3D(drawer, vertices(1,:) , vertices(4,:), self.color);
       d5= drawLine3D(drawer, vertices(2,:) , vertices(4,:), self.color);
       d6= drawLine3D(drawer, vertices(3,:) , vertices(4,:), self.color);
-      d7= drawLine3D(drawer, transl' , vertices(5,:), self.color);
+      d7= drawLine3D(drawer, transl' , vertices(5,:), abs( self.color' - oppositeColor')');
 
       self.drawing= [ d1;d2;d3;d4;d5;d6;d7];
 
