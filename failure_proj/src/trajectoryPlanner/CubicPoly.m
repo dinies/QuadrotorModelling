@@ -6,6 +6,7 @@ classdef CubicPoly < handle
     delta_t
   end
 
+  %TODO   check if the values after getPolynomials are computed in the right way : e.g. if the parameters are taken into account
   methods
     function  self =  CubicPoly( q_0, v_0, q_f, v_f, t_0, t_f, delta_t_des)
 

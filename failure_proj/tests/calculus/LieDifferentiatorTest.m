@@ -3,6 +3,90 @@ function tests = LieDifferentiatorTest
 end
 
 
+%% function testUnicycle(~)
+%%   syms  x y theta v1 v2
+
+%%   state = [ x , y , theta];
+
+%%   h = [ x ; y];
+%%   f = [
+%%        0;
+%%        0;
+%%        0
+%%   ];
+%%  g = [
+%%        cos(theta) , 0 ;
+%%        sin(theta) , 0 ;
+%%        0 , 1 ;
+%%   ];
+
+%%   Diff=  LieDifferentiator( state );
+%%   anym_g = matlabFunction( g);
+%%   anym_h = matlabFunction( h);
+
+
+%%   A = lieDiff(Diff, anym_h, { f} );
+%%   B = lieDiff(Diff, anym_h, { anym_g} );
+
+
+
+%%   alfa = - B\A;
+%%   beta = B\1;
+
+%%   u = alfa + beta* [ v1 ; v2];
+%% end
+
+function testOne(~)
+
+  syms p q r Ix Iy Iz Sw rho Izx dalpaca alpaca betotal dbetotal V  b c  Clbetotal Cldbetotal Clr Clp Cnbetotal Cndbetotal Cnr Cnp Cm0 Cmalpaca Cmdalpaca Cmq CldeltaA CldeltaR CmdeltaE CndeltaA CndeltaR phi theta psiche
+
+  state = [p , q , r , phi , theta, psiche ];
+
+                                %vector fields
+                                % differentiable vec of functions
+  h = [
+       phi;
+       theta;
+       psiche
+  ];
+
+  f(1,1) = (2*p*q*Izx*(Iz+Ix-Iy)+2*q*r*(Iy*Iz-Iz^2-Izx^2)+Iz*rho*V^2*Sw*b*(Clbetotal*betotal+Cldbetotal*dbetotal+Clr*r+Clp*p)+Izx*rho*V^2*Sw*b*(Cnbetotal*betotal+Cndbetotal*dbetotal+Cnr*r+Cnp*p))*inv(2*Ix*Iz-2*Izx^2);
+
+  f(2,1) = (-2*p*r*(Ix-Iz)-2*(p^2-r^2)*Izx+rho*V^2*Sw*c*(Cm0+Cmalpaca*alpaca+Cmdalpaca*dalpaca+Cmq*q))*inv(2*Iy);
+
+  f(3,1) = (2*p*q*(Izx^2+Ix^2-Iy*Ix)+2*q*r*(Iy-Iz-Ix)+Izx*rho*V^2*Sw*b*(Clbetotal*betotal+Cldbetotal*dbetotal+Clr*r+Clp*p)+Ix*rho*V^2*Sw*b*(Cnbetotal*betotal+Cndbetotal*dbetotal+Cnr*r+Cnp*p))*inv(2*Ix*Iz-2*Izx^2);
+
+  f(4,1) = (p+q*sin(phi)*tan(theta)+r*cos(phi)*tan(theta));
+
+  f(5,1) = (q*cos(phi)-r*sin(phi));
+
+  f(6,1) = (q*sin(phi)*sec(theta)+r*cos(phi)*sec(theta));
+
+  term = (rho*V^2*Sw)/(2*Iy*( Ix*Iz - Izx^2));
+
+  g11 = Iy*b*( Iz*CldeltaA + Izx*CndeltaA);
+  g13 = Iy*b*( Iz*CldeltaR + Izx*CndeltaR);
+  g22 = CmdeltaE * ( Ix*Iz - Izx);
+  g31 = Iy*b*( Izx*CldeltaA + Ix*CndeltaA);
+  g33 = Iy*b*( Izx*CldeltaR + Ix*CndeltaR);
+  g= term* [
+            g11 , 0 , g13;
+            0 , g22 , 0  ;
+            g31, 0 , g33 ;
+            0 , 0 , 0 ;
+            0 , 0 , 0 ;
+            0 , 0 , 0
+     ];
+
+
+  Diff = LieDifferentiator( state);
+  anym_f= matlabFunction( f);
+  anym_g= matlabFunction( g);
+  anym_h= matlabFunction( h);
+
+  res = lieDiff(Diff, anym_h, { anym_g, anym_f} );
+end
+
 function testSimpleFixedWingUav(~)
   syms q1 q2 q3 q4 q5 q6   I grav
 
