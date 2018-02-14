@@ -1,24 +1,66 @@
 classdef CamFrontUav  < Uav
   properties
-    v
+    vel
     m
     J
+    gammaDotSym
+    diffBlocks
 
+  end
+  methods( Static = true)
+    function gammaDot= computeGammaDot()
+      syms q1 q2 q3 q5 q7;
+      state = [q1;q2;q3;q5;q7];
+      gammaFun =  [
+                   q1+ q5 * cot(q7)* cos(q3);
+                   q2+ q5 * cot(q7)* sin(q3);
+                   q5
+                  ];
+      gammaNabla = jacobian(gammaFun);
+      gammaDot = matlabFunction(gammaNabla*state);
+    end
   end
 
   methods
-
-
     function self = CamFrontUav(q_0, color, clock )
       self@Uav(q_0, color, clock )
       self.m = 1;    %[kg]
       self.I = 1.0e-2;     %body             %[kg*m^2]
       self.J = 1.0e-3;     %camera           %[kg*m^2]
-      self.v = 10; % constant velocity on the x-y plane
+      self.vel = 10; % constant velocity on the x-y plane
       self.dimState = size(q_0,1);
       self.dimInput = 3;
       self.dimRef= 3;
+      self.gammaDotSym = CamFrontUav.computeGammaDot();
+      self.diffBlocks= {
+                        DifferentiatorBlock(self.clock.delta_t,1);
+                        DifferentiatorBlock(self.clock.delta_t,1);
+                        DifferentiatorBlock(self.clock.delta_t,1);
+      };
     end
+
+
+    function gamma = gamma(self)
+      gamma(1,1) = self.q(1,1) + self.q(5,1)*cot(self.q(7,1))*cos(self.q(3,1));
+      gamma(2,1) = self.q(2,1) + self.q(5,1)*cot(self.q(7,1))*sin(self.q(3,1));
+      gamma(3,1) = self.q(5,1);
+    end
+
+    function gs= gammaState(self)
+      gs = [
+            self.q(1,1);
+            self.q(2,1);
+            self.q(3,1);
+            self.q(5,1);
+            self.q(7,1)
+      ];
+    end
+
+    function gDot = gammaDot(self)
+      q_g = gammaState(self);
+      gDot = self.gammaDotSym( q_g(1,1),q_g(2,1),q_g(3,1),q_g(4,1), q_g(5,1));
+    end
+
 
     function q_dot= transitionModel( self, u)
       q3 = self.q(3,1);
@@ -27,8 +69,8 @@ classdef CamFrontUav  < Uav
       q8 = self.q(8,1);
 
       f= [
-          self.v* cos(q3);
-          self.v* sin(q3);
+          self.vel* cos(q3);
+          self.vel* sin(q3);
           q4;
           0;
           q6;
@@ -47,8 +89,12 @@ classdef CamFrontUav  < Uav
 
     function  data = doAction(self, ref ,stepNum)
 
+      R = zeros(size(ref,1),1);
+      for i = 1:size(ref,1)
+        R(i,1)= ref(i,1).positions(stepNum,1);
+      end
 
-      v = controller(self,ref);
+      v = controller(self,R);
       u= feedBackLin(self, v);
 
       q_dot= transitionModel(self, u);
@@ -61,9 +107,15 @@ classdef CamFrontUav  < Uav
     end
 
 
-    function v = controller(self,ref)
-      %TODO
-      v= 0;
+    function v = controller(self,R)
+      E = gamma(self) - R + gammaDot(self);
+
+      E_dot= zeros(size(E,1),1);
+      for i = 1:size(self.diffBlocks,1)
+        diffBlock= self.diffBlocks{i};
+        E_dot(i,1)= differentiate(diffBlock ,E(i,1));
+      end
+      v= E_dot;
     end
 
 
@@ -75,9 +127,9 @@ classdef CamFrontUav  < Uav
       q7 = self.q(7,1);
       q8 = self.q(8,1);
 
-      A(1,1)= q8*(q4*q5*sin(q3)*(cot(q7)^2 + 1) - q6*cos(q3)*(cot(q7)^2 + 1) + 2*q5*q8*cos(q3)*cot(q7)*(cot(q7)^2 + 1)) - q4*(self.v*sin(q3) + q6*cot(q7)*sin(q3) - q5*q8*sin(q3)*(cot(q7)^2 + 1) + q4*q5*cos(q3)*cot(q7)) - q6*(q8*cos(q3)*(cot(q7)^2 + 1) + q4*cot(q7)*sin(q3));
+      A(1,1)= q8*(q4*q5*sin(q3)*(cot(q7)^2 + 1) - q6*cos(q3)*(cot(q7)^2 + 1) + 2*q5*q8*cos(q3)*cot(q7)*(cot(q7)^2 + 1)) - q4*(self.vel*sin(q3) + q6*cot(q7)*sin(q3) - q5*q8*sin(q3)*(cot(q7)^2 + 1) + q4*q5*cos(q3)*cot(q7)) - q6*(q8*cos(q3)*(cot(q7)^2 + 1) + q4*cot(q7)*sin(q3));
 
-      A(2,1)= q4*(self.v*cos(q3) + q6*cos(q3)*cot(q7) - q5*q8*cos(q3)*(cot(q7)^2 + 1) - q4*q5*cot(q7)*sin(q3)) - q6*(q8*sin(q3)*(cot(q7)^2 + 1) - q4*cos(q3)*cot(q7)) - q8*(q6*sin(q3)*(cot(q7)^2 + 1) + q4*q5*cos(q3)*(cot(q7)^2 + 1) - 2*q5*q8*cot(q7)*sin(q3)*(cot(q7)^2 + 1));
+      A(2,1)= q4*(self.vel*cos(q3) + q6*cos(q3)*cot(q7) - q5*q8*cos(q3)*(cot(q7)^2 + 1) - q4*q5*cot(q7)*sin(q3)) - q6*(q8*sin(q3)*(cot(q7)^2 + 1) - q4*cos(q3)*cot(q7)) - q8*(q6*sin(q3)*(cot(q7)^2 + 1) + q4*q5*cos(q3)*(cot(q7)^2 + 1) - 2*q5*q8*cot(q7)*sin(q3)*(cot(q7)^2 + 1));
 
       A(3,1)=0;
 
@@ -87,7 +139,7 @@ classdef CamFrontUav  < Uav
          0,                 1/self.m,                               0;
       ];
 
-      u = B\v - B\A ;
+      u = B\( -A - gammaDot(self) + v ) ;
     end
 
 

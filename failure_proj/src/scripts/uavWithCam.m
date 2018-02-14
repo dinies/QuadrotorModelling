@@ -22,11 +22,7 @@ xPlanner = CubicPoly(ref_0(1,1), v_0, ref_f(1,1), v_f, t_0, t_f, delta_t_des);
 yPlanner = CubicPoly(ref_0(2,1), v_0, ref_f(2,1), v_f, t_0, t_f, delta_t_des);
 zPlanner = CubicPoly(ref_0(3,1), v_0, ref_f(3,1), v_f, t_0, t_f, delta_t_des);
 
-
-
-u_poly_x= getPolynomial(xPlanner);
-u_poly_y= getPolynomial(yPlanner);
-u_poly_z= getPolynomial(yPlanner);
+planners= [xPlanner;yPlanner;zPlanner];
 
 
 delta_t = xPlanner.delta_t;
@@ -34,14 +30,14 @@ delta_t = xPlanner.delta_t;
 clock= Clock(delta_t);
 %        x   y     theta           omega     z      dz     phi         dphi
 q_0 = [ -1800 ;2500 ; 240*pi/180  ;  pi/180  ; 300  ; 10  ;  10*pi/180  ;pi/180];
-%agent = CamFrontUav(q_0, [0.8,0.8,0.1], clock);
-                                agent = CamSideUav(q_0,  [0.5,0.2,0.9], clock);
+agent = CamFrontUav(q_0, [0.8,0.8,0.1], clock);
+%                                agent = CamSideUav(q_0,  [0.5,0.2,0.9], clock);
 
 env  = Env3D( 350, delta_t, agent, clock);
 
-setMission(env, [q_0(1,1);q_0(2,1);q_0(5,1)], ref_f );
+setMission(env, [q_0(1,1);q_0(2,1);q_0(5,1)], ref_0 );
 
-runSimulation( env, { u_poly_x , u_poly_y, u_poly_z},t_f);
+runSimulation( env, planners,timeSim);
 
 
 

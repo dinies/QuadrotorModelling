@@ -72,7 +72,7 @@ classdef CamSideUav  < Uav
 
     function  data = doAction(self, ref,stepNum)
 
-      v = controller(self,ref);
+      v = controller(self,R);
       u= feedBackLin(self, v);
 
       q_dot= transitionModel(self, u);

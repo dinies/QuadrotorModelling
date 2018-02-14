@@ -73,7 +73,8 @@ classdef Env3D < Env
       minAxis= 0 - frame;
       maxAxis= self.length + frame;
       figure('Name','Environment'),hold on;
-      axis([minAxis maxAxis minAxis maxAxis minAxis maxAxis]);
+      %axis([minAxis maxAxis minAxis maxAxis minAxis maxAxis]);
+      axis([-2000 100  -300 2700   0   900]);
       title('world'), xlabel('x'), ylabel('y'), zlabel('z')
       grid on
       az = 20;
