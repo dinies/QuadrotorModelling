@@ -36,7 +36,8 @@ classdef XYPlaneUav  < Uav
 
     end
 
-    function u = feedBackLin(self,ref)
+    function u = feedBackLin(self,v)
+      %  v needs to be the third derivatives of the output, being rel deg 3 + 3 = 6
       q3 = self.q(3,1);
       q4 = self.q(4,1);
       q5 = self.q(5,1);
@@ -52,31 +53,33 @@ classdef XYPlaneUav  < Uav
           -grav*cos(q3)*(tan(q4)^2 + 1), sin(q3)/self.I
       ];
 
-      u = B\ref - B\A ;
+      u = B\v - B\A ;
     end
 
 
-    function ref = chooseReference(self,polys)
-                               %TODO think to something more robust
-                               %      ref = [ self(1,1); self.q(2,1) ] + 0.01*f;
+    function  data = doAction(self, ref, stepNum)
+      v = [
+           ref(1,1).jerks(stepNum,1);
+           ref(2,1).jerks(stepNum,1);
+      ];
+      u= feedBackLin(self, v);
 
-      poly_x= polys(1,1);
-      poly_x= poly_x{:};
-      poly_y= polys(1,2);
-      poly_y= poly_y{:};
-      refs(1,:)= poly_x( self.clock.curr_t)';
-      refs(2,:)= poly_y( self.clock.curr_t)';
-      ref = [ refs(1,1); refs(2,1)];
+      q_dot= transitionModel(self, u);
+      updateState(self, q_dot);
 
+      data.state= self.q;
+      data.v = v;
+      data.u = u;
     end
+
 
     function draw(self)
       drawer = Drawer();
-      scale = 0.8;
+      scale = 1.8;
 
       vertices = [
-                  - 1.0*scale, 0.6*scale, -0.2*scale ;
-                  - 1.0*scale, -0.6*scale, -0.2*scale ;
+                  - 1.0*scale, 1.6*scale, -0.2*scale ;
+                  - 1.0*scale, -1.6*scale, -0.2*scale ;
                   3.5*scale, 0, -0.2*scale ;
                   0, 0 , 0.8*scale
       ];

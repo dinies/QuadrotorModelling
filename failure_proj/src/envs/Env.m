@@ -14,7 +14,7 @@ classdef Env < handle
 
   methods(Abstract)
     setMission(self, start, goal)
-    runSimulation( self, planner, timeTot)
+    runSimulation( self, planners, timeTot)
     draw(self)
   end
 

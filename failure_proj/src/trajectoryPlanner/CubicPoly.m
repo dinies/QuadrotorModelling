@@ -40,6 +40,9 @@ classdef CubicPoly < handle
       ref.positions= zeros(numOfSteps,1 );
       ref.velocities= zeros(numOfSteps,1 );
       ref.accelerations= zeros(numOfSteps,1 );
+      ref.jerks = zeros(numOfSteps,1 );
+      ref.snaps= zeros(numOfSteps,1 );
+
 
       curr_t= 0;
       for i= 1:numOfSteps

@@ -45,8 +45,29 @@ classdef CamFrontUav  < Uav
       q_dot= f + g*u;
     end
 
+    function  data = doAction(self, ref ,stepNum)
 
-    function u = feedBackLin(self,ref)
+
+      v = controller(self,ref);
+      u= feedBackLin(self, v);
+
+      q_dot= transitionModel(self, u);
+      updateState(self, q_dot);
+
+
+      data.state= self.q;
+      data.v = v;
+      data.u = u;
+    end
+
+
+    function v = controller(self,ref)
+      %TODO
+      v= 0;
+    end
+
+
+    function u = feedBackLin(self,v)
       q3 = self.q(3,1);
       q4 = self.q(4,1);
       q5 = self.q(5,1);
@@ -66,24 +87,10 @@ classdef CamFrontUav  < Uav
          0,                 1/self.m,                               0;
       ];
 
-      u = B\ref - B\A ;
+      u = B\v - B\A ;
     end
 
-    function ref = chooseReference(self,polys)
-                               %TODO think to something more robust
 
-      poly_x= polys(1,1);
-      poly_x= poly_x{:};
-      poly_y= polys(1,2);
-      poly_y= poly_y{:};
-      poly_z= polys(1,3);
-      poly_z= poly_z{:};
-      refs(1,:)= poly_x( self.clock.curr_t)';
-      refs(2,:)= poly_y( self.clock.curr_t)';
-      refs(3,:)= poly_z( self.clock.curr_t)';
-      ref = [ refs(1,1); refs(2,1); refs(3,1)];
-
-    end
 
     function draw(self)
       drawer = Drawer();

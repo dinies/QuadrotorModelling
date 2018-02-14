@@ -47,7 +47,7 @@ classdef CamSideUav  < Uav
 
 
 
-    function u = feedBackLin(self,ref)
+    function u = feedBackLin(self,v)
       q3 = self.q(3,1);
       q4 = self.q(4,1);
       q5 = self.q(5,1);
@@ -67,27 +67,22 @@ classdef CamSideUav  < Uav
               (q5*cot(q7)*sin(q3))/self.I, -(cos(q3)*cot(q7))/self.m,  (q5*cos(q3)*(cot(q7)^2 + 1))/self.J;
               0,                  1/self.m,                               0;
       ];
-      u = B\ref - B\A ;
+      u = B\v - B\A ;
     end
 
+    function  data = doAction(self, ref,stepNum)
+
+      v = controller(self,ref);
+      u= feedBackLin(self, v);
+
+      q_dot= transitionModel(self, u);
+      updateState(self, q_dot);
 
 
-    function ref = chooseReference(self,polys)
-                                %TODO think to something more robust
-
-%      poly_x= polys(1,1);
-%      poly_x= poly_x{:};
-%      poly_y= polys(1,2);
-%      poly_y= poly_y{:};
-%      poly_z= polys(1,3);
-%      poly_z= poly_z{:};
-%      refs(1,:)= poly_x( self.clock.curr_t)';
-%      refs(2,:)= poly_y( self.clock.curr_t)';
-%      refs(3,:)= poly_z( self.clock.curr_t)';
-%      ref = [ refs(1,1); refs(2,1); refs(3,1)];
-      ref = [ -50; -50 ; 500];
+      data.state= self.q;
+      data.v = v;
+      data.u = u;
     end
-
 
 
     function draw(self)
