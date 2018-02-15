@@ -14,8 +14,8 @@ timeSim= t_f - t_0;
 delta_t_des = 0.01;
 
 
-ref_0 = [ -50;-50;500];
-ref_f = [ -50;-50;500];
+ref_0 = [ 100;-20;500];
+ref_f = [ 100;-20;500];
 
 
 xPlanner = CubicPoly(ref_0(1,1), v_0, ref_f(1,1), v_f, t_0, t_f, delta_t_des);

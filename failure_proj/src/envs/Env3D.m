@@ -113,7 +113,7 @@ classdef Env3D < Env
         tick(self.clock);
 
       end
-      drawStatistics( self, data);
+      drawStatistics( self,planners,references, data);
     end
     function draw(self)
 
@@ -122,8 +122,11 @@ classdef Env3D < Env
       draw3D(self.goal);
 
     end
-    function drawStatistics( self, data)
-      drawStatistics( self.agent, data)
+    function drawStatistics( self , planners, references, data)
+      drawStatistics( self.agent, data);
+      for i = 1:size(planners,1)
+        plotTrajectory(planners(i,1), references(i,1));
+      end
     end
   end
 end
