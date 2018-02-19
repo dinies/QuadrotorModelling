@@ -1,17 +1,23 @@
 classdef XYPlaneUav  < Uav
   properties
     h
+    gains
+    diffBlocks
 
   end
 
   methods
 
 
-    function self = XYPlaneUav(q_0, h , color, clock )
+    function self = XYPlaneUav(q_0, h , color, clock, gains )
 
       self@Uav(q_0, color, clock )
       self.h= h;
-
+      self.gains= gains;
+      self.diffBlocks= {
+                        DifferentiatorBlock(self.clock.delta_t,2);
+                        DifferentiatorBlock(self.clock.delta_t,2);
+      };
 
     end
 
@@ -57,11 +63,22 @@ classdef XYPlaneUav  < Uav
     end
 
 
+    function v = controller(self,ref,stepNum)
+
+      for i = 1:2
+        diffBlock= self.diffBlocks{i};
+        diffState= differentiate(diffBlock ,self.q(i,1));
+        posErr = ref(i,1).positions(stepNum,1) - self.q(i,1);
+        velErr = ref(i,1).velocities(stepNum,1) - diffState(1,1);
+        accErr = ref(i,1).accelerations(stepNum,1) - diffState(2,1);
+        v(i,1)= self.gains(i,1)*posErr + self.gains(i,2)*velErr+ self.gains(i,3)*accErr;
+      end
+     end
+
+
     function  data = doAction(self, ref, stepNum)
-      v = [
-           ref(1,1).jerks(stepNum,1);
-           ref(2,1).jerks(stepNum,1);
-      ];
+
+      v= controller(self,ref,stepNum);
       u= feedBackLin(self, v);
 
       q_dot= transitionModel(self, u);
@@ -140,15 +157,15 @@ classdef XYPlaneUav  < Uav
       title(ax6,'ksi');
 
 
-      figure('Name','References and Inputs')
+      figure('Name','controller and feedbacklin outputs')
 
       ax1 = subplot(2,2,1);
       plot(data(:,7),data(:,8), '-o');
-      title(ax1,'x axis');
+      title(ax1,'output controller x axis');
 
       ax2 = subplot(2,2,2);
       plot(data(:,7),data(:,9), '-o');
-      title(ax2,'y axis');
+      title(ax2,'output controller y axis');
 
       ax3 = subplot(2,2,3);
       plot(data(:,7),data(:,10), '-o');

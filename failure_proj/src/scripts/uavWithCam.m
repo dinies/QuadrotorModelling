@@ -36,8 +36,12 @@ clock= Clock(delta_t);
 q_0 = [ -1800 ;2500 ; 240*pi/180  ;  pi/180  ; 300  ; 10  ;  10*pi/180  ;pi/180];
 agent = CamSideUav(q_0, [0.8,0.8,0.1], clock);
 %                                agent = CamFrontUav(q_0,  [0.5,0.2,0.9], clock);
-
-env  = Env3D( 350, delta_t, agent, clock);
+dimensions = [
+              - 2000 , -1000;
+              1700   , 2700;
+              100    , 700
+];
+env  = Env3D( dimensions, delta_t, agent, clock);
 
 setMission(env, [q_0(1,1);q_0(2,1);q_0(5,1)], ref_0 );
 

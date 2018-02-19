@@ -1,24 +1,27 @@
 classdef EnvArtPot2D < Env
   properties
     obstacles
-
+    xLength
+    yLength
   end
   methods
-    function self = EnvArtPot2D( length, delta_t )
-      self@Env(length, delta_t)
+    function self = EnvArtPot2D( dimensions, delta_t )
+      self@Env(dimensions, delta_t)
+      self.xLength = (dimensions(1,2)- dimensions(1,1));
+      self.yLength = (dimensions(2,2)- dimensions(2,1));
       self.start= Position(self.unitaryDim*5,self.unitaryDim*5,0 ,self.unitaryDim, self.colors.green);
 
-      self.goal = Position(length - self.unitaryDim*5,length - self.unitaryDim*5,0 ,self.unitaryDim, self.colors.red);
+      self.goal = Position(self.xLength - self.unitaryDim*2,self.yLength - self.unitaryDim*2,0 ,self.unitaryDim, self.colors.red);
 
 
       self.agent=  Agent( self.start.coords.x,self.start.coords.y,0, self.unitaryDim, self.colors.blue);
 
 
       self.vertices= [
-                      0,0;
-                      0,length;
-                      length,length;
-                      length, 0;
+                      dimensions(1,1),dimensions(2,1);
+                      dimensions(1,1),dimensions(2,2);
+                      dimensions(1,2),dimensions(2,2);
+                      dimensions(1,2),dimensions(2,1)
       ];
       self.borders= [
                      self.vertices(1,1), self.vertices(2,1);
@@ -44,12 +47,14 @@ classdef EnvArtPot2D < Env
     end
 
     function runSimulation( self, planner , timeTot)
-
-      frame= self.length* 0.05;
-      minAxis= 0 - frame;
-      maxAxis= self.length + frame;
-      figure('Name','Environment'),hold on;
-      axis([minAxis maxAxis minAxis maxAxis ]);
+      xFrame= self.xLength* 0.1;
+      yFrame= self.yLength* 0.1;
+      minXaxis= self.dimensions(1,1) - xFrame;
+      maxXaxis= self.dimensions(1,2) + xFrame;
+      minYaxis= self.dimensions(2,1) - yFrame;
+      maxYaxis= self.dimensions(2,2) + yFrame;
+     figure('Name','Environment'),hold on;
+      axis([ minXaxis maxXaxis minYaxis maxYaxis]);
       title('world'), xlabel('x'), ylabel('y')
       drawRectangle2D(self.drawer,self.vertices,self.colors.black);
 

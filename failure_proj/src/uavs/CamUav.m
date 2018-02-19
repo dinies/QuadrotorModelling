@@ -94,7 +94,7 @@ classdef CamUav  < Uav
 
 
     function v = controller(self,R)
-      E = gamma(self) - R + gammaDot(self);
+      E =  (gamma(self) - R )+ gammaDot(self);
 
       E_dot= zeros(size(E,1),1);
       for i = 1:size(self.diffBlocks,1)
