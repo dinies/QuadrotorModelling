@@ -11,7 +11,7 @@ gains = [ 3.4 , 0.9, 0.05];
 delta_t_des = 0.1;
 
 q_0= 0;
-q_f= 10;
+q_f= 1000;
 v_0=0; %vel
 v_f=0;
 a_0=0; %acc
@@ -40,7 +40,7 @@ delta_t = trajectoryPlanner.delta_t;
 
 obj = CartPlant1d( 1 , 0.0, delta_t,q_0,v_0);
 
-%closed_loop_plant(obj, totSim_t, "position",gains, referenceValues, false);
-closed_loop_plant(obj, totSim_t, "total",gains, referenceValues, false);
-%closed_loop_plant(obj, totSim_t, "velocity",gains, referenceValues, false);
+     %closed_loop_plant(obj, timeSim, "position",gains, referenceValues, false);
+closed_loop_plant(obj, timeSim, "total",gains, referenceValues, false);
+      %closed_loop_plant(obj,timeSim, "velocity",gains, referenceValues, false);
 

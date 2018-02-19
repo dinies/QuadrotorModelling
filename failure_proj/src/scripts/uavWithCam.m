@@ -14,8 +14,12 @@ timeSim= t_f - t_0;
 delta_t_des = 0.01;
 
 
-ref_0 = [ 100;-20;500];
-ref_f = [ 100;-20;500];
+                   %ref_0 = [ 100;-20;500]; %frontCamUav paper reference values
+                   %ref_f = [ 100;-20;500];
+
+
+ref_0 = [ -50;-50;500]; %sideCamUav paper reference values
+ref_f = [ -50;-50;500];
 
 
 xPlanner = CubicPoly(ref_0(1,1), v_0, ref_f(1,1), v_f, t_0, t_f, delta_t_des);
@@ -30,8 +34,8 @@ delta_t = xPlanner.delta_t;
 clock= Clock(delta_t);
 %        x   y     theta           omega     z      dz     phi         dphi
 q_0 = [ -1800 ;2500 ; 240*pi/180  ;  pi/180  ; 300  ; 10  ;  10*pi/180  ;pi/180];
-agent = CamFrontUav(q_0, [0.8,0.8,0.1], clock);
-%                                agent = CamSideUav(q_0,  [0.5,0.2,0.9], clock);
+agent = CamSideUav(q_0, [0.8,0.8,0.1], clock);
+%                                agent = CamFrontUav(q_0,  [0.5,0.2,0.9], clock);
 
 env  = Env3D( 350, delta_t, agent, clock);
 
