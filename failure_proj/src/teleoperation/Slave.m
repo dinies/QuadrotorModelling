@@ -14,22 +14,19 @@ classdef Slave < TeleSys
       self.Kv= Kv;
       self.Bv = Bv;
       self.Jsv = Jsv;
-
-                                % Bv * deltaTheta * s
-      self.blocks(1,1)= DifferentiatorBlock(self.clock.delta_t,1);
-                                % Jmv  * thetaM * s^2
-      self.blocks(2,1)= DifferentiatorBlock(self.clock.delta_t,2);
-                                % ddthetaM / (Jm * s^2)
-      self.blocks(3,1)= IntegratorBlock(self.clock.delta_t,2 [0;thetaS_0]);
-
+      self.blocks= {
+                    DifferentiatorBlock(self.clock.delta_t,1); % Bv * deltaTheta * s
+                    DifferentiatorBlock(self.clock.delta_t,2); % Jmv  * thetaM * s^2
+                    IntegratorBlock(self.clock.delta_t,2 [0;thetaS_0]); % ddthetaM / (Jm * s^2)
+      };
     end
 
     function transitionFunc(self, tauS , thetaMaster)
       deltaTheta = thetaMaster - self.theta;
-      BvTerm = self.Bv* differentiate( self.blocks(1,1), deltaTheta);
-      JsvTerm= self.Jsv* differentiate( self.blocks(2,1), self.theta);
+      BvTerm = self.Bv* differentiate( self.block{1}, deltaTheta);
+      JsvTerm= self.Jsv* differentiate( self.blocks{2}, self.theta);
       ddThetaS =  - tauS + ( BvTerm  + self.Kv * deltaTheta  -  JsvTerm );
-      newThetaS = differentiate( self.blocks(3,1), ddthetaS)/ self.Js;
+      newThetaS = differentiate( self.blocks{3}, ddthetaS)/ self.Js;
       self.theta = newThetaS;
     end
   end
