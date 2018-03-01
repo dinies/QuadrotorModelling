@@ -23,10 +23,10 @@ classdef Drawer < handle
       drawing = plot(points(:,1),points(:,2),'Color',color,'LineWidth', 2);
     end
     function drawing = drawRectangle2D(self, points ,color)
-      l1= drawLine2d(self, points(1,:), points(2,:), color);
-      l2= drawLine2d(self, points(2,:), points(3,:), color);
-      l3= drawLine2d(self, points(3,:), points(4,:), color);
-      l4= drawLine2d(self, points(4,:), points(1,:), color);
+      l1= drawLine2D(self, points(1,:), points(2,:), color);
+      l2= drawLine2D(self, points(2,:), points(3,:), color);
+      l3= drawLine2D(self, points(3,:), points(4,:), color);
+      l4= drawLine2D(self, points(4,:), points(1,:), color);
       drawing = [ l1 ; l2 ; l3 ; l4];
     end
     function drawing= drawLine2D(~, first, second, color)

@@ -2,7 +2,7 @@ classdef Uav  < handle
   properties
     color
     clock
-    q   %  x  y  psi phi v ksi
+    q
     t_0
     drawing
     g
@@ -15,8 +15,7 @@ classdef Uav  < handle
 
   methods(Abstract)
     transitionModel( self, u)
-    feedBackLin(self,ref)
-    chooseReference(self,polys)
+    doAction(self,refs,stepNum)
     draw(self)
     drawStatistics(self, data)
   end
@@ -63,23 +62,6 @@ classdef Uav  < handle
                               % end
 
 
-
-    function  data = doAction(self, polynomials )
-
-
-      ref = chooseReference(self,polynomials);
-      u= feedBackLin(self, ref);
-
-                                %      u_sat= saturateInput(self, u)
-
-      q_dot= transitionModel(self, u);
-      updateState(self, q_dot);
-
-
-      data.state= self.q;
-      data.ref = ref;
-      data.u = u;
-    end
 
     function deleteDrawing(self)
       for i = 1:size(self.drawing,1)

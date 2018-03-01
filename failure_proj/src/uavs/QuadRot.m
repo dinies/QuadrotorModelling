@@ -1,5 +1,6 @@
 classdef QuadRot < Uav
 
+  % TODO   choose if is the case to port all the quadrotor code in the /rotor/Quadrotor class for refactoring purposes
 
   properties
     Sw

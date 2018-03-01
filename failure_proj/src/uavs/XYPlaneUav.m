@@ -1,17 +1,23 @@
 classdef XYPlaneUav  < Uav
   properties
     h
+    gains
+    diffBlocks
 
   end
 
   methods
 
 
-    function self = XYPlaneUav(q_0, h , color, clock )
+    function self = XYPlaneUav(q_0, h , color, clock, gains )
 
       self@Uav(q_0, color, clock )
       self.h= h;
-
+      self.gains= gains;
+      self.diffBlocks= {
+                        DifferentiatorBlock(self.clock.delta_t,2);
+                        DifferentiatorBlock(self.clock.delta_t,2);
+      };
 
     end
 
@@ -36,7 +42,8 @@ classdef XYPlaneUav  < Uav
 
     end
 
-    function u = feedBackLin(self,ref)
+    function u = feedBackLin(self,v)
+      %  v needs to be the third derivatives of the output, being rel deg 3 + 3 = 6
       q3 = self.q(3,1);
       q4 = self.q(4,1);
       q5 = self.q(5,1);
@@ -52,31 +59,44 @@ classdef XYPlaneUav  < Uav
           -grav*cos(q3)*(tan(q4)^2 + 1), sin(q3)/self.I
       ];
 
-      u = B\ref - B\A ;
+      u = B\v - B\A ;
     end
 
 
-    function ref = chooseReference(self,polys)
-                               %TODO think to something more robust
-                               %      ref = [ self(1,1); self.q(2,1) ] + 0.01*f;
+    function v = controller(self,ref,stepNum)
 
-      poly_x= polys(1,1);
-      poly_x= poly_x{:};
-      poly_y= polys(1,2);
-      poly_y= poly_y{:};
-      refs(1,:)= poly_x( self.clock.curr_t)';
-      refs(2,:)= poly_y( self.clock.curr_t)';
-      ref = [ refs(1,1); refs(2,1)];
+      for i = 1:2
+        diffBlock= self.diffBlocks{i};
+        diffState= differentiate(diffBlock ,self.q(i,1));
+        posErr = ref(i,1).positions(stepNum,1) - self.q(i,1);
+        velErr = ref(i,1).velocities(stepNum,1) - diffState(1,1);
+        accErr = ref(i,1).accelerations(stepNum,1) - diffState(2,1);
+        v(i,1)= self.gains(i,1)*posErr + self.gains(i,2)*velErr+ self.gains(i,3)*accErr;
+      end
+     end
 
+
+    function  data = doAction(self, ref, stepNum)
+
+      v= controller(self,ref,stepNum);
+      u= feedBackLin(self, v);
+
+      q_dot= transitionModel(self, u);
+      updateState(self, q_dot);
+
+      data.state= self.q;
+      data.v = v;
+      data.u = u;
     end
+
 
     function draw(self)
       drawer = Drawer();
-      scale = 0.8;
+      scale = 1.8;
 
       vertices = [
-                  - 1.0*scale, 0.6*scale, -0.2*scale ;
-                  - 1.0*scale, -0.6*scale, -0.2*scale ;
+                  - 1.0*scale, 1.6*scale, -0.2*scale ;
+                  - 1.0*scale, -1.6*scale, -0.2*scale ;
                   3.5*scale, 0, -0.2*scale ;
                   0, 0 , 0.8*scale
       ];
@@ -137,15 +157,15 @@ classdef XYPlaneUav  < Uav
       title(ax6,'ksi');
 
 
-      figure('Name','References and Inputs')
+      figure('Name','controller and feedbacklin outputs')
 
       ax1 = subplot(2,2,1);
       plot(data(:,7),data(:,8), '-o');
-      title(ax1,'x axis');
+      title(ax1,'output controller x axis');
 
       ax2 = subplot(2,2,2);
       plot(data(:,7),data(:,9), '-o');
-      title(ax2,'y axis');
+      title(ax2,'output controller y axis');
 
       ax3 = subplot(2,2,3);
       plot(data(:,7),data(:,10), '-o');

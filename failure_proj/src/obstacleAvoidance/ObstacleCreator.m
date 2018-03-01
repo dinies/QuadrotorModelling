@@ -23,10 +23,11 @@ classdef ObstacleCreator  < handle
     function coords = createRandCoord(~,env)
       length = env.length;
       offset= env.unitaryDim;
-      extension= length - 2*offset;
+      extension_x= length(1,1) - 2*offset;
+      extension_y= length(2,1) - 2*offset;
 
-      coords.x = offset + rand()*extension;
-      coords.y = offset + rand()*extension;
+      coords.x = offset + rand()*extension_x;
+      coords.y = offset + rand()*extension_y;
     end
 
 
@@ -108,7 +109,7 @@ classdef ObstacleCreator  < handle
 
 
       range = radius + env.unitaryDim/10;
-      if coords.x <= range || coords.x >= env.length - range|| coords.y <= range|| coords.y >= env.length -range
+      if coords.x <= range || coords.x >= env.length(1,1) - range|| coords.y <= range|| coords.y >= env.length(2,1) -range
         collision = 1;
       end
 

@@ -3,42 +3,54 @@ clear
 clc
 
 
-v_0=0; %vel
+v_0=0;
 v_f=0;
+a_0=0;
+a_f=0;
+j_0=0;
+j_f=0;
 
 t_0=0; %time
 t_f=10;
 
-timeSim= t_f - t_0;
+delta_t_des = 0.1;
 
-delta_t_des = 0.02;
-
-x_0 = [ 10;10;10];
-x_f = [ 40;40;10];
+x_0 = [ 50;50;20];
+x_f = [ 80;80;20];
 
 
-xPlanner = CubicPoly(x_0(1,1), v_0, x_f(1,1), v_f, t_0, t_f, delta_t_des);
-yPlanner = CubicPoly(x_0(2,1), v_0, x_f(2,1), v_f, t_0, t_f, delta_t_des);
+xPlanner = SepticPoly( x_0(1,1), v_0, a_0 , j_0 , x_f(1,1), v_f, a_f, j_f, t_0, t_f, delta_t_des);
+yPlanner = SepticPoly( x_0(2,1), v_0, a_0 , j_0 , x_f(2,1), v_f, a_f, j_f, t_0, t_f, delta_t_des);
 
-u_poly_x= getPolynomial(xPlanner);
-u_poly_y= getPolynomial(yPlanner);
 
+planners = [ xPlanner; yPlanner];
 
 delta_t = xPlanner.delta_t;
 
 
 clock= Clock(delta_t);
+
  % state x  y     psi           phi        v    ksi
-%q_0 = [ 10 ;10 ; 40*pi/180  ;  30*pi/180  ; 3  ;  1  ];
-q_0 = [ 10 ;10 ;45*pi/180 ; 0  ; 3  ;  0  ];
+%q_0 = [x_0(1,1);x_0(2,1) ; 40*pi/180  ;  30*pi/180  ; 3  ;  1  ];
+q_0 =  [x_0(1,1) ; x_0(2,1);  5*pi/180 ;  0          ; 3  ;  0  ];
 
-agent = XYPlaneUav(q_0,10,[0.5,0.2,0.9], clock);
+gains = [
+         1.0, 1.0, 1.0;
+         1.0, 1.0, 1.0
+];
+agent = XYPlaneUav(q_0,20,[0.5,0.2,0.9], clock,gains);
 
-env  = Env3D( 50, delta_t, agent, clock);
+
+dimensions = [
+              0 , 100;
+              0 , 100;
+              0, 50
+];
+env  = Env3D( dimensions, delta_t, agent, clock);
 
 setMission(env, x_0, x_f );
 
-runSimulation( env, { u_poly_x , u_poly_y},t_f);
+runSimulation( env, planners,t_f);
 
 
 

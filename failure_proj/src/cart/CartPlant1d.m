@@ -95,7 +95,7 @@ classdef CartPlant1d < handle
       error.deriv= zeros( step_num, 1);
       error.integr= zeros( step_num, 1);
       figure('Name','World representation'),hold on;
-      axis([-250 250 0 80]);
+      axis([-250 1250 0 80]);
       title( 'world'), xlabel('x'), ylabel('z')
       draw(self);
       for i= 1:step_num
