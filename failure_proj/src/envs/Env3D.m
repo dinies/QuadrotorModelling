@@ -77,6 +77,95 @@ classdef Env3D < Env
       self.goal.coords.z = goal(3,1);
     end
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    %function waypoints= generateWayPoints(self,planner)
+    %  path = generatePath(planner,self);
+
+    function result = generatePathRRT(self, planner)
+      result = planPath(self.agent, planner);
+    end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function runPrimitives( self, primitives, timeTot)
+
+      xFrame= self.xLength* 0.1;
+      yFrame= self.yLength* 0.1;
+      zFrame= self.zLength* 0.1;
+      minXaxis= self.dimensions(1,1) - xFrame;
+      maxXaxis= self.dimensions(1,2) + xFrame;
+      minYaxis= self.dimensions(2,1) - yFrame;
+      maxYaxis= self.dimensions(2,2) + yFrame;
+      minZaxis= self.dimensions(3,1) - zFrame;
+      maxZaxis= self.dimensions(3,2) + zFrame;
+      figure('Name','Environment'),hold on;
+      axis([ minXaxis maxXaxis minYaxis maxYaxis  minZaxis maxZaxis]);
+      title('world'), xlabel('x'), ylabel('y'), zlabel('z')
+      grid on
+      az = 20;
+      el = 45;
+      view(az, el);
+
+      %for i= 1:size(self.borders,1)
+      %  first=  self.borders(i,1:3);
+      %  second=  self.borders(i,4:6);
+      %  drawLine3D(self.drawer,first,second,self.colors.black);
+      %end
+
+      numSteps = timeTot/self.clock.delta_t;
+      data = zeros(numSteps, self.agent.dimState);
+      draw(self);
+      pause(0.5);
+      for j = 1:numSteps
+        deleteDrawing(self.agent);
+
+        agentData = doAction(self.agent, primitives, j);
+        draw(self.agent);
+
+        agentStateDim = size( agentData.state,1);
+        data(j, 1:agentStateDim)= agentData.state';
+        data(j, agentStateDim+1) = self.clock.curr_t;
+
+        pause(0.03);
+        tick(self.clock);
+      end
+      drawStatistics( self, data);
+    end
+
+
     function runSimulation( self, planners, timeTot)
 
       xFrame= self.xLength* 0.1;
@@ -128,7 +217,7 @@ classdef Env3D < Env
         tick(self.clock);
 
       end
-      drawStatistics( self,planners,references, data);
+      drawStatistics( self, data , planners,references);
     end
     function draw(self)
 
@@ -137,11 +226,14 @@ classdef Env3D < Env
       draw3D(self.goal);
 
     end
-    function drawStatistics( self , planners, references, data)
+    function drawStatistics( self, data, planners, references)
+
       drawStatistics( self.agent, data);
-      for i = 1:size(planners,1)
-        plotTrajectory(planners(i,1), references(i,1));
-      end
+      %if varargin > 2
+      %  for i = 1:size(planners,1)
+      %    plotTrajectory(planners(i,1), references(i,1));
+      %  end
+      %end
     end
   end
 end

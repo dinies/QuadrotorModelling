@@ -71,8 +71,8 @@ classdef MotionPlanner < handle
       f = zeros(2,1);
       self.coordsWallPotentials= [
                self.env.agent.coords.x, 0;
-               self.env.length, self.env.agent.coords.y;
-               self.env.agent.coords.x, self.env.length;
+               self.env.length(1,1), self.env.agent.coords.y;
+               self.env.agent.coords.x, self.env.length(2,1);
                0, self.env.agent.coords.y
       ];
 

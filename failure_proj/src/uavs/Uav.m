@@ -2,7 +2,7 @@ classdef Uav  < handle
   properties
     color
     clock
-    q   %  x  y  psi phi v ksi
+    q
     t_0
     drawing
     g

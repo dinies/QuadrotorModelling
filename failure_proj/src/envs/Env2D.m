@@ -1,11 +1,11 @@
-classdef EnvArtPot2D < Env
+classdef Env2D < Env
   properties
     obstacles
     xLength
     yLength
   end
   methods
-    function self = EnvArtPot2D( dimensions, delta_t )
+    function self = Env2D( dimensions, delta_t )
       self@Env(dimensions, delta_t)
       self.xLength = (dimensions(1,2)- dimensions(1,1));
       self.yLength = (dimensions(2,2)- dimensions(2,1));

@@ -5,7 +5,7 @@ clc
 
 obsNum= 8;
 t_0=0; %time
-t_f=20;
+t_f=40;
 
 timeSim= t_f - t_0;
 
@@ -19,7 +19,7 @@ dimensions = [
               0 , 100;
               0 , 100;
 ];
-env  = EnvArtPot2D( 40, delta_t);
+env  = Env2D( dimensions, delta_t);
 
 %setMission(env, x_0, x_f );
 
@@ -30,7 +30,7 @@ mat = [
 ];
 
 
-addObstacles(env, mat);
+addObstacles(env, 8);
 
 planner =  MotionPlanner( env);
 runSimulation( env,planner,t_f);

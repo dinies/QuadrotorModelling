@@ -10,6 +10,7 @@ classdef Env < handle
     agent
     vertices
     borders
+    length
   end
 
   methods(Abstract)
@@ -32,14 +33,16 @@ classdef Env < handle
       self.clock = Clock(delta_t);
       self.drawer= Drawer();
 
-      length = 0;
       for i =1:size(dimensions,1)
-        length = length + ( dimensions(i,2) - dimensions(i,1))^2;
+        self.length(i,1) =  dimensions(i,2) - dimensions(i,1);
       end
 
-      length = sqrt(length);
+      sum_lengths= 0;
+      for j =1:size(self.length,1)
+        sum_lengths = sum_lengths + self.length(j,1);
+      end
 
-      self.unitaryDim = length * 0.02;
+      self.unitaryDim = ( sum_lengths / size(self.length,1))* 0.02;
     end
 
   end
