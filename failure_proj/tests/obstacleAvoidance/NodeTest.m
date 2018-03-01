@@ -89,7 +89,6 @@ classdef  NodeTest < matlab.unittest.TestCase
       b = Node( structB);
       c = Node( structC);
       list = {a,b,c};
-      
       elem = Node(structB);
       truth = { testCase.A, testCase.C };
       result= Node.removeNodeFromList( elem, list);
@@ -105,7 +104,6 @@ classdef  NodeTest < matlab.unittest.TestCase
       b = Node( structB);
       c = Node( structC);
       list = {a,b,c};
-      
       elem = Node(structD);
       truth = { testCase.A, testCase.B, testCase.C };
       result= Node.removeNodeFromList( elem, list);
@@ -115,7 +113,6 @@ classdef  NodeTest < matlab.unittest.TestCase
     function testRemoveNodeFromListEmpty(testCase)
       structA.conf = [ 1 ; 1 ];
       list = {};
-      
       elem = Node(structA);
       truth = { testCase.A, testCase.C };
       result= Node.removeNodeFromList( elem, list);
@@ -134,12 +131,10 @@ classdef  NodeTest < matlab.unittest.TestCase
       addChild(a, b);
       addChild(a, c);
       addChild(b, d);
-      
       truth = { c };
       Node.removeChild( b );
       testCase.verifyEqual( a.children, truth );
     end
-    
     function testRemoveChildEmpty(testCase)
       structA.conf = [ 1 ; 1 ];
       structB.conf = [ 3 ; 3 ];
@@ -152,7 +147,6 @@ classdef  NodeTest < matlab.unittest.TestCase
       addChild(a, b);
       addChild(a, c);
       addChild(b, d);
-      
       truth = { };
       Node.removeChild( d );
       testCase.verifyEqual( b.children, truth );

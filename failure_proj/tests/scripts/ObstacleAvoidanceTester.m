@@ -6,7 +6,7 @@ clc
 
 n = NodeTest;
 res1 = run(n);
-
+j
 
                                 %RRTplanner
 
