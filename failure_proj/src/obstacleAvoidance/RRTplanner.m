@@ -62,7 +62,7 @@ classdef RRTplanner< handle
     end
 
 
-    function path = runAlgo(self,agent)
+    function path = runAlgo(self,agent,obstacleCreator)
       initialValue.conf = agent.q;
       initialValue.input = [ 0; 0];
       root = Node( initialValue, {});
@@ -75,21 +75,31 @@ classdef RRTplanner< handle
 
       while (( stepNum < maxNumSteps) || ( ~reachedGoal ))
 
+        currentLeaves = findLeaves(root);
 
         if rand() < self.epsilon
           posRand = generateRandPos(self);
-          currentLeaves = findLeaves(root);
           qNear = chooseNearerConf(currentLeaves, posRand);
         else
-          goalPos.x = 0;
-          goalPos.y = 0;
-          qNear = chooseNearerConf(currentLeaves, goalPos);
+          qNear = chooseNearerConf(currentLeaves, self.env.goalPos.coords);
         end
 
         children = generatePrimitives(agent,qNear);
         orderedChildren = recSortByNearerChild(children, posRand);
-
-
+        qNewFound = false;
+        for i = 1:size(orderedChildren,2)
+          if ~qNewFound
+            qNew = orderedChildren{i};
+            if ~collisionCheck(obstacleCreator,qNew.value.conf(1:2,1),agent.radius,size(obstacleCreator.obstacles,1),self.env)
+              addChild(qNew, qNear);
+              qNewFound = true;
+            end
+          end
+        end 
+        if qNewFound
+          self.epsilon = self.epsilon - 0.001;
+        end
+        
         path = {};
       end
     end

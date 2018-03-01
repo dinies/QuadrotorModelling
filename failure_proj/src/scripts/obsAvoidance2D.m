@@ -3,7 +3,7 @@ clear
 clc
 
 
-obsNum= 8;
+obsNum= 5;
 t_0=0; %time
 t_f=40;
 
@@ -30,7 +30,7 @@ mat = [
 ];
 
 
-addObstacles(env, 8);
+addObstacles(env, obsNum);
 
 planner =  MotionPlanner( env);
 runSimulation( env,planner,t_f);

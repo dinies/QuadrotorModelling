@@ -156,8 +156,9 @@ classdef QuadRotor < handle
       az = 135;
       el = 45;
       view(az, el);
-      axis([-550 550 -550 550 -2550 2550 ]);
+      axis([-50 50 -50 50 -2050 2050 ]);
       title('world'), xlabel('x'), ylabel('y'), zlabel('z')
+      grid on
       draw(self);
 
       for i= 1:numOfSteps
