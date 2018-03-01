@@ -39,6 +39,13 @@ classdef Node < handle
     function result= addInTail( elem, list)
       result= Node.concatLists( list, {elem});
     end
+
+    function removeNodeFromList(elem, list)
+      for i = 1:size(list,2)
+        if list{i}
+          
+    end
+
   end
 
   methods
@@ -64,6 +71,11 @@ classdef Node < handle
       self.children = Node.addInTail(child, self.children);
     end
 
+    function removeChild(self)
+      parent = self.parent{:};
+      newChildren = removeNode(self,parent.children);
+      parent.children = newChildren;
+    end
 
     function path = getPathFromRoot(self)
       path = recPathFromRoot( self, {});
