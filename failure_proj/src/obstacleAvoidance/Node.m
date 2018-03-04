@@ -5,7 +5,6 @@ classdef Node < handle
     root
     value
   end
-
                                 % list and tree foundamental functions
   methods( Static = true)
     function result = concatLists(firstSet,secondSet)
@@ -20,7 +19,6 @@ classdef Node < handle
         result= Node.concatLists( firstPartOfFirstSet, partialRes);
       end
     end
-
     function result= addInHead(elem, list)
       if size(list,2)== 0
         result= {elem};
@@ -35,17 +33,65 @@ classdef Node < handle
         result= list;
       end
     end
-
     function result= addInTail( elem, list)
       result= Node.concatLists( list, {elem});
     end
 
-    function removeNodeFromList(elem, list)
-      for i = 1:size(list,2)
-        if list{i}
-          
+    function result = recRemoveNodeFromList( elem, list)
+      if isempty(list)
+        result = {};
+      else
+        if equals( list{1}, elem)
+          if size(list,2) == 1
+            result = Node.recRemoveNodeFromList( elem , {} );
+          else
+            result = Node.recRemoveNodeFromList( elem , {list{2:size(list,2)}} );
+          end
+        else
+          if size(list,2) == 1
+            result = Node.addInHead( list{1} , Node.recRemoveNodeFromList(elem , {} ) );
+          else
+            result = Node.addInHead( list{1} ,Node.recRemoveNodeFromList( elem , {list{2:size(list,2)}} ));
+          end
+        end
+      end
     end
 
+    %TODO   fix this method or use the recursive version above
+    %function result = removeNodeFromList(elem, list)
+    %  for i = 1:size(list,2)
+    %    if equals(list{i}, elem)
+    %      if (i == 1) && (size(list,2) == 1)
+    %        list = {};
+    %      elseif (i == 1) && (size(list,2) > 1)
+    %        list = {list{i+1:size(list,2)}};
+    %      elseif i < size(list,2)
+    %        list = Node.concatLists( {list{1:i-1}}, list(i+1:size(list,2)) );
+    %      else
+    %        list = {list{1:i-1}};
+    %      end
+    %    end
+    %    result = list;
+    %  end
+    %end
+    function res = checkEquality( x, y )
+      res = true;
+      if isenum(x) && isenum(y)
+        if x ~= y
+          res = false;
+        end
+      elseif isstring(x) && isstring(y)
+        if x ~= y
+          res = false;
+        end
+      elseif isvector(x) && isvector(y)
+        if ~isequal( x , y)
+          res = false;
+        end
+      else
+        res = false;
+      end
+    end
   end
 
   methods
@@ -55,32 +101,24 @@ classdef Node < handle
       self.parent =  {};
       self.root = true;
     end
-
-
     function bool = isRoot(self)
       bool = self.root;
     end
-
     function addParent(self, parent)
       self.root = false;
       self.parent = {parent};
     end
-
     function addChild(self, child)
       addParent(child, self);
       self.children = Node.addInTail(child, self.children);
     end
-
-    function removeChild(self)
-      parent = self.parent{:};
-      newChildren = removeNode(self,parent.children);
-      parent.children = newChildren;
+    function removeAsChild(self)
+      newChildren = Node.recRemoveNodeFromList(self,self.parent{:}.children);
+      self.parent{:}.children = newChildren;
     end
-
     function path = getPathFromRoot(self)
       path = recPathFromRoot( self, {});
     end
-
     function result= recPathFromRoot( self, partial )
       list = Node.addInHead( self, partial );
       if  isRoot( self)
@@ -89,9 +127,7 @@ classdef Node < handle
         result= recPathFromRoot( self.parent{:}, list);
       end
     end
-
     function res = recFindLeaves(self)
-
       if size(self.children,2) == 0
         res = {self};
       else
@@ -102,13 +138,13 @@ classdef Node < handle
         res = partialList;
       end
     end
-
     function print(self)
       if isstruct(self.value)
         list = fieldnames(self.value);
         for i= 1:size(list,1)
-          x = getField(self.value, list{i});
-          if isnum(x) || isstring(x)
+          x = getfield(self.value, list{i});
+          disp(list{i});
+          if isenum(x) || isstring(x)
             disp(x);
           else
             for j=1:size(x,1)
@@ -117,8 +153,32 @@ classdef Node < handle
           end
         end
       else
-        if isnum(self.value) || isstring(self.value)
-        disp(self.value);
+        if isenum(self.value) || isstring(self.value)
+          disp(self.value);
+        end
+      end
+    end
+    function res = equals(self, obj)
+      res = true;
+      if isstruct(self.value) && isstruct(obj.value)
+        listSelf = fieldnames(self.value);
+        listObj = fieldnames(obj.value);
+        if size(listSelf,1) ~= size(listObj,1)
+          res = false;
+        else
+          for i= 1:size(listSelf,1)
+            x = getfield(self.value, listSelf{i});
+            y = getfield(obj.value, listObj{i});
+            if ~Node.checkEquality( x, y)
+              res = false;
+            end
+          end
+        end
+      else
+        x = self.value;
+        y = obj.value;
+        if ~Node.checkEquality( x, y)
+          res = false;
         end
       end
     end
