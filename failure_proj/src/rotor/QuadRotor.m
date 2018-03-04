@@ -68,7 +68,6 @@ classdef QuadRotor < handle
     end
     function q_dot = plantEvolution(self, u)
 
-
       q_dot = fFun(self) + gFun(self) * u;
 
       self.y = [self.q(1,1), self.q(2,1), self.q(3,1), self.q(4,1), self.q(5,1), self.q(6,1)]';
@@ -140,8 +139,8 @@ classdef QuadRotor < handle
 
       for j= 1:size(trajPlanners,1)
         references(j,1)= getReferences( trajPlanners(j,1));
+        plotTrajectory(trajPlanners(j,1), references(j,1));
       end
-      plotTrajectory(trajPlanners(3,1), references(3,1));
       % stub references
       %references =  zeros(4,5,numOfSteps);
       controller= PID( gains, numOfSteps );
@@ -156,7 +155,7 @@ classdef QuadRotor < handle
       az = 135;
       el = 45;
       view(az, el);
-      axis([-50 50 -50 50 -2050 2050 ]);
+      axis([-100 100 -100 100 -100 450 ]);
       title('world'), xlabel('x'), ylabel('y'), zlabel('z')
       grid on
       draw(self);
@@ -176,8 +175,9 @@ classdef QuadRotor < handle
                     ];
 
         referenceMat = extractCurrRefs(self, references, i);
+        orderOfInput = [5;5;5;3];
 
-        v_input = computeInput( controller, referenceMat, stateDiff , i);
+        v_input = computeInput( controller, referenceMat, stateDiff , orderOfInput , i);
 
         curr_u = computeInput( FBlin, v_input, self.q );
         oldPos = self.q(1:3,1);

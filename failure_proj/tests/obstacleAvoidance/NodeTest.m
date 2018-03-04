@@ -50,6 +50,13 @@ classdef  NodeTest < matlab.unittest.TestCase
       truth4 = { 122,45};
       testCase.verifyEqual( list4, truth4 );
     end
+    function testConcatListsNodesTwoSigletons(testCase)
+      firstList = { testCase.A };
+      secondList = {testCase.B };
+      truth = { testCase.A , testCase.B };
+      list = Node.concatLists( firstList, secondList);
+      testCase.verifyEqual( list, truth );
+    end
     function testConcatListsNodes(testCase)
       firstList = { testCase.B };
       secondList = {testCase.C , testCase.D};
@@ -90,8 +97,8 @@ classdef  NodeTest < matlab.unittest.TestCase
       c = Node( structC);
       list = {a,b,c};
       elem = Node(structB);
-      truth = { testCase.A, testCase.C };
-      result= Node.removeNodeFromList( elem, list);
+      truth = { a, c};
+      result= Node.recRemoveNodeFromList( elem, list);
       testCase.verifyEqual( result, truth );
     end
 
@@ -105,18 +112,27 @@ classdef  NodeTest < matlab.unittest.TestCase
       c = Node( structC);
       list = {a,b,c};
       elem = Node(structD);
-      truth = { testCase.A, testCase.B, testCase.C };
-      result= Node.removeNodeFromList( elem, list);
+      truth = { a, b, c };
+      result= Node.recRemoveNodeFromList( elem, list);
       testCase.verifyEqual( result, truth );
     end
 
     function testRemoveNodeFromListEmpty(testCase)
-      structA.conf = [ 1 ; 1 ];
       list = {};
-      elem = Node(structA);
-      truth = { testCase.A, testCase.C };
-      result= Node.removeNodeFromList( elem, list);
+      truth = {};
+      result= Node.recRemoveNodeFromList( testCase.A, list);
       testCase.verifyEqual( result, truth );
+    end
+
+
+    function testCheckEquality(testCase)
+      testCase.verifyTrue( Node.checkEquality( 3.3, 3.3) );
+      testCase.verifyTrue( Node.checkEquality( [4;2;4], [4;2;4] ));
+      testCase.verifyTrue( Node.checkEquality( "3.3", "3.3") );
+      testCase.verifyFalse( Node.checkEquality( 8.3, 3.3) );
+      testCase.verifyFalse( Node.checkEquality( [2;2;2], [1;1;1]) );
+      testCase.verifyFalse( Node.checkEquality( [3;3;3;3], [3;3;3]) );
+      testCase.verifyFalse( Node.checkEquality( "bar", "foo") );
     end
 
     function testRemoveChild(testCase)
@@ -132,7 +148,7 @@ classdef  NodeTest < matlab.unittest.TestCase
       addChild(a, c);
       addChild(b, d);
       truth = { c };
-      Node.removeChild( b );
+      removeAsChild( b );
       testCase.verifyEqual( a.children, truth );
     end
     function testRemoveChildEmpty(testCase)
@@ -148,10 +164,9 @@ classdef  NodeTest < matlab.unittest.TestCase
       addChild(a, c);
       addChild(b, d);
       truth = { };
-      Node.removeChild( d );
+      removeAsChild( d );
       testCase.verifyEqual( b.children, truth );
     end
-
     function testGetPathFromRootDepthOne(testCase)
       truth = { testCase.A };
       result = getPathFromRoot(testCase.A);
@@ -166,7 +181,6 @@ classdef  NodeTest < matlab.unittest.TestCase
       truth = { testCase.B , testCase.C , testCase.D};
       testCase.verifyEqual( truth, testCase.A.children );
     end
-
     function testAddParent(testCase)
       truth = { testCase.A };
       testCase.verifyEqual( truth, testCase.B.parent);
@@ -182,6 +196,26 @@ classdef  NodeTest < matlab.unittest.TestCase
       truth = { testCase.E, testCase.F};
       result = recFindLeaves( testCase.B);
       testCase.verifyEqual( result, truth );
+    end
+    function testEqualsNodesWithSimpleValue(testCase)
+      a = Node( 45);
+      b = Node( 45);
+      c = Node( "45");
+      testCase.verifyTrue( equals(a,b));
+      testCase.verifyFalse( equals(a,c));
+    end
+    function testEqualsNodesWithStruct(testCase)
+      structA.conf = [ 1 ; 2 ; 3];
+      structA.primitives = "bar";
+      structB.conf = [ 1 ; 2 ; 3];
+      structB.primitives = "bar";
+      structC.conf = [ 1 ; 2 ; 3];
+      structC.primitives = "foo";
+      a = Node( structA);
+      b = Node( structB);
+      c = Node( structC);
+      testCase.verifyTrue( equals(a,b));
+      testCase.verifyFalse( equals(a,c));
     end
   end
 end

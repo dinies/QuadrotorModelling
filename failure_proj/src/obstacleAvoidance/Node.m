@@ -36,23 +36,64 @@ classdef Node < handle
     function result= addInTail( elem, list)
       result= Node.concatLists( list, {elem});
     end
-    function result = removeNodeFromList(elem, list)
-      for i = 1:size(list,2)
-        if list{i}.value.conf == elem.value.conf
-          if (i == 1) && (size(list,2) == 1)
-            list = {};
-          elseif (i == 1) && (size(list,2) > 1)
-            list = {list{i+1:size(list,2)}};
-          elseif i < size(list,2)
-            list = concatLists( {list{1:i-1}}, {list(i+1:size(list,2))} );
+
+    function result = recRemoveNodeFromList( elem, list)
+      if isempty(list)
+        result = {};
+      else
+        if equals( list{1}, elem)
+          if size(list,2) == 1
+            result = Node.recRemoveNodeFromList( elem , {} );
           else
-            list = {list{1:i-1}};
+            result = Node.recRemoveNodeFromList( elem , {list{2:size(list,2)}} );
+          end
+        else
+          if size(list,2) == 1
+            result = Node.addInHead( list{1} , Node.recRemoveNodeFromList(elem , {} ) );
+          else
+            result = Node.addInHead( list{1} ,Node.recRemoveNodeFromList( elem , {list{2:size(list,2)}} ));
           end
         end
-        result = list;
+      end
+    end
+
+    %TODO   fix this method or use the recursive version above
+    %function result = removeNodeFromList(elem, list)
+    %  for i = 1:size(list,2)
+    %    if equals(list{i}, elem)
+    %      if (i == 1) && (size(list,2) == 1)
+    %        list = {};
+    %      elseif (i == 1) && (size(list,2) > 1)
+    %        list = {list{i+1:size(list,2)}};
+    %      elseif i < size(list,2)
+    %        list = Node.concatLists( {list{1:i-1}}, list(i+1:size(list,2)) );
+    %      else
+    %        list = {list{1:i-1}};
+    %      end
+    %    end
+    %    result = list;
+    %  end
+    %end
+    function res = checkEquality( x, y )
+      res = true;
+      if isenum(x) && isenum(y)
+        if x ~= y
+          res = false;
+        end
+      elseif isstring(x) && isstring(y)
+        if x ~= y
+          res = false;
+        end
+      elseif isvector(x) && isvector(y)
+        if ~isequal( x , y)
+          res = false;
+        end
+      else
+        res = false;
       end
     end
   end
+
   methods
     function self = Node(value)
       self.value = value;
@@ -71,8 +112,8 @@ classdef Node < handle
       addParent(child, self);
       self.children = Node.addInTail(child, self.children);
     end
-    function removeChild(self)
-      newChildren = removeNode(self,self.parent{:}.children);
+    function removeAsChild(self)
+      newChildren = Node.recRemoveNodeFromList(self,self.parent{:}.children);
       self.parent{:}.children = newChildren;
     end
     function path = getPathFromRoot(self)
@@ -101,8 +142,9 @@ classdef Node < handle
       if isstruct(self.value)
         list = fieldnames(self.value);
         for i= 1:size(list,1)
-          x = getField(self.value, list{i});
-          if isnum(x) || isstring(x)
+          x = getfield(self.value, list{i});
+          disp(list{i});
+          if isenum(x) || isstring(x)
             disp(x);
           else
             for j=1:size(x,1)
@@ -111,8 +153,32 @@ classdef Node < handle
           end
         end
       else
-        if isnum(self.value) || isstring(self.value)
+        if isenum(self.value) || isstring(self.value)
           disp(self.value);
+        end
+      end
+    end
+    function res = equals(self, obj)
+      res = true;
+      if isstruct(self.value) && isstruct(obj.value)
+        listSelf = fieldnames(self.value);
+        listObj = fieldnames(obj.value);
+        if size(listSelf,1) ~= size(listObj,1)
+          res = false;
+        else
+          for i= 1:size(listSelf,1)
+            x = getfield(self.value, listSelf{i});
+            y = getfield(obj.value, listObj{i});
+            if ~Node.checkEquality( x, y)
+              res = false;
+            end
+          end
+        end
+      else
+        x = self.value;
+        y = obj.value;
+        if ~Node.checkEquality( x, y)
+          res = false;
         end
       end
     end

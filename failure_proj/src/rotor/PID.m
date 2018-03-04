@@ -20,24 +20,25 @@ classdef PID < handle
                                 %                q2_d, dq2_d, ddq2_d]
                                 % state : [ q1, dq1;
                                 %           q2, dq2]
-    function input = computeInput( self, references , state ,iterNum)
+    function input = computeInput( self, references , state ,orders ,iterNum)
 
       input = zeros(size(self.gains,1),1);
       for i = 1:size(self.gains,1)
-        val = references(i,size(references,2));
-        for j= 1:(size(references,2)-1)
+        order = orders(i,1);
+        val = references(i,order);
+        for j= 1:(order-1)
           err = references(i,j) - state(i,j);
           self.errors(i,j,iterNum) = err;
           val= val+ self.gains(i,j)*err;
         end
-        integrErr= saturIntegrErr( self,iterNum ,i);
+        integrErr= saturIntegrErrOnPos( self,iterNum ,i);
         self.errors(i,j+1,iterNum) = integrErr;
         val= val+ self.gains(i,size(references,2))* integrErr;
         input(i,1)= val;
       end
     end
 
-    function err = saturIntegrErr(self , currStep, targetInput)
+    function err = saturIntegrErrOnPos(self , currStep, targetInput)
         meaningfullInterval= round(self.totIterNum/10);
         if currStep - meaningfullInterval < 1
           startIntegration = 1;
@@ -46,7 +47,8 @@ classdef PID < handle
         end
         err = 0.0;
         for j= startIntegration:currStep
-          increment = tanh( self.errors(targetInput,1,j)'  );
+          positionIndex = 1;
+          increment = tanh( self.errors(targetInput,positionIndex,j)'  );
           err = err+ increment;
         end
     end
