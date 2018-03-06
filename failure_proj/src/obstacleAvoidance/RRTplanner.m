@@ -95,7 +95,7 @@ classdef RRTplanner< handle
               qNewFound = true;
             end
           end
-        end 
+        end
         if qNewFound
           self.epsilon = self.epsilon - 0.001;
         end

@@ -49,6 +49,10 @@ classdef FixedWingsUav < Uav
 
 
 
+    function setUavState(self, conf, time)
+      self.q = currConf;
+      self.clock.curr_t = time;
+    end
 
 
 
@@ -57,15 +61,23 @@ classdef FixedWingsUav < Uav
     end
 
 
-
-
-
-
-
-
-
-
-
+    function res = generatePrimitives(self,node)
+      currConf = node.value.conf;
+      currTime = node.value.time;
+      res = {};
+      for i = 1:size(self.primitives,1)
+        setUavState(self,currConf,currTime );
+        currInput = self.primitives(i,:)';
+        newQDot = transitionModel(self, currInput );
+        updateState(self, newQDot);
+        newConf = self.q;
+        struct.conf = newConf;
+        struct.pastInput = currInput;
+        struct.time = self.clock.curr_t;
+        elem  = Node( struct );
+        Node.addInTail(elem, res);
+      end
+    end
 
 
 
