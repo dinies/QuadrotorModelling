@@ -16,7 +16,12 @@ clock= Clock(delta_t);
  % state       x      y     psi    phi
 q_0 =  [x_0(1,1) ; x_0(2,1);  0 ;  0  ];
 
-agent = FixedWingsUav(q_0,20,[0.5,0.2,0.9], clock);
+v_max = 10;
+u_phi_max = 4;
+
+radius = 1.5;
+
+agent = FixedWingsUav(q_0,20,[0.5,0.2,0.9], clock, v_max, u_phi_max, radius);
 
 
 dimensions = [
@@ -27,9 +32,6 @@ dimensions = [
 env  = Env3D( dimensions, delta_t, agent, clock);
 
 setMission(env, x_0, x_f );
-
-v_max = 10;
-u_phi_max = 4;
 
 primitives= [
              v_max , u_phi_max;
