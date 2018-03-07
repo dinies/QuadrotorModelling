@@ -2,9 +2,6 @@ close all
 clear
 clc
 
-t_0=0; %time
-t_f=10;
-totT = t_f - t_0;
 %{
  normalized unit to perform path  generation, it is not the real delta_t
  it defines the magnitude of the displacement of the agent into the environment after each step
@@ -39,5 +36,6 @@ addObstacles(env, obsNum);
 
 planner = RRTplanner(env);
 
-path = generatePathRRT(env, planner);
+treeDrawing = true;
+path = generatePathRRT(env, planner,treeDrawing);
 

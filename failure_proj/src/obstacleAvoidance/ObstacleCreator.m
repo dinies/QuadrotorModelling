@@ -28,6 +28,7 @@ classdef ObstacleCreator  < handle
 
       coords.x = offset + rand()*extension_x;
       coords.y = offset + rand()*extension_y;
+      coords.z = 0;
     end
 
 
@@ -50,7 +51,7 @@ classdef ObstacleCreator  < handle
 
     function insertObstacle( self, coords,radius, env)
       epsilon = env.unitaryDim/1000;
-      obs = Obstacle(coords.x, coords.y,0,  radius, self.color);
+      obs = Obstacle(coords.x, coords.y, coords.z,  radius, self.color);
       distFromGoal= sqrt( (obs.coords.x - env.goal.coords.x)^2 + (obs.coords.y - env.goal.coords.y)^2);
       if distFromGoal <= (env.agent.radius + obs.influenceRange + obs.radius)
         obs.influenceRange= distFromGoal - (env.agent.radius + obs.radius + epsilon);
@@ -90,6 +91,7 @@ classdef ObstacleCreator  < handle
 
         coords.x=  mat(i,1);
         coords.y=  mat(i,2);
+        coords.z= 0;
         radius= mat(i,3);
         collision = collisionCheck(self,coords,radius, obsInsertedNum, env);
         if ~collision

@@ -12,14 +12,12 @@ q_0(6,1)= 0;
 
 q_0(10,1)= 9.81; %to avoid singularities in feedback lin invertion
 
-%{  older parameters
-m = 0.650;                  %[kg]
-Ix = 7.5e-3;                %[kg*m^2]
-Iy = 7.5e-3;                %[kg*m^2]
-Iz = 1.3e-2;                %[kg*m^2]
+%m = 0.650;                  %[kg]
+%Ix = 7.5e-3;                %[kg*m^2]
+%Iy = 7.5e-3;                %[kg*m^2]
+%Iz = 1.3e-2;                %[kg*m^2]
                                 % arm length (from cm to rotor position)
-d = 0.23;                    %[m]
-%}
+%d = 0.23;                    %[m]
 
                                 % taken from ---Exact Lin paper
 m = 0.7;                  %[kg]

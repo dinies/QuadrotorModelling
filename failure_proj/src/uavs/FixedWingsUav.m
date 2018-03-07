@@ -1,14 +1,15 @@
 classdef FixedWingsUav < Uav
   properties
     h
-
+    radius
+    coords
     v_max
     u_phi_max
     primitives
   end
 
   methods
-    function self = FixedWingsUav (q_0, h , color, clock, v_max, u_phi_max)
+    function self = FixedWingsUav (q_0, h , color, clock, v_max, u_phi_max, radius)
       self@Uav(q_0, color, clock )
       self.h= h;
       self.v_max = v_max;
@@ -18,6 +19,10 @@ classdef FixedWingsUav < Uav
                          v_max, u_phi_max;
                          v_max, -u_phi_max
       ];
+      self.coords.x = q_0(1,1);
+      self.coords.y = q_0(2,1);
+      self.coords.z = 0;
+      self.radius = radius;
     end
 
 
@@ -39,6 +44,16 @@ classdef FixedWingsUav < Uav
       ];
     end
 
+    function updateState(self, q_dot)
+      new_t= self.clock.curr_t+self.clock.delta_t;
+      for i= 1:size(self.q,1)
+        integral = ode45( @(t, unused) q_dot(i,1) , [ self.clock.curr_t new_t], self.q(i,1));
+        self.q(i,1)= deval( integral, new_t);
+      end
+      self.coords.x = self.q(1,1);
+      self.coords.y = self.q(2,1);
+    end
+
     function  data = doAction(self, primitives, stepNum)
       u = primitives(stepNum,:)';
       q_dot= transitionModel(self, u);
@@ -50,14 +65,10 @@ classdef FixedWingsUav < Uav
 
 
     function setUavState(self, conf, time)
-      self.q = currConf;
+      self.q = conf;
+      self.coords.x = conf(1,1);
+      self.coords.y = conf(2,1);
       self.clock.curr_t = time;
-    end
-
-
-
-    function  path = planPath(self, planner)
-      path = runAlgo(planner);
     end
 
 
@@ -71,11 +82,13 @@ classdef FixedWingsUav < Uav
         newQDot = transitionModel(self, currInput );
         updateState(self, newQDot);
         newConf = self.q;
+        tick(self.clock);
         struct.conf = newConf;
         struct.pastInput = currInput;
         struct.time = self.clock.curr_t;
+        struct.burned = false;
         elem  = Node( struct );
-        Node.addInTail(elem, res);
+        res = Node.addInTail(elem, res);
       end
     end
 

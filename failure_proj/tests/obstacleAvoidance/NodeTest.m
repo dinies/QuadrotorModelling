@@ -124,6 +124,20 @@ classdef  NodeTest < matlab.unittest.TestCase
       testCase.verifyEqual( result, truth );
     end
 
+    function testRecNodeBelongs(testCase)
+      structA.conf = [ 1 ; 1 ];
+      structB.conf = [ 3 ; 3 ];
+      structC.conf = [ 5 ; 5 ];
+      structD.conf = [ 7 ; 7 ];
+      a = Node( structA);
+      b = Node( structB);
+      c = Node( structC);
+      d = Node( structD);
+      list = {a,b,c};
+      testCase.verifyTrue( Node.recNodeBelongs(b , list) );
+      testCase.verifyFalse( Node.recNodeBelongs(d , list) );
+    end
+
 
     function testCheckEquality(testCase)
       testCase.verifyTrue( Node.checkEquality( 3.3, 3.3) );

@@ -8,7 +8,7 @@ classdef RRTplanner< handle
 
   methods( Static = true)
 
-    function qNear = chooseNearerConf(list, pos)
+    function qNear = chooseNearerConfNode(list, pos)
       currRes= list{1};
       euclideanDist = sqrt((currRes.value.conf(1,1) - pos.x)^2 + (currRes.value.conf(2,1) - pos.y)^2);
       for i= 1:size(list,2)
@@ -19,7 +19,7 @@ classdef RRTplanner< handle
           euclideanDist = currDistance;
         end
       end
-      qNear = currRes.value.conf;
+      qNear = currRes;
     end
 
     function orderedList = insertInCrescentOrder( list, elem, posRand)
@@ -52,59 +52,123 @@ classdef RRTplanner< handle
         orderedChildren = RRTplanner.insertInCrescentOrder( RRTplanner.recSortByNearerChild( {children{2:size(children,2)}}, posRand), children{1}, posRand);
       end
     end
+
+    function bool =  isNearGoal(elem, goalCoords, threshold )
+      euclideanDist = sqrt((elem.value.conf(1,1) - goalCoords.x)^2 +(elem.value.conf(2,1) -goalCoords.y)^2);
+      if euclideanDist < threshold
+        bool = true;
+      else
+        bool = false;
+      end
+    end
   end
 
   methods
     function self= RRTplanner( env )
       self.env = env;
-      self.primitives = [];
       self.epsilon = 0.85;
     end
 
+    function collision = collisionCheckAgent(self,newNode,radius,obstacles)
+      collision = false;
+      xCoord= newNode.value.conf(1,1);
+      yCoord= newNode.value.conf(2,1);
 
-    function path = runAlgo(self,agent,obstacleCreator)
+      range = radius + self.env.unitaryDim/10;
+      if xCoord <= range || xCoord >= self.env.length(1,1) - range|| yCoord <= range|| yCoord >= self.env.length(2,1) -range
+        collision = true;
+      end
+
+      for i=1:size(obstacles,1)
+        obstacle= obstacles(i,1);
+        distFromObs= sqrt((xCoord - obstacle.coords.x)^2 +(yCoord- obstacle.coords.y)^2);
+        if  distFromObs - ( radius + obstacle.radius) <= 0
+          collision = true;
+        end
+      end
+    end
+
+
+
+    function path = runAlgo(self,agent,obstacles,threshold, treeDrawing)
       initialValue.conf = agent.q;
       initialValue.input = [ 0; 0];
-      root = Node( initialValue, {});
+      initialValue.time = agent.clock.curr_t;
+      initialValue.burned = false;
+      root = Node( initialValue);
 
+      if treeDrawing
+        color= [0.0, 0.0, 1.0];
+        drawer = Drawer();
+      end
 
       stepNum = 0;
       maxNumSteps = 1000;
       reachedGoal = false;
-      treeStart = root;
+      path= {};
 
-      while (( stepNum < maxNumSteps) || ( ~reachedGoal ))
+      while ( stepNum < maxNumSteps) && ( ~reachedGoal )
 
-        currentLeaves = findLeaves(root);
+        currentNodes = recFindNodes(root);
 
         if rand() < self.epsilon
-          posRand = generateRandPos(self);
-          qNear = chooseNearerConf(currentLeaves, posRand);
+          posRand = generateRandomPosition(self);
         else
-          qNear = chooseNearerConf(currentLeaves, self.env.goalPos.coords);
+          posRand = self.env.goal.coords;
         end
 
-        children = generatePrimitives(agent,qNear);
-        orderedChildren = recSortByNearerChild(children, posRand);
-        qNewFound = false;
-        for i = 1:size(orderedChildren,2)
-          if ~qNewFound
-            qNew = orderedChildren{i};
-            if ~collisionCheck(obstacleCreator,qNew.value.conf(1:2,1),agent.radius,size(obstacleCreator.obstacles,1),self.env)
-              addChild(qNew, qNear);
-              qNewFound = true;
-            end
+        orderedNodes = RRTplanner.recSortByNearerChild( currentNodes, posRand);
+
+        qNearFound = false;
+        for j=  1:size(orderedNodes,2)
+          node = orderedNodes{j};
+          if  ~qNearFound && ~node.value.burned
+            qNear = node;
+            qNearFound= true;
           end
         end
-        if qNewFound
-          self.epsilon = self.epsilon - 0.001;
+        if ~qNearFound
+          path= {};
+        else
+          children = generatePrimitives(agent,qNear);
+          orderedChildren = RRTplanner.recSortByNearerChild(children, posRand);
+          qNewFound = false;
+          for i = 1:size(orderedChildren,2)
+            if ~qNewFound
+              qNew = orderedChildren{i};
+              if ~collisionCheckAgent(self,qNew,agent.radius, obstacles)
+                if ~Node.recNodeBelongs( qNew , qNear.children)
+                  addChild(qNear, qNew);
+                  if treeDrawing
+                    fristCoords = qNear.value.conf(1:2,1)';
+                    secondCoords = qNew.value.conf(1:2,1)';
+                    drawLine2D(drawer, fristCoords, secondCoords, color);
+                  end
+                  qNewFound = true;
+                end
+              end
+            end
+          end
+          if qNewFound
+            self.epsilon = self.epsilon - 0.001;
+            if RRTplanner.isNearGoal(qNew, self.env.goal.coords, threshold)
+              reachedGoal = true;
+              path = getPathFromRoot(qNew);
+            end
+          else
+            qNear.value.burned = true;
+          end
+          stepNum = stepNum +1;
+          if reachedGoal
+              disp( "GOAL REACHED");
+          end
+          size(recFindNodes(root),2);
+
         end
-        
-        path = {};
       end
     end
 
-    function generateRandomPosition(self)
+    function coords = generateRandomPosition(self)
       length = self.env.length;
       offset= self.env.unitaryDim;
       extension_x= length(1,1) - 2*offset;

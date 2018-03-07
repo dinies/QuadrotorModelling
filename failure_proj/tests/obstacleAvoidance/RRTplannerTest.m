@@ -21,15 +21,15 @@ classdef RRTplannerTest < matlab.unittest.TestCase
     end
   end
   methods(Test)
-    function testChoseNearerConfig(testCase)
-      truth = [ 3; 3];
+    function testChoseNearerConfNode(testCase)
+      truth = testCase.B;
       pos.x = 3.3;
       pos.y = 3.3;
-      result = RRTplanner.chooseNearerConf( testCase.list, pos );
+      result = RRTplanner.chooseNearerConfNode( testCase.list, pos );
       testCase.verifyEqual( result, truth );
     end
 
-    function testInsertInCrescentOrder( testCase) % list, elem, posRand)
+    function testInsertInCrescentOrder( testCase)
       pos.x = 0;
       pos.y = 0;
 
@@ -42,7 +42,7 @@ classdef RRTplannerTest < matlab.unittest.TestCase
       testCase.verifyEqual( result, truth );
     end
 
-    function testRecSortByNearerChild(testCase) %children, posRand)
+    function testRecSortByNearerChild(testCase)
       pos.x = 0;
       pos.y = 0;
 
@@ -50,6 +50,13 @@ classdef RRTplannerTest < matlab.unittest.TestCase
       inputList =  {testCase.C,testCase.A,testCase.D,testCase.B};
       result = RRTplanner.recSortByNearerChild( inputList , pos);
       testCase.verifyEqual( result, truth );
+    end
+
+    function testIsNearGoal(testCase)
+      goalCoords.x = 8;
+      goalCoords.y = 8;
+      testCase.verifyTrue( RRTplanner.isNearGoal( testCase.D, goalCoords, 2));
+      testCase.verifyFalse( RRTplanner.isNearGoal( testCase.C, goalCoords, 4));
     end
   end
 end

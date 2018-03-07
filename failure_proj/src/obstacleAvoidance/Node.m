@@ -57,23 +57,25 @@ classdef Node < handle
       end
     end
 
-    %TODO   fix this method or use the recursive version above
-    %function result = removeNodeFromList(elem, list)
-    %  for i = 1:size(list,2)
-    %    if equals(list{i}, elem)
-    %      if (i == 1) && (size(list,2) == 1)
-    %        list = {};
-    %      elseif (i == 1) && (size(list,2) > 1)
-    %        list = {list{i+1:size(list,2)}};
-    %      elseif i < size(list,2)
-    %        list = Node.concatLists( {list{1:i-1}}, list(i+1:size(list,2)) );
-    %      else
-    %        list = {list{1:i-1}};
-    %      end
-    %    end
-    %    result = list;
-    %  end
-    %end
+    function res = recNodeBelongs(elem, list)
+      if isempty(list)
+        res = false;
+      else
+        if equals( list{1}, elem)
+          res = true;
+        else
+          if size(list,2) == 1
+            res = Node.recNodeBelongs(elem, {});
+          else
+            res = Node.recNodeBelongs(elem, {list{2:size(list,2)}});
+          end
+        end
+      end
+    end
+
+
+
+
     function res = checkEquality( x, y )
       res = true;
       if isenum(x) && isenum(y)
@@ -138,7 +140,22 @@ classdef Node < handle
         res = partialList;
       end
     end
-    function print(self)
+
+
+    function res = recFindNodes(self)
+      if size(self.children,2) == 0
+        res = {self};
+      else
+        partialList = {self};
+        for i=1:size(self.children,2)
+          partialList = Node.concatLists(partialList, recFindNodes(self.children{i}));
+        end
+        res = partialList;
+      end
+    end
+
+
+   function print(self)
       if isstruct(self.value)
         list = fieldnames(self.value);
         for i= 1:size(list,1)
@@ -158,6 +175,7 @@ classdef Node < handle
         end
       end
     end
+   %{
     function res = equals(self, obj)
       res = true;
       if isstruct(self.value) && isstruct(obj.value)
@@ -182,6 +200,29 @@ classdef Node < handle
         end
       end
     end
+   %}
+
+    function res = equals(self, obj)
+      res = true;
+      if isstruct(self.value) && isstruct(obj.value)
+        listSelf = fieldnames(self.value);
+        listObj = fieldnames(obj.value);
+        if size(listSelf,1) ~= size(listObj,1)
+          res = false;
+        else
+          if ~Node.checkEquality( self.value.conf,obj.value.conf )
+            res = false;
+          end
+        end
+      else
+        x = self.value;
+        y = obj.value;
+        if ~Node.checkEquality( x, y)
+          res = false;
+        end
+      end
+    end
+
   end
 end
 

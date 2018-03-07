@@ -7,7 +7,7 @@ classdef Drawer < handle
     end
 
     function drawing = drawCircle2D(~, x, y, r,color)
-      resolution = 720;
+      resolution = 360;
       delta = 2*pi/resolution;
 
       points = zeros(resolution,2);
@@ -22,6 +22,25 @@ classdef Drawer < handle
       points(:,2)= points(:,2) + y;
       drawing = plot(points(:,1),points(:,2),'Color',color,'LineWidth', 2);
     end
+
+    function drawing = drawCircle3D(~, x, y, z, r,color)
+      resolution = 360;
+      delta = 2*pi/resolution;
+
+      points = zeros(resolution,2);
+      index =1;
+      for i = 0.0:delta:2*pi
+        p_x= r*cos(i);
+        p_y= r*sin(i);
+        points(index,:) = [p_x,p_y];
+        index = index + 1;
+      end
+      points(:,1)= points(:,1) + x;
+      points(:,2)= points(:,2) + y;
+      points(:,3)= z;
+      drawing = plot3(points(:,1),points(:,2),points(:,3),'Color',color,'LineWidth', 2);
+    end
+
     function drawing = drawRectangle2D(self, points ,color)
       l1= drawLine2D(self, points(1,:), points(2,:), color);
       l2= drawLine2D(self, points(2,:), points(3,:), color);

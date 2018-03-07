@@ -10,5 +10,5 @@ res1 = run(n);
 
                                 %RRTplanner
 
-%rrt = RRTplannerTest;
-%res2 = run(rrt);
+rrt = RRTplannerTest;
+res2 = run(rrt);
