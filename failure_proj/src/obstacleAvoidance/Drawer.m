@@ -49,11 +49,11 @@ classdef Drawer < handle
       drawing = [ l1 ; l2 ; l3 ; l4];
     end
     function drawing= drawLine2D(~, first, second, color)
-      drawing= line( [ first(1,1), second(1,1)],[ first(1,2), second(1,2)], 'Color', color , 'LineWidth',4);
+      drawing= line( [ first(1,1), second(1,1)],[ first(1,2), second(1,2)], 'Color', color , 'LineWidth',2);
     end
 
     function drawing= drawLine3D(~, first, second, color)
-      drawing= line( [ first(1,1), second(1,1)],[ first(1,2), second(1,2)],[ first(1,3), second(1,3)], 'Color', color , 'LineWidth',4);
+      drawing= line( [ first(1,1), second(1,1)],[ first(1,2), second(1,2)],[ first(1,3), second(1,3)], 'Color', color , 'LineWidth',2);
     end
 
     function drawing = drawSphere3D(~,xCoord,yCoord,zCoord,size,color)

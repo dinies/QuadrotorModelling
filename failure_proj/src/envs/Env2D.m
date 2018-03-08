@@ -53,7 +53,7 @@ classdef Env2D < Env
       maxXaxis= self.dimensions(1,2) + xFrame;
       minYaxis= self.dimensions(2,1) - yFrame;
       maxYaxis= self.dimensions(2,2) + yFrame;
-     figure('Name','Environment'),hold on;
+      figure('Name','Environment'),hold on;
       axis([ minXaxis maxXaxis minYaxis maxYaxis]);
       title('world'), xlabel('x'), ylabel('y')
       drawRectangle2D(self.drawer,self.vertices,self.colors.black);

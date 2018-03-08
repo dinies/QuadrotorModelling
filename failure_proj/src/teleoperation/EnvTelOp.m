@@ -3,6 +3,9 @@ classdef  EnvTelOp < handle
     master
     slave
     clock
+    color
+    drawing
+    width
   end
 
   methods
@@ -11,6 +14,8 @@ classdef  EnvTelOp < handle
       self.clock = Clock(delta_t);
       self.master= Master(self.clock);
       self.slave = Slave(self.clock);
+      self.color = [0.5,0.2,0.9];
+      self.width = 10 ;
 
     end
 
@@ -33,11 +38,29 @@ classdef  EnvTelOp < handle
 
     function runSimulation(self,timeTot)
 
+      figure('Name','Teleoperation System'),hold on;
+      axis([ -self.width self.width -self.width self.width]);
+      title('world'), xlabel('x'), ylabel('y')
+
       numSteps = timeTot/self.clock.delta_t;
       for i = 1:numSteps
         stateTransition(self);
         draw(self);
       end
     end
+
+    function deleteDrawing(self)
+      deleteDrawing(self.slave);
+      deleteDrawing(self.master);
+    end
+
+
+
+    function draw(self)
+      d = Drawer();
+      points= [
+
+      ]
+      self.drawing =  drawRectangle2D(d,points,self.color);
   end
 end

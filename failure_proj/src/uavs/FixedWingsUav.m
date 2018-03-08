@@ -44,11 +44,20 @@ classdef FixedWingsUav < Uav
       ];
     end
 
-    function updateState(self, q_dot)
+    function  middleConfs = updateState(self, q_dot)
       new_t= self.clock.curr_t+self.clock.delta_t;
+      precision = 20;
+      middleConfs = zeros(size(self.q,1), precision);
       for i= 1:size(self.q,1)
         integral = ode45( @(t, unused) q_dot(i,1) , [ self.clock.curr_t new_t], self.q(i,1));
         self.q(i,1)= deval( integral, new_t);
+
+        T = new_t- self.clock.curr_t;
+        delta = T/precision;
+        times = 0:delta:T;
+        for j= 1:precision
+          middleConfs(i,j) = deval( integral, self.clock.curr_t+times(1,j));
+        end
       end
       self.coords.x = self.q(1,1);
       self.coords.y = self.q(2,1);
@@ -80,13 +89,14 @@ classdef FixedWingsUav < Uav
         setUavState(self,currConf,currTime );
         currInput = self.primitives(i,:)';
         newQDot = transitionModel(self, currInput );
-        updateState(self, newQDot);
+        middleConfs = updateState(self, newQDot);
         newConf = self.q;
         tick(self.clock);
         struct.conf = newConf;
         struct.pastInput = currInput;
         struct.time = self.clock.curr_t;
         struct.burned = false;
+        struct.middleConfs = middleConfs;
         elem  = Node( struct );
         res = Node.addInTail(elem, res);
       end

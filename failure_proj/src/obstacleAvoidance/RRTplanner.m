@@ -66,7 +66,7 @@ classdef RRTplanner< handle
   methods
     function self= RRTplanner( env )
       self.env = env;
-      self.epsilon = 0.85;
+      self.epsilon = 0.5;
     end
 
     function collision = collisionCheckAgent(self,newNode,radius,obstacles)
@@ -95,6 +95,7 @@ classdef RRTplanner< handle
       initialValue.input = [ 0; 0];
       initialValue.time = agent.clock.curr_t;
       initialValue.burned = false;
+      initialValue.middleConfs = agent.q;
       root = Node( initialValue);
 
       if treeDrawing
@@ -110,6 +111,7 @@ classdef RRTplanner< handle
       while ( stepNum < maxNumSteps) && ( ~reachedGoal )
 
         currentNodes = recFindNodes(root);
+
 
         if rand() < self.epsilon
           posRand = generateRandomPosition(self);
@@ -140,17 +142,23 @@ classdef RRTplanner< handle
                 if ~Node.recNodeBelongs( qNew , qNear.children)
                   addChild(qNear, qNew);
                   if treeDrawing
-                    fristCoords = qNear.value.conf(1:2,1)';
-                    secondCoords = qNew.value.conf(1:2,1)';
-                    drawLine2D(drawer, fristCoords, secondCoords, color);
+                    for j = 1:size(qNew.value.middleConfs,2)
+                      coords = qNew.value.middleConfs(1:2,j);
+                      scatter3(coords(1,1), coords(2,1), 0 , agent.radius, agent.color);
+                      pause(0.00001);
+                    end
                   end
                   qNewFound = true;
+                end
+              else
+                if self.epsilon < 1
+                  self.epsilon = self.epsilon + 0.4;
                 end
               end
             end
           end
           if qNewFound
-            self.epsilon = self.epsilon - 0.001;
+            self.epsilon = self.epsilon - 0.01;
             if RRTplanner.isNearGoal(qNew, self.env.goal.coords, threshold)
               reachedGoal = true;
               path = getPathFromRoot(qNew);
@@ -158,12 +166,10 @@ classdef RRTplanner< handle
           else
             qNear.value.burned = true;
           end
-          stepNum = stepNum +1;
+          stepNum = stepNum +1
           if reachedGoal
               disp( "GOAL REACHED");
           end
-          size(recFindNodes(root),2);
-
         end
       end
     end

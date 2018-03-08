@@ -7,6 +7,7 @@ classdef Env3D < Env
     obstacleCreator
   end
 
+
   methods( Static = true)
     function res = extractPrimitives(list )
       res = zeros(size(list,2),2);
@@ -101,46 +102,40 @@ classdef Env3D < Env
                             %  path = generatePath(planner,self);
 
     function result = generatePathRRT(self, planner, treeDrawing)
-      if treeDrawing
         figure('Name','RRT'),hold on;
         xFrame= self.xLength* 0.1;
         yFrame= self.yLength* 0.1;
+        zFrame= self.zLength* 0.1;
         minXaxis= self.dimensions(1,1) - xFrame;
         maxXaxis= self.dimensions(1,2) + xFrame;
         minYaxis= self.dimensions(2,1) - yFrame;
         maxYaxis= self.dimensions(2,2) + yFrame;
-
-        ax1 = subplot(1,2,1);
-        axis([ minXaxis maxXaxis minYaxis maxYaxis]);
-
-        title(ax1,'Tree Evolution');
-        result = runAlgo(planner,self.agent,self.obstacles, self.unitaryDim*3 ,  treeDrawing );
-
-        ax2 = subplot(1,2,2);
-        axis([ minXaxis maxXaxis minYaxis maxYaxis]);
-        title(ax2,'Path Robot');
+        minZaxis= self.dimensions(3,1) - zFrame;
+        maxZaxis= self.dimensions(3,2) + zFrame;
+        axis([ minXaxis maxXaxis minYaxis maxYaxis  minZaxis maxZaxis]);
+        grid on
+        az = 0;
+        el = 90;
+        view(az, el);
+        title('RRT Tree Evolution'), xlabel('x'), ylabel('y');
+        draw3D(self.start);
+        draw3D(self.goal);
+        for i = 1:size(self.obstacles,1)
+          draw3D(self.obstacles(i,1));
+        end
+        result = runAlgo(planner,self.agent,self.obstacles, self.unitaryDim ,  treeDrawing );
 
         if ~isempty(result)
+          rootNode=  result{1};
+          setUavState(self.agent, rootNode.value.conf, rootNode.value.time);
           primitiveList = Env3D.extractPrimitives( {result{2:size(result,2)}});
           runPrimitives(self, primitiveList, size(primitiveList,1)*self.clock.delta_t,  treeDrawing  );
         else
           disp("Game Over !!")
         end
-      else
-        result = runAlgo(planner,self.agent,self.obstacles, self.unitaryDim*3, treeDrawing);
-        if ~isempty(result)
-          primitiveList = Env3D.extractPrimitives( {result{2:size(result,2)}});
-          runPrimitives(self, primitiveList, size(primitiveList,1)*self.clock.delta_t, treeDrawing);
-        else
-          disp("Game Over !!")
-        end
-      end
     end
 
     function runPrimitives( self, primitives, timeTot, treeDrawing )
-
-      if ~treeDrawing
-
 
         xFrame= self.xLength* 0.1;
         yFrame= self.yLength* 0.1;
@@ -155,35 +150,28 @@ classdef Env3D < Env
         axis([ minXaxis maxXaxis minYaxis maxYaxis  minZaxis maxZaxis]);
         title('world'), xlabel('x'), ylabel('y'), zlabel('z')
         grid on
-        az = 20;
-        el = 45;
+        az = 0;
+        el = 90;
         view(az, el);
 
-        for i= 1:size(self.borders,1)
-          first=  self.borders(i,1:3);
-          second=  self.borders(i,4:6);
-          drawLine3D(self.drawer,first,second,self.colors.black);
+        numSteps = timeTot/self.clock.delta_t;
+        data = zeros(numSteps, self.agent.dimState);
+        draw(self);
+        pause(0.2);
+        for j = 1:numSteps
+          deleteDrawing(self.agent);
+
+          agentData = doAction(self.agent, primitives, j);
+          draw(self.agent);
+
+          agentStateDim = size( agentData.state,1);
+          data(j, 1:agentStateDim)= agentData.state';
+          data(j, agentStateDim+1) = self.clock.curr_t;
+
+          pause(2.03);
+          tick(self.clock);
         end
-      end
-
-      numSteps = timeTot/self.clock.delta_t;
-      data = zeros(numSteps, self.agent.dimState);
-      draw(self);
-      pause(0.5);
-      for j = 1:numSteps
-        deleteDrawing(self.agent);
-
-        agentData = doAction(self.agent, primitives, j);
-        draw(self.agent);
-
-        agentStateDim = size( agentData.state,1);
-        data(j, 1:agentStateDim)= agentData.state';
-        data(j, agentStateDim+1) = self.clock.curr_t;
-
-        pause(0.03);
-        tick(self.clock);
-      end
-      drawStatistics( self, data);
+        drawStatistics( self, data);
     end
 
 
@@ -249,15 +237,10 @@ classdef Env3D < Env
       draw3D(self.goal);
 
     end
-    function drawStatistics( self, data, planners, references)
+    function drawStatistics( self, data)
 
       drawStatistics( self.agent, data);
-                            %if varargin > 2
-                            %  for i = 1:size(planners,1)
-                            %    plotTrajectory(planners(i,1), references(i,1));
-                            %  end
-                            %end
-    end
+   end
   end
 end
 

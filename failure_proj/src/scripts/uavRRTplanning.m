@@ -9,7 +9,7 @@ clc
 delta_s = 1.0;
 
 x_0 = [ 50;50;0];
-x_f = [ 80;80;0];
+x_f = [ 180;20;0];
 
 clock= Clock(delta_s);
 
@@ -26,12 +26,12 @@ agent = FixedWingsUav(q_0,20,[0.5,0.2,0.9], clock, v_max, u_phi_max, radius);
 dimensions = [
               0 , 250;
               0 , 250;
-              0, 250
+              0, 40
 ];
 env  = Env3D( dimensions, delta_s, agent, clock);
 
 setMission(env, x_0, x_f );
-obsNum = 4;
+obsNum = 0;
 addObstacles(env, obsNum);
 
 planner = RRTplanner(env);
