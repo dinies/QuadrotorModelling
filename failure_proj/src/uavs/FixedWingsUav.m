@@ -44,20 +44,12 @@ classdef FixedWingsUav < Uav
       ];
     end
 
-    function  middleConfs = updateState(self, q_dot)
+    function  updateState(self, q_dot)
       new_t= self.clock.curr_t+self.clock.delta_t;
       precision = 20;
-      middleConfs = zeros(size(self.q,1), precision);
       for i= 1:size(self.q,1)
         integral = ode45( @(t, unused) q_dot(i,1) , [ self.clock.curr_t new_t], self.q(i,1));
         self.q(i,1)= deval( integral, new_t);
-
-        T = new_t- self.clock.curr_t;
-        delta = T/precision;
-        times = 0:delta:T;
-        for j= 1:precision
-          middleConfs(i,j) = deval( integral, self.clock.curr_t+times(1,j));
-        end
       end
       self.coords.x = self.q(1,1);
       self.coords.y = self.q(2,1);
@@ -81,17 +73,22 @@ classdef FixedWingsUav < Uav
     end
 
 
-    function res = generatePrimitives(self,node)
+    function res = generatePrimitives(self,node,delta_s)
       currConf = node.value.conf;
       currTime = node.value.time;
+      precision = delta_s / self.clock.delta_t;
       res = {};
       for i = 1:size(self.primitives,1)
         setUavState(self,currConf,currTime );
         currInput = self.primitives(i,:)';
-        newQDot = transitionModel(self, currInput );
-        middleConfs = updateState(self, newQDot);
+        middleConfs = zeros(size(self.q,1),precision);
+        for j = 1:precision
+          newQDot = transitionModel(self, currInput );
+          updateState(self, newQDot);
+          middleConfs(:,j) = self.q;
+          tick(self.clock);
+        end
         newConf = self.q;
-        tick(self.clock);
         struct.conf = newConf;
         struct.pastInput = currInput;
         struct.time = self.clock.curr_t;

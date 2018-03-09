@@ -22,6 +22,31 @@ classdef RRTplanner< handle
       qNear = currRes;
     end
 
+    function qNearest = nearestNodeNotBurned(list, pos)
+      if ~isempty(list)
+
+        currRes= list{1};
+        if currRes.value.burned
+          qNearest = {};
+        else
+
+          euclideanDist = sqrt((currRes.value.conf(1,1) - pos.x)^2 + (currRes.value.conf(2,1) - pos.y)^2);
+          for i= 2:size(list,2)
+            currNode= list{i};
+            currDistance = sqrt((currNode.value.conf(1,1) - pos.x)^2 + (currNode.value.conf(2,1) - pos.y)^2);
+            if currDistance < euclideanDist && ~currNode.value.burned
+              currRes = currNode;
+              euclideanDist = currDistance;
+            end
+          end
+          qNearest = {currRes};
+        end
+      else
+      qNearest = {};
+      end
+    end
+
+
     function orderedList = insertInCrescentOrder( list, elem, posRand)
       euclideanDist = sqrt((elem.value.conf(1,1) - posRand.x)^2 + (elem.value.conf(2,1) - posRand.y)^2);
       inserted = false;
@@ -90,7 +115,7 @@ classdef RRTplanner< handle
 
 
 
-    function path = runAlgo(self,agent,obstacles,threshold, treeDrawing)
+    function path = runAlgo(self,agent,obstacles,threshold,delta_s, treeDrawing)
       initialValue.conf = agent.q;
       initialValue.input = [ 0; 0];
       initialValue.time = agent.clock.curr_t;
@@ -119,25 +144,19 @@ classdef RRTplanner< handle
           posRand = self.env.goal.coords;
         end
 
-        orderedNodes = RRTplanner.recSortByNearerChild( currentNodes, posRand);
+        qNearSingleton = RRTplanner.nearestNodeNotBurned( currentNodes, posRand);
 
-        qNearFound = false;
-        for j=  1:size(orderedNodes,2)
-          node = orderedNodes{j};
-          if  ~qNearFound && ~node.value.burned
-            qNear = node;
-            qNearFound= true;
-          end
-        end
-        if ~qNearFound
+        if isempty(qNearSingleton)
           path= {};
+          return;
         else
-          children = generatePrimitives(agent,qNear);
-          orderedChildren = RRTplanner.recSortByNearerChild(children, posRand);
+          qNear = qNearSingleton{:};
+          nodesFromPrimitives = generatePrimitives(agent,qNear,delta_s);
+          orderedNodesFromPrim = RRTplanner.recSortByNearerChild(nodesFromPrimitives, posRand);
           qNewFound = false;
-          for i = 1:size(orderedChildren,2)
+          for i = 1:size(orderedNodesFromPrim,2)
             if ~qNewFound
-              qNew = orderedChildren{i};
+              qNew = orderedNodesFromPrim{i};
               if ~collisionCheckAgent(self,qNew,agent.radius, obstacles)
                 if ~Node.recNodeBelongs( qNew , qNear.children)
                   addChild(qNear, qNew);
@@ -150,26 +169,22 @@ classdef RRTplanner< handle
                   end
                   qNewFound = true;
                 end
-              else
-                if self.epsilon < 1
-                  self.epsilon = self.epsilon + 0.4;
-                end
               end
             end
           end
-          if qNewFound
-            self.epsilon = self.epsilon - 0.01;
-            if RRTplanner.isNearGoal(qNew, self.env.goal.coords, threshold)
-              reachedGoal = true;
-              path = getPathFromRoot(qNew);
-            end
-          else
-            qNear.value.burned = true;
+        end
+        if qNewFound
+          self.epsilon = self.epsilon - 0.01;
+          if RRTplanner.isNearGoal(qNew, self.env.goal.coords, threshold)
+            reachedGoal = true;
+            path = getPathFromRoot(qNew);
           end
-          stepNum = stepNum +1
-          if reachedGoal
-              disp( "GOAL REACHED");
-          end
+        else
+          qNear.value.burned = true;
+        end
+        stepNum = stepNum +1
+        if reachedGoal
+          disp( "GOAL REACHED");
         end
       end
     end

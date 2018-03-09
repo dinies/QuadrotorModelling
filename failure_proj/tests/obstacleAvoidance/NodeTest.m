@@ -220,11 +220,8 @@ classdef  NodeTest < matlab.unittest.TestCase
     end
     function testEqualsNodesWithStruct(testCase)
       structA.conf = [ 1 ; 2 ; 3];
-      structA.primitives = "bar";
       structB.conf = [ 1 ; 2 ; 3];
-      structB.primitives = "bar";
-      structC.conf = [ 1 ; 2 ; 3];
-      structC.primitives = "foo";
+      structC.conf = [ 7 ; 2 ; 3];
       a = Node( structA);
       b = Node( structB);
       c = Node( structC);

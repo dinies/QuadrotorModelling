@@ -2,16 +2,12 @@ close all
 clear
 clc
 
-%{
- normalized unit to perform path  generation, it is not the real delta_t
- it defines the magnitude of the displacement of the agent into the environment after each step
-%}
-delta_s = 1.0;
+delta_t = 0.02;
 
 x_0 = [ 50;50;0];
 x_f = [ 180;20;0];
 
-clock= Clock(delta_s);
+clock= Clock(delta_t);
 
  % state       x      y     psi    phi
 q_0 =  [x_0(1,1) ; x_0(2,1);  0 ;  0  ];
@@ -28,7 +24,7 @@ dimensions = [
               0 , 250;
               0, 40
 ];
-env  = Env3D( dimensions, delta_s, agent, clock);
+env  = Env3D( dimensions, delta_t, agent, clock);
 
 setMission(env, x_0, x_f );
 obsNum = 0;
@@ -36,6 +32,12 @@ addObstacles(env, obsNum);
 
 planner = RRTplanner(env);
 
+
+%{
+ normalized unit to perform path  generation, it is not the real delta_t
+ it defines the magnitude of the displacement of the agent into the environment after each step
+%}
+delta_s = delta_t*30;
 treeDrawing = true;
-path = generatePathRRT(env, planner,treeDrawing);
+path = generatePathRRT(env, planner,delta_s,treeDrawing);
 

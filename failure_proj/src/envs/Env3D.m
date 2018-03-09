@@ -101,7 +101,7 @@ classdef Env3D < Env
                             %function waypoints= generateWayPoints(self,planner)
                             %  path = generatePath(planner,self);
 
-    function result = generatePathRRT(self, planner, treeDrawing)
+    function result = generatePathRRT(self, planner,delta_s, treeDrawing)
         figure('Name','RRT'),hold on;
         xFrame= self.xLength* 0.1;
         yFrame= self.yLength* 0.1;
@@ -123,7 +123,7 @@ classdef Env3D < Env
         for i = 1:size(self.obstacles,1)
           draw3D(self.obstacles(i,1));
         end
-        result = runAlgo(planner,self.agent,self.obstacles, self.unitaryDim ,  treeDrawing );
+        result = runAlgo(planner,self.agent,self.obstacles, self.unitaryDim ,delta_s, treeDrawing );
 
         if ~isempty(result)
           rootNode=  result{1};
