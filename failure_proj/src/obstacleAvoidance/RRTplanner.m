@@ -166,6 +166,7 @@ classdef RRTplanner< handle
                       scatter3(coords(1,1), coords(2,1), 0 , agent.radius, agent.color);
                       pause(0.00001);
                     end
+                    scatter3(qNew.value.conf(1,1), qNear.value.conf(2,1), 0 , agent.radius*5, agent.color*0.5);
                   end
                   qNewFound = true;
                 end

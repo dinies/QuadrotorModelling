@@ -9,15 +9,15 @@ classdef FixedWingsUav < Uav
   end
 
   methods
-    function self = FixedWingsUav (q_0, h , color, clock, v_max, u_phi_max, radius)
+    function self = FixedWingsUav (q_0, h , color, clock, v_max, w_max, radius)
       self@Uav(q_0, color, clock )
       self.h= h;
       self.v_max = v_max;
       self.u_phi_max = u_phi_max;
       self.primitives = [
                          v_max, 0;
-                         v_max, u_phi_max;
-                         v_max, -u_phi_max
+                         v_max, w_max;
+                         v_max, -w_max
       ];
       self.coords.x = q_0(1,1);
       self.coords.y = q_0(2,1);
@@ -28,19 +28,17 @@ classdef FixedWingsUav < Uav
 
     function q_dot= transitionModel( self, u)
 
-      % q :  x  ,  y ,  psi  ,  phi
+      % q :  x  ,  y ,  theta
 
       v = u(1,1);
-      u_phi = u(2,1);
+      w = u(2,1);
 
       q3 = self.q(3,1);
-      q4 = self.q(4,1);
 
       q_dot= [
               v* cos(q3);
               v* sin(q3);
-              - self.g*tan(q4)/v;
-              u_phi;
+              w
       ];
     end
 
@@ -114,7 +112,7 @@ classdef FixedWingsUav < Uav
       ];
 
 
-      rotPsi= [
+      rotTheta= [
                   cos(self.q(3,1)) , -sin(self.q(3,1)), 0;
                   sin(self.q(3,1)) , cos(self.q(3,1)),  0;
                   0     ,     0     ,     1      ;
@@ -122,7 +120,7 @@ classdef FixedWingsUav < Uav
 
       transl = [ self.q(1,1);self.q(2,1);self.h];
       for i = 1:size(vertices,1)
-        newVertex = rotPsi*vertices(i,:)';
+        newVertex = rotTheta*vertices(i,:)';
         vertices(i,:)= (newVertex+transl)';
       end
 
