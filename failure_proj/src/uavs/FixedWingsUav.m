@@ -143,8 +143,6 @@ classdef FixedWingsUav < Uav
     end
 
     function drawStatistics(self, data)
-      %data: matrix  with dimensions
-      %numOfPrmitivesExecuted x numOfIntegrationsForEachPrim x stateDim+1
 
       figure('Name','State')
 

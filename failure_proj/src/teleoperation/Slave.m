@@ -28,7 +28,7 @@ classdef Slave < TeleSys
       JsvTerm= self.Jsv* dTheta(2,1);
       ddThetaS =  - tauS + ( BvTerm  + self.Kv * deltaTheta  -  JsvTerm );
       newThetaS = integrate( self.blocks{3}, ddThetaS)/ self.Js;
-      self.theta = newThetaS;
+      self.theta = wrapTo2Pi(newThetaS);
     end
   end
 end

@@ -29,7 +29,7 @@ classdef Master < TeleSys
       JmvTerm= self.Jmv* dTheta(2,1);
       ddThetaM = tauM + ( BvTerm  + self.Kv * deltaTheta  -  JmvTerm );
       newThetaM = integrate( self.blocks{3}, ddThetaM)/ self.Jm;
-      self.theta = newThetaM;
+      self.theta = wrapTo2Pi(newThetaM);
     end
   end
 end

@@ -26,7 +26,7 @@ classdef  EnvTelOp < handle
       self.width = 10 ;
     end
 
-    function stateTransition(self)
+    function [tauS, tauM] = stateTransition(self)
       [tauS, tauM]= bilateralControl(self);
 
       currState = [ self.master.theta ; self.slave.theta];
@@ -44,9 +44,12 @@ classdef  EnvTelOp < handle
       tauM = 0;
 
       if self.clock.curr_t <0.06 && self.clock.curr_t > 0.04
-        tauM = 0.0000001;
+        tauM = 0.0000000000001;
       end
-      %self.slave.theta = self.slave.theta + 0.04;
+      if self.clock.curr_t <0.08 && self.clock.curr_t > 0.06
+        tauM = -0.0000000000007;
+      end
+      %%self.slave.theta = self.slave.theta + 0.04;
       %self.master.theta = self.master.theta + 0.04;
 
     end
@@ -58,12 +61,15 @@ classdef  EnvTelOp < handle
       title('world'), xlabel('x'), ylabel('y')
 
       numSteps = timeTot/self.clock.delta_t;
+      data = zeros(numSteps, 5);
       for i = 1:numSteps
         deleteDrawing(self);
-        stateTransition(self);
+        [tauS, tauM] = stateTransition(self);
+        data(i,:)= [ self.clock.curr_t, self.master.theta, self.slave.theta, tauM, tauS];
         draw(self);
         pause(0.0001);
       end
+      drawStatistics(self,data);
     end
 
     function deleteDrawing(self)
@@ -83,6 +89,26 @@ classdef  EnvTelOp < handle
       self.drawing =  drawRectangle2D(d,rectanglePoints,self.color);
       draw(self.slave, self.width/2 );
       draw(self.master, -self.width/2 );
+    end
+    function drawStatistics(self,data)
+
+      figure('Name','State and Torques')
+
+      ax1 = subplot(2,2,1);
+      plot(data(:,1),data(:,2), '-o');
+      title(ax1,'master theta');
+
+      ax2 = subplot(2,2,2);
+      plot(data(:,1),data(:,3), '-o');
+      title(ax2,'slave theta');
+
+      ax3 = subplot(2,2,3);
+      plot(data(:,1),data(:,4), '-o');
+      title(ax3,'master torque');
+
+      ax4 = subplot(2,2,4);
+      plot(data(:,1),data(:,5), '-o');
+      title(ax4,'slave torque');
     end
   end
 end
