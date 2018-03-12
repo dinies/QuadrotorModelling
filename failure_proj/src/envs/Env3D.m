@@ -129,13 +129,13 @@ classdef Env3D < Env
           rootNode=  result{1};
           setUavState(self.agent, rootNode.value.conf, rootNode.value.time);
           primitiveList = Env3D.extractPrimitives( {result{2:size(result,2)}});
-          runPrimitives(self, primitiveList, size(primitiveList,1)*self.clock.delta_t,  treeDrawing  );
+          runPrimitives(self, primitiveList, delta_s,  treeDrawing  );
         else
           disp("Game Over !!")
         end
     end
 
-    function runPrimitives( self, primitives, timeTot, treeDrawing )
+    function runPrimitives( self, primitives , delta_s, treeDrawing )
 
         xFrame= self.xLength* 0.1;
         yFrame= self.yLength* 0.1;
@@ -154,22 +154,22 @@ classdef Env3D < Env
         el = 90;
         view(az, el);
 
-        numSteps = timeTot/self.clock.delta_t;
-        data = zeros(numSteps, self.agent.dimState);
+        numOfIntegrations =delta_s/self.clock.delta_t;
+        numPrimitives = size(primitives,1);
+        data = zeros(numPrimitives*numOfIntegrations , self.agent.dimState +1);
         draw(self);
         pause(0.2);
-        for j = 1:numSteps
-          deleteDrawing(self.agent);
-
-          agentData = doAction(self.agent, primitives, j);
-          draw(self.agent);
-
-          agentStateDim = size( agentData.state,1);
-          data(j, 1:agentStateDim)= agentData.state';
-          data(j, agentStateDim+1) = self.clock.curr_t;
-
-          pause(2.03);
-          tick(self.clock);
+        for i = 1:numPrimitives
+          for j = 1:numOfIntegrations
+            deleteDrawing(self.agent);
+            agentData = doAction(self.agent, primitives, i);
+            dataIndex = ( i -1 )*numOfIntegrations + j;
+            data(dataIndex, 1:self.agent.dimState)= agentData.state';
+            data(dataIndex, self.agent.dimState+1) = self.clock.curr_t;
+            draw(self.agent);
+            pause(0.0001);
+            tick(self.clock);
+          end
         end
         drawStatistics( self, data);
     end
@@ -215,7 +215,7 @@ classdef Env3D < Env
         agentData=  doAction(self.agent, references, j);
         draw(self.agent);
 
-        agentStateDim = size( agentData.state,1);
+        agentStateDim = self.agent.dimState;
         data(j, 1:agentStateDim)= agentData.state';
         data(j, agentStateDim+1) = self.clock.curr_t;
         data(j, agentStateDim+2:agentStateDim+2+size(agentData.v,1)-1)= agentData.v';

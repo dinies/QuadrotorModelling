@@ -42,7 +42,7 @@ classdef RRTplanner< handle
           qNearest = {currRes};
         end
       else
-      qNearest = {};
+        qNearest = {};
       end
     end
 
@@ -78,12 +78,14 @@ classdef RRTplanner< handle
       end
     end
 
-    function bool =  isNearGoal(elem, goalCoords, threshold )
-      euclideanDist = sqrt((elem.value.conf(1,1) - goalCoords.x)^2 +(elem.value.conf(2,1) -goalCoords.y)^2);
-      if euclideanDist < threshold
-        bool = true;
-      else
-        bool = false;
+    function near =  isNearGoal(elem, goalCoords, threshold )
+      i=1;
+      near = false;
+      while  ~near && i <= size( elem.value.middleConfs,2)
+        coords = elem.value.middleConfs(1:2,i);
+        euclideanDist = sqrt((coords(1,1) - goalCoords.x)^2 +(coords(2,1) -goalCoords.y)^2);
+        near = euclideanDist < threshold;
+        i = i + 1;
       end
     end
   end
@@ -136,8 +138,6 @@ classdef RRTplanner< handle
       while ( stepNum < maxNumSteps) && ( ~reachedGoal )
 
         currentNodes = recFindNodes(root);
-
-
         if rand() < self.epsilon
           posRand = generateRandomPosition(self);
         else
@@ -154,39 +154,34 @@ classdef RRTplanner< handle
           nodesFromPrimitives = generatePrimitives(agent,qNear,delta_s);
           orderedNodesFromPrim = RRTplanner.recSortByNearerChild(nodesFromPrimitives, posRand);
           qNewFound = false;
-          for i = 1:size(orderedNodesFromPrim,2)
-            if ~qNewFound
-              qNew = orderedNodesFromPrim{i};
-              if ~collisionCheckAgent(self,qNew,agent.radius, obstacles)
-                if ~Node.recNodeBelongs( qNew , qNear.children)
-                  addChild(qNear, qNew);
-                  if treeDrawing
-                    for j = 1:size(qNew.value.middleConfs,2)
-                      coords = qNew.value.middleConfs(1:2,j);
-                      scatter3(coords(1,1), coords(2,1), 0 , agent.radius, agent.color);
-                      pause(0.00001);
-                    end
-                    scatter3(qNew.value.conf(1,1), qNear.value.conf(2,1), 0 , agent.radius*5, agent.color*0.5);
-                  end
-                  qNewFound = true;
+          i = 1;
+          while  ~qNewFound && i <= size(orderedNodesFromPrim,2)
+            qNew = orderedNodesFromPrim{i};
+            if ~collisionCheckAgent(self,qNew,agent.radius, obstacles) && ~Node.recNodeBelongs( qNew , qNear.children)
+              addChild(qNear, qNew);
+              if treeDrawing
+                for j = 1:size(qNew.value.middleConfs,2)
+                  coords = qNew.value.middleConfs(1:2,j);
+                  scatter3(coords(1,1), coords(2,1), 0 , agent.radius, agent.color);
+                  pause(0.00001);
                 end
+                scatter3(qNew.value.conf(1,1), qNew.value.conf(2,1), 0 , agent.radius*5, agent.color*0.5);
+              end
+              qNewFound = true;
+              self.epsilon = self.epsilon - 0.01;
+              if RRTplanner.isNearGoal(qNew, self.env.goal.coords, threshold)
+                reachedGoal = true;
+                disp( "GOAL REACHED");
+                path = getPathFromRoot(qNew);
               end
             end
+            i = i+1;
           end
         end
-        if qNewFound
-          self.epsilon = self.epsilon - 0.01;
-          if RRTplanner.isNearGoal(qNew, self.env.goal.coords, threshold)
-            reachedGoal = true;
-            path = getPathFromRoot(qNew);
-          end
-        else
+        if ~qNewFound
           qNear.value.burned = true;
         end
-        stepNum = stepNum +1
-        if reachedGoal
-          disp( "GOAL REACHED");
-        end
+        stepNum = stepNum +1;
       end
     end
 

@@ -1,21 +1,23 @@
-classdef FixedWingsUav < Uav
+classdef Unicycle < Uav
   properties
     h
     radius
     coords
     v_max
-    u_phi_max
+    w_max
     primitives
   end
 
   methods
-    function self = FixedWingsUav (q_0, h , color, clock, v_max, w_max, radius)
+    function self = Unicycle(q_0, h , color, clock, v_max, w_max, radius)
       self@Uav(q_0, color, clock )
       self.h= h;
       self.v_max = v_max;
-      self.u_phi_max = u_phi_max;
+      self.w_max = w_max;
       self.primitives = [
                          v_max, 0;
+                         v_max, w_max/2;
+                         v_max, -w_max/2;
                          v_max, w_max;
                          v_max, -w_max
       ];
@@ -102,7 +104,7 @@ classdef FixedWingsUav < Uav
 
     function draw(self)
       drawer = Drawer();
-      scale = 1.8;
+      scale = 0.4;
 
       vertices = [
                   - 1.0*scale, 1.6*scale, -0.2*scale ;
@@ -139,24 +141,23 @@ classdef FixedWingsUav < Uav
     end
 
     function drawStatistics(self, data)
+      % data: matrix  with dimensions
+      % numOfPrmitivesExecuted x numOfIntegrationsForEachPrim x stateDim+1
 
       figure('Name','State')
 
-      ax1 = subplot(2,2,1);
-      plot(data(:,5),data(:,1), '-o');
+      ax1 = subplot(1,3,1);
+
+      plot(data(:,4),data(:,1), '-o');
       title(ax1,'x axis');
 
-      ax2 = subplot(2,2,2);
-      plot(data(:,5),data(:,2), '-o');
+      ax2 = subplot(1,3,2);
+      plot(data(:,4),data(:,2), '-o');
       title(ax2,'y axis');
 
-      ax3 = subplot(2,2,3);
-      plot(data(:,5),data(:,3), '-o');
-      title(ax3,'psi');
-
-      ax4 = subplot(2,2,4);
-      plot(data(:,5),data(:,4), '-o');
-      title(ax4,'phi');
+      ax3 = subplot(1,3,3);
+      plot(data(:,4),data(:,3), '-o');
+      title(ax3,'theta');
 
     end
   end

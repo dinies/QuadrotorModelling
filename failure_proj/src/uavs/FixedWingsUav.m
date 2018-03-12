@@ -16,6 +16,8 @@ classdef FixedWingsUav < Uav
       self.u_phi_max = u_phi_max;
       self.primitives = [
                          v_max, 0;
+                         v_max, u_phi_max/2;
+                         v_max, -u_phi_max/2;
                          v_max, u_phi_max;
                          v_max, -u_phi_max
       ];
@@ -104,7 +106,7 @@ classdef FixedWingsUav < Uav
 
     function draw(self)
       drawer = Drawer();
-      scale = 1.8;
+      scale = 0.4;
 
       vertices = [
                   - 1.0*scale, 1.6*scale, -0.2*scale ;
@@ -141,6 +143,8 @@ classdef FixedWingsUav < Uav
     end
 
     function drawStatistics(self, data)
+      %data: matrix  with dimensions
+      %numOfPrmitivesExecuted x numOfIntegrationsForEachPrim x stateDim+1
 
       figure('Name','State')
 
