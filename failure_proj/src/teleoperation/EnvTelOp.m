@@ -10,8 +10,8 @@ classdef  EnvTelOp < handle
   methods
     function self= EnvTelOp(delta_t, thetaM, thetaS)
 
-      Jm = 0.05;
-      Js = 0.1;
+      Jm = 0.000005;
+      Js = 0.000005;
       Kv = 5.0;
       Bv = 0.4;
       Jmv = 0.0007;
@@ -25,30 +25,41 @@ classdef  EnvTelOp < handle
 
     function input = stateTransition(self)
       input = bilateralControl(self);
-
-      currState = self.system.q(1:2,1);
       transitionFunc(self.system,input);
       tick(self.clock);
     end
 
+    function res = inputMasterTorque(self, vibration , refTorque)
+      Kh = 20;
+      Bh = 4;
+
+      res = refTorque - Kh*self.system.q(1,1) - Bh*self.system.q(2,1) +vibration ;
+    end
+
+    function res = inputSlaveTorque(self, vibration, freeMotionFlag )
+      if freeMotionFlag
+        Benv = 0.01;
+        res =  - Benv*self.system.q(4,1)+vibration;
+      else
+        Bs =4;
+        Ks =20;
+        res =  - Ks*self.system.q(3,1) - Bs*self.system.q(4,1)+ vibration;
+      end
+    end
+
+
     function  input= bilateralControl(self)
 
       % TODO    implement the control logic that is written in the paper
-
-      %tauS ;
-      %tauM ;
-      input = [0;0];
-
-      if self.clock.curr_t > 0.2 && self.clock.curr_t <0.35
-        input = [0;700];
-      end
-      %if self.clock.curr_t <0.08 && self.clock.curr_t > 0.06
-%
-%        input = [0;0];
-%      end
-      %%self.slave.theta = self.slave.theta + 0.04;
-      %self.master.theta = self.master.theta + 0.04;
-
+      %if self.clock.curr_t > 0.2 && self.clock.curr_t <0.35
+      %  refTorqueMaster = 50;
+      %else
+      %  refTorqueMaster = 0;
+      %end
+       refTorqueMaster = 10;
+       vibrations = wgn(2,1,20);
+      input(1,1) = inputMasterTorque(self, vibrations(1,1) , refTorqueMaster);
+      input(2,1) = -inputSlaveTorque(self, vibrations(2,1) , false);
     end
 
     function runSimulation(self,timeTot)
@@ -86,7 +97,7 @@ classdef  EnvTelOp < handle
       self.drawing =  drawRectangle2D(d,rectanglePoints,self.color);
       draw(self.system, self.width/2 );
     end
-    function drawStatistics(self,data)
+    function drawStatistics(~,data)
 
       figure('Name','Torques')
 

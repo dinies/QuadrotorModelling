@@ -103,6 +103,8 @@ classdef TeleSys < handle
         integral = ode45( @(t, unused) q_dot(i,1) , [ self.clock.curr_t new_t], self.q(i,1));
         self.q(i,1)= deval( integral, new_t);
       end
+      self.q(1,1) = wrapToPi(self.q(1,1));
+      self.q(3,1) = wrapToPi(self.q(3,1));
     end
 
 
