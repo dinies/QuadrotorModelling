@@ -6,8 +6,8 @@ classdef Obstacle < Entity
   methods
     function self= Obstacle(x, y, z , r, color )
       self@Entity( x, y, z, r, color );
-      self.influenceRange= 6*r;
-      self.Kr= 2.8;
+      self.influenceRange= 5*r;
+      self.Kr= 50*r;
     end
 
     function draw2D(self)

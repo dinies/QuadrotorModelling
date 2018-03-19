@@ -129,13 +129,16 @@ classdef Env3D < Env
           rootNode=  result{1};
           setUavState(self.agent, rootNode.value.conf, rootNode.value.time);
           primitiveList = Env3D.extractPrimitives( {result{2:size(result,2)}});
-          runPrimitives(self, primitiveList, delta_s,  treeDrawing  );
+          data = runPrimitives(self, primitiveList, delta_s,  treeDrawing  );
+          path = GeometricPath(data);
+          wPoints = extractWayPoints(path);
+
         else
           disp("Game Over !!")
         end
     end
 
-    function runPrimitives( self, primitives , delta_s, treeDrawing )
+    function data = runPrimitives( self, primitives , delta_s, treeDrawing )
 
         xFrame= self.xLength* 0.1;
         yFrame= self.yLength* 0.1;
@@ -154,9 +157,12 @@ classdef Env3D < Env
         el = 90;
         view(az, el);
 
+        %theta variation in vel, acc and jerk
+        theta_diff = DifferentiatorBlock(self.clock.delta_t,3);
+
         numOfIntegrations =delta_s/self.clock.delta_t;
         numPrimitives = size(primitives,1);
-        data = zeros(numPrimitives*numOfIntegrations , self.agent.dimState +1);
+        data = zeros(numPrimitives*numOfIntegrations , self.agent.dimState +4);
         draw(self);
         pause(0.2);
         for i = 1:numPrimitives
@@ -166,6 +172,7 @@ classdef Env3D < Env
             dataIndex = ( i -1 )*numOfIntegrations + j;
             data(dataIndex, 1:self.agent.dimState)= agentData.state';
             data(dataIndex, self.agent.dimState+1) = self.clock.curr_t;
+            data(dataIndex, self.agent.dimState+2:self.agent.dimState +4) = differentiate(theta_diff,agentData.state(3,1))';
             draw(self.agent);
             pause(0.0001);
             tick(self.clock);

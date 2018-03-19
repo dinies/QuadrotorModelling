@@ -16,10 +16,10 @@ classdef FixedWingsUav < Uav
       self.u_phi_max = u_phi_max;
       self.primitives = [
                          v_max, 0;
-                         v_max, u_phi_max/2;
-                         v_max, -u_phi_max/2;
-                         v_max, u_phi_max;
-                         v_max, -u_phi_max
+                         v_max/2, u_phi_max/2;
+                         v_max/2, -u_phi_max/2;
+                         v_max/2, u_phi_max;
+                         v_max/2, -u_phi_max
       ];
       self.coords.x = q_0(1,1);
       self.coords.y = q_0(2,1);
@@ -147,20 +147,41 @@ classdef FixedWingsUav < Uav
       figure('Name','State')
 
       ax1 = subplot(2,2,1);
-      plot(data(:,5),data(:,1), '-o');
+      plot(data(:,5),data(:,1));
       title(ax1,'x axis');
 
       ax2 = subplot(2,2,2);
-      plot(data(:,5),data(:,2), '-o');
+      plot(data(:,5),data(:,2));
       title(ax2,'y axis');
 
       ax3 = subplot(2,2,3);
-      plot(data(:,5),data(:,3), '-o');
+      plot(data(:,5),data(:,3));
       title(ax3,'psi');
 
       ax4 = subplot(2,2,4);
-      plot(data(:,5),data(:,4), '-o');
+      plot(data(:,5),data(:,4));
       title(ax4,'phi');
+
+
+      figure('Name','angle of approach (alfa) variation')
+
+      ax1 = subplot(2,2,1);
+      plot(data(:,5),data(:,3));
+      title(ax1,'alfa');
+
+      ax2 = subplot(2,2,2);
+      plot(data(:,5),data(:,6));
+      title(ax2,'d_alfa');
+
+      ax3 = subplot(2,2,3);
+      plot(data(:,5),data(:,7));
+      title(ax3,'dd_alfa');
+
+      ax4 = subplot(2,2,4);
+      plot(data(:,5),data(:,8));
+      title(ax4,'ddd_alfa');
+
+
 
     end
   end

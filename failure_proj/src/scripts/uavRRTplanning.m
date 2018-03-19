@@ -9,16 +9,15 @@ x_f = [ 40;25;0];
 
 clock= Clock(delta_t);
 
-
 %   fixed Wings
  % state       x      y     psi    phi
 q_0 =  [x_0(1,1) ; x_0(2,1);  0 ;  0  ];
 
-v_max = 10;
-u_phi_max = 4;
+v_max = 14;
+u_phi_max = 10;
 radius = 1.5;
 
-%agent = FixedWingsUav(q_0,20,[0.5,0.2,0.9], clock, v_max, u_phi_max, radius);
+agent = FixedWingsUav(q_0,20,[0.5,0.2,0.9], clock, v_max, u_phi_max, radius);
 
 
 
@@ -30,7 +29,7 @@ v_max = 10;
 w_max = 4;
 radius = 1.5;
 
-agent = Unicycle(q_0,20,[0.5,0.2,0.9], clock, v_max,w_max, radius);
+%agent = Unicycle(q_0,20,[0.5,0.2,0.9], clock, v_max,w_max, radius);
 
 
 dimensions = [

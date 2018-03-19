@@ -13,7 +13,7 @@ classdef MotionPlanner < handle
 
   methods
     function self = MotionPlanner(env)
-      self.gamma= 2;
+      self.gamma= 1.4;
       self.env=env;
       self.Ka = 2.4;
       self.Kb = 4.0;

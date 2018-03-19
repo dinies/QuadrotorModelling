@@ -146,16 +146,34 @@ classdef Unicycle < Uav
 
       ax1 = subplot(1,3,1);
 
-      plot(data(:,4),data(:,1), '-o');
+      plot(data(:,4),data(:,1));
       title(ax1,'x axis');
 
       ax2 = subplot(1,3,2);
-      plot(data(:,4),data(:,2), '-o');
+      plot(data(:,4),data(:,2));
       title(ax2,'y axis');
 
       ax3 = subplot(1,3,3);
-      plot(data(:,4),data(:,3), '-o');
+      plot(data(:,4),data(:,3));
       title(ax3,'theta');
+
+      figure('Name','angle of approach (alfa) variation')
+
+      ax1 = subplot(2,2,1);
+      plot(data(:,4),data(:,3));
+      title(ax1,'alfa');
+
+      ax2 = subplot(2,2,2);
+      plot(data(:,4),data(:,5));
+      title(ax2,'d_alfa');
+
+      ax3 = subplot(2,2,3);
+      plot(data(:,4),data(:,6));
+      title(ax3,'dd_alfa');
+
+      ax4 = subplot(2,2,4);
+      plot(data(:,4),data(:,7));
+      title(ax4,'ddd_alfa');
 
     end
   end
