@@ -114,7 +114,7 @@ classdef FixedWingsUav < Uav
 
     function draw(self)
       drawer = Drawer();
-      scale = 40;
+      scale = 20;
 
       vertices = [
                   - 1.0*scale, 1.6*scale, -0.2*scale ;

@@ -22,13 +22,28 @@ classdef MotionPlanner < handle
       self.Kwall = 1.5;
     end
 
+    function clockWise = checkVortexDirection(self)
+      px = self.env.agent.q(1,1);
+      py = self.env.agent.q(2,1);
+      psi = self.env.agent.q(3,1);
+      line = m*x + q;
+      d = "TODO";
+    end
+
+    function f = computeArtificialVortexForce( self)
+      attr = computeAttrForce(self);
+      vortexRep = computeRepForce(self,self.env.obstacles,true);
+      f = attr + vortexRep;
+    end
+
+
     function f = computeArtificialForce( self)
       attr = computeAttrForce(self);
-      rep = computeRepForce(self,self.env.obstacles);
+      rep = computeRepForce(self,self.env.obstacles,false);
       f = attr + rep;
     end
 
-    function f = computeAttrForce(self )
+    function f = computeAttrForce(self)
       err= [ self.env.goal.coords.x - self.env.agent.coords.x ;
              self.env.goal.coords.y - self.env.agent.coords.y
            ];
@@ -41,7 +56,7 @@ classdef MotionPlanner < handle
       end
     end
 
-    function f= computeRepForce(self, obs)
+    function f= computeRepForce(self, obs, flagVortex)
       f = zeros(2,1);
       for i = 1:size(obs,1)
         obstacle = obs(i);
@@ -56,11 +71,23 @@ classdef MotionPlanner < handle
 
           gradientClearance =  (  1/sqrt((obstacle.coords.x - self.env.agent.coords.x)^2 +(obstacle.coords.y - self.env.agent.coords.y)^2) )*vec;
           force = (obstacle.Kr/clearance^2) * ( 1/clearance - 1/obstacle.influenceRange)^(self.gamma-1) * gradientClearance;
+          if flagVortex
+            clockWise = checkVortexDirection(self);
+            force = [
+                     force(2,1);
+                     - force(1,1);
+            ];
+            if ~clockWise
+              force = - force;
+            end
+          end
         else
           force = zeros(2,1);
         end
         f = f + force;
       end
+
+
 
       forceFromWalls = computeRepWalls( self);
       f = f + forceFromWalls;

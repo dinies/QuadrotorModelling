@@ -50,7 +50,8 @@ mat = [
 
 addObstacles(env, obsNum );
 
-planner = RRTplanner(env);
+artPotPlanner =  MotionPlanner( env);
+planner = RRTplanner(env,agent);
 
 
 %{
@@ -59,5 +60,5 @@ planner = RRTplanner(env);
 %}
 delta_s = delta_t*10;
 treeDrawing = true;
-path = generatePathRRT(env, planner,delta_s,treeDrawing);
+path = generatePathRRT(env, artPotPlanner,planner,delta_s,treeDrawing);
 

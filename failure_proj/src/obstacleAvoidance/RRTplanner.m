@@ -2,8 +2,8 @@ classdef RRTplanner< handle
   properties
     env
     primitives
-    delta_
     epsilon
+    agent
   end
 
   methods( Static = true)
@@ -47,12 +47,12 @@ classdef RRTplanner< handle
     end
 
 
-    function orderedList = insertInCrescentOrder( list, elem, posRand)
-      euclideanDist = sqrt((elem.value.conf(1,1) - posRand.x)^2 + (elem.value.conf(2,1) - posRand.y)^2);
+    function orderedList = insertInCrescentOrder( list, elem, pos)
+      euclideanDist = sqrt((elem.value.conf(1,1) - pos.x)^2 + (elem.value.conf(2,1) - pos.y)^2);
       inserted = false;
       for i = 1:size(list,2)
         if ~inserted
-          currDist = sqrt((list{i}.value.conf(1,1) - posRand.x)^2 + (list{i}.value.conf(2,1) - posRand.y)^2);
+          currDist = sqrt((list{i}.value.conf(1,1) - pos.x)^2 + (list{i}.value.conf(2,1) - pos.y)^2);
           if euclideanDist < currDist
             inserted = true;
             if i == 1
@@ -68,13 +68,13 @@ classdef RRTplanner< handle
       end
     end
 
-    function orderedChildren = recSortByNearerChild(children, posRand)
+    function orderedChildren = recSortByNearerChild(children, pos)
       if size(children,2) == 0
         orderedChildren = {};
       elseif size(children,2) == 1
         orderedChildren = children;
       else
-        orderedChildren = RRTplanner.insertInCrescentOrder( RRTplanner.recSortByNearerChild( {children{2:size(children,2)}}, posRand), children{1}, posRand);
+        orderedChildren = RRTplanner.insertInCrescentOrder( RRTplanner.recSortByNearerChild( {children{2:size(children,2)}}, pos), children{1}, pos);
       end
     end
 
@@ -91,9 +91,10 @@ classdef RRTplanner< handle
   end
 
   methods
-    function self= RRTplanner( env )
+    function self= RRTplanner( env, agent )
       self.env = env;
       self.epsilon = 0.5;
+      self.agent = agent;
     end
 
     function collision = collisionCheckAgent(self,newNode,radius,obstacles)
@@ -117,12 +118,12 @@ classdef RRTplanner< handle
 
 
 
-    function path = runAlgo(self,agent,obstacles,threshold,delta_s, treeDrawing)
-      initialValue.conf = agent.q;
+    function path = runAlgo(self,artPotPlanner,obstacles,threshold,delta_s, treeDrawing)
+      initialValue.conf = self.agent.q;
       initialValue.input = [ 0; 0];
-      initialValue.time = agent.clock.curr_t;
+      initialValue.time = self.agent.clock.curr_t;
       initialValue.burned = false;
-      initialValue.middleConfs = agent.q;
+      initialValue.middleConfs = self.agent.q;
       root = Node( initialValue);
 
       if treeDrawing
@@ -151,23 +152,32 @@ classdef RRTplanner< handle
           return;
         else
           qNear = qNearSingleton{:};
-          nodesFromPrimitives = generatePrimitives(agent,qNear,delta_s);
-          orderedNodesFromPrim = RRTplanner.recSortByNearerChild(nodesFromPrimitives, posRand);
+          nodesFromPrimitives = generatePrimitives(self.agent,qNear,delta_s);
+
+          setUavState(self.agent,qNear.value.conf,qNear.value.time );
+
+          artForce = computeArtificialVortexForce( artPotPlanner, );
+          "TODO"
+
+          artPos.x = self.agent.q(1,1) + artForce(1,1);
+          artPos.y = self.agent.q(2,1) + artForce(2,1);
+
+          orderedNodesFromPrim = RRTplanner.recSortByNearerChild(nodesFromPrimitives, artPos);
           qNewFound = false;
           i = 1;
           while  ~qNewFound && i <= size(orderedNodesFromPrim,2)
             qNew = orderedNodesFromPrim{i};
-            if ~collisionCheckAgent(self,qNew,agent.radius, obstacles) && ~Node.recNodeBelongs( qNew , qNear.children)
+            if ~collisionCheckAgent(self,qNew,self.agent.radius, obstacles) && ~Node.recNodeBelongs( qNew , qNear.children)
               addChild(qNear, qNew);
               if treeDrawing
                 precision = 10;
                 actualPrecision = round( size(qNew.value.middleConfs,2) /precision);
                 for j = 1:actualPrecision:size(qNew.value.middleConfs,2)
                   coords = qNew.value.middleConfs(1:2,j);
-                  scatter3(coords(1,1), coords(2,1), 0 , agent.radius, agent.color);
+                  scatter3(coords(1,1), coords(2,1), 0 , self.agent.radius, self.agent.color);
                   pause(0.00001);
                 end
-                scatter3(qNew.value.conf(1,1), qNew.value.conf(2,1), 0 , agent.radius*5, agent.color*0.5);
+                scatter3(qNew.value.conf(1,1), qNew.value.conf(2,1), 0 , self.agent.radius*5, self.agent.color*0.5);
               end
               qNewFound = true;
               self.epsilon = self.epsilon - 0.01;
