@@ -34,8 +34,12 @@ classdef ObstacleCreator  < handle
 
 
     function r=  createRandRadius(~,env)
-      avgWidth= env.unitaryDim*2;
-      variance = avgWidth/6;
+      %avgWidth= env.unitaryDim*2;
+      %variance = avgWidth/6;
+
+      avgWidth = 50; % auv-si specific values
+      variance = 43;
+
       if rand() >= 0.5
         willBePos= 1;
       else

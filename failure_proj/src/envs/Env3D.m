@@ -102,7 +102,7 @@ classdef Env3D < Env
                             %  path = generatePath(planner,self);
 
     function result = generatePathRRT(self, planner,delta_s, treeDrawing)
-        figure('Name','RRT'),hold on;
+      figure('Name','RRT','pos',[10 10 1350 900]),hold on;
         xFrame= self.xLength* 0.1;
         yFrame= self.yLength* 0.1;
         zFrame= self.zLength* 0.1;
@@ -149,7 +149,7 @@ classdef Env3D < Env
         maxYaxis= self.dimensions(2,2) + yFrame;
         minZaxis= self.dimensions(3,1) - zFrame;
         maxZaxis= self.dimensions(3,2) + zFrame;
-        figure('Name','Environment'),hold on;
+        figure('Name','Environment','pos',[10 10 1350 900]),hold on;
         axis([ minXaxis maxXaxis minYaxis maxYaxis  minZaxis maxZaxis]);
         title('world'), xlabel('x'), ylabel('y'), zlabel('z')
         grid on
@@ -160,21 +160,25 @@ classdef Env3D < Env
         %theta variation in vel, acc and jerk
         theta_diff = DifferentiatorBlock(self.clock.delta_t,3);
 
+        precision =3;
         numOfIntegrations =delta_s/self.clock.delta_t;
+        actualPrecision = round( numOfIntegrations / precision);
         numPrimitives = size(primitives,1);
         data = zeros(numPrimitives*numOfIntegrations , self.agent.dimState +4);
         draw(self);
         pause(0.2);
         for i = 1:numPrimitives
           for j = 1:numOfIntegrations
-            deleteDrawing(self.agent);
             agentData = doAction(self.agent, primitives, i);
+            if rem(j,actualPrecision) == 0
+              deleteDrawing(self.agent);
+              draw(self.agent);
+            end
             dataIndex = ( i -1 )*numOfIntegrations + j;
             data(dataIndex, 1:self.agent.dimState)= agentData.state';
             data(dataIndex, self.agent.dimState+1) = self.clock.curr_t;
             data(dataIndex, self.agent.dimState+2:self.agent.dimState +4) = differentiate(theta_diff,agentData.state(3,1))';
-            draw(self.agent);
-            pause(0.0001);
+            pause(0.000001);
             tick(self.clock);
           end
         end

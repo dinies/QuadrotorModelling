@@ -4,27 +4,31 @@ classdef FixedWingsUav < Uav
     radius
     coords
     v_max
+    v_min
     u_phi_max
+    phi_bound
     primitives
   end
 
   methods
-    function self = FixedWingsUav (q_0, h , color, clock, v_max, u_phi_max, radius)
+    function self = FixedWingsUav (q_0, h , color, clock, v_max, v_min, u_phi_max, radius)
       self@Uav(q_0, color, clock )
       self.h= h;
       self.v_max = v_max;
+      self.v_min= v_min;
       self.u_phi_max = u_phi_max;
       self.primitives = [
                          v_max, 0;
-                         v_max/2, u_phi_max/2;
-                         v_max/2, -u_phi_max/2;
-                         v_max/2, u_phi_max;
-                         v_max/2, -u_phi_max
+                         v_max, u_phi_max;
+                         v_max, -u_phi_max;
+                         v_min, u_phi_max;
+                         v_min, -u_phi_max;
       ];
       self.coords.x = q_0(1,1);
       self.coords.y = q_0(2,1);
       self.coords.z = 0;
       self.radius = radius;
+      self.phi_bound=  0.7;   % 40 degrees
     end
 
 
@@ -96,7 +100,11 @@ classdef FixedWingsUav < Uav
         struct.burned = false;
         struct.middleConfs = middleConfs;
         elem  = Node( struct );
-        res = Node.addInTail(elem, res);
+        if abs(newConf(4,1)) <= self.phi_bound
+          res = Node.addInTail(elem, res);
+        else
+          scatter3(newConf(1,1),newConf(2,1),0, 30 ,[0.8,0.2,0.2]);
+        end
       end
     end
 
@@ -106,7 +114,7 @@ classdef FixedWingsUav < Uav
 
     function draw(self)
       drawer = Drawer();
-      scale = 0.4;
+      scale = 40;
 
       vertices = [
                   - 1.0*scale, 1.6*scale, -0.2*scale ;

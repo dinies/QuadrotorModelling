@@ -160,7 +160,9 @@ classdef RRTplanner< handle
             if ~collisionCheckAgent(self,qNew,agent.radius, obstacles) && ~Node.recNodeBelongs( qNew , qNear.children)
               addChild(qNear, qNew);
               if treeDrawing
-                for j = 1:size(qNew.value.middleConfs,2)
+                precision = 10;
+                actualPrecision = round( size(qNew.value.middleConfs,2) /precision);
+                for j = 1:actualPrecision:size(qNew.value.middleConfs,2)
                   coords = qNew.value.middleConfs(1:2,j);
                   scatter3(coords(1,1), coords(2,1), 0 , agent.radius, agent.color);
                   pause(0.00001);

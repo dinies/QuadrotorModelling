@@ -2,10 +2,10 @@ close all
 clear
 clc
 
-delta_t = 0.02;
+delta_t = 0.1;
 
-x_0 = [ 10;10;0];
-x_f = [ 40;25;0];
+x_0 = [ 100;100;0];
+x_f = [ 1900;1900;0];
 
 clock= Clock(delta_t);
 
@@ -13,11 +13,12 @@ clock= Clock(delta_t);
  % state       x      y     psi    phi
 q_0 =  [x_0(1,1) ; x_0(2,1);  0 ;  0  ];
 
-v_max = 14;
-u_phi_max = 10;
-radius = 1.5;
+v_max = 30;
+v_min=  20;
+u_phi_max = 0.28; %11.5 degrees
+radius = 2;
 
-agent = FixedWingsUav(q_0,20,[0.5,0.2,0.9], clock, v_max, u_phi_max, radius);
+agent = FixedWingsUav(q_0,20,[0.5,0.2,0.9], clock, v_max,v_min, u_phi_max, radius);
 
 
 
@@ -33,15 +34,21 @@ radius = 1.5;
 
 
 dimensions = [
-              0 , 60;
-              0 , 60;
-              0, 40
+              0 , 2000;
+              0 , 2000;
+              0, 1000
 ];
 env  = Env3D( dimensions, delta_t, agent, clock);
 
 setMission(env, x_0, x_f );
-obsNum = 20;
-addObstacles(env, obsNum);
+obsNum = 30;
+
+mat = [
+       400,   150,   100;
+];
+
+
+addObstacles(env, obsNum );
 
 planner = RRTplanner(env);
 
