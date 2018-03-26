@@ -4,10 +4,10 @@ classdef Obstacle < Entity
     Kr
   end
   methods
-    function self= Obstacle(x, y, z , r, color )
+    function self= Obstacle(x, y, z , r, color, Kr )
       self@Entity( x, y, z, r, color );
       self.influenceRange= 5*r;
-      self.Kr= 50*r;
+      self.Kr = Kr;
     end
 
     function draw2D(self)
@@ -20,8 +20,10 @@ classdef Obstacle < Entity
     end
     function draw3D(self)
       drawer = Drawer();
-      d= drawCircle3D(drawer , self.coords.x, self.coords.y, self.coords.z, self.radius, self.color);
-      self.drawing = [d];
+      d1 = drawCircle3D(drawer , self.coords.x, self.coords.y, self.coords.z, self.radius, self.color);
+      colorInfluenceRange= self.color * 0.8;
+      d2 = drawCircle3D(drawer , self.coords.x, self.coords.y, self.coords.z, self.radius + self.influenceRange, colorInfluenceRange);
+      self.drawing = [ d1 ; d2];
     end
   end
 end

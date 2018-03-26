@@ -89,11 +89,83 @@ classdef Env3D < Env
       self.goal.coords.z = goal(3,1);
     end
 
-    function addObstacles( self, obstacles )
-      obsCreator= ObstacleCreator(self,obstacles, self.obstacles);
+    function addObstacles( self, obstacles, Kr)
+      if nargin > 2
+        obsCreator= ObstacleCreator(self,obstacles, self.obstacles, Kr);
+      else
+        obsCreator= ObstacleCreator(self,obstacles, self.obstacles);
+      end
       self.obstacles = obsCreator.obstacles;
       self.obstacleCreator = obsCreator;
     end
+
+    function drawMeshArtForces(self, artPotPlanner, vortexFlag)
+
+      if ~vortexFlag
+        figure('Name','Radial Artificial Potential Forces','pos',[10 10 1000 1000]),hold on;
+      else
+        figure('Name','Vortex Artificial Potentials Forces','pos',[10 10 1000 1000]),hold on;
+      end
+      xFrame= self.xLength* 0.1;
+      yFrame= self.yLength* 0.1;
+      zFrame= self.zLength* 0.1;
+      minXaxis= self.dimensions(1,1) - xFrame;
+      maxXaxis= self.dimensions(1,2) + xFrame;
+      minYaxis= self.dimensions(2,1) - yFrame;
+      maxYaxis= self.dimensions(2,2) + yFrame;
+      minZaxis= self.dimensions(3,1) - zFrame;
+      maxZaxis= self.dimensions(3,2) + zFrame;
+      axis([ minXaxis maxXaxis minYaxis maxYaxis  minZaxis maxZaxis]);
+      grid on
+      az = 0;
+      el = 90;
+      view(az, el);
+      title('Artificial Force vectors'), xlabel('x'), ylabel('y');
+      draw3D(self.start);
+      draw3D(self.goal);
+      for i = 1:size(self.obstacles,1)
+        draw3D(self.obstacles(i,1));
+      end
+      for i= 1:size(self.borders,1)
+        first=  self.borders(i,1:3);
+        second=  self.borders(i,4:6);
+        self.drawer.drawLine3D(first,second,self.colors.black);
+      end
+      artPotPlanner.drawMeshArtForceVectors(vortexFlag);
+    end
+
+
+    function drawMeshArtPotentials(self, artPotPlanner)
+
+      figure('Name','Artificial Potentials','pos',[10 10 1000 1000]),hold on;
+      xFrame= self.xLength* 0.1;
+      yFrame= self.yLength* 0.1;
+      zFrame= self.zLength* 0.1;
+      minXaxis= self.dimensions(1,1) - xFrame;
+      maxXaxis= self.dimensions(1,2) + xFrame;
+      minYaxis= self.dimensions(2,1) - yFrame;
+      maxYaxis= self.dimensions(2,2) + yFrame;
+      minZaxis= self.dimensions(3,1) - zFrame;
+      maxZaxis =   10^4;
+      axis([ minXaxis maxXaxis minYaxis maxYaxis  minZaxis maxZaxis]);
+      grid on
+      az = 45;
+      el = 45;
+      view(az, el);
+      title('Artificial Potentials'), xlabel('x'), ylabel('y');
+      draw3D(self.start);
+      draw3D(self.goal);
+      for i = 1:size(self.obstacles,1)
+        draw3D(self.obstacles(i,1));
+      end
+      for i= 1:size(self.borders,1)
+        first=  self.borders(i,1:3);
+        second=  self.borders(i,4:6);
+        self.drawer.drawLine3D(first,second,self.colors.black);
+      end
+      artPotPlanner.drawMeshPotentials(maxZaxis-self.unitaryDim);
+    end
+
 
 
 
@@ -102,7 +174,7 @@ classdef Env3D < Env
                             %  path = generatePath(planner,self);
 
     function result = generatePathRRT(self,artPotPlanner, planner,delta_s, treeDrawing)
-      figure('Name','RRT','pos',[10 10 1350 900]),hold on;
+      figure('Name','RRT','pos',[10 10 1000 1000]),hold on;
         xFrame= self.xLength* 0.1;
         yFrame= self.yLength* 0.1;
         zFrame= self.zLength* 0.1;
@@ -149,7 +221,7 @@ classdef Env3D < Env
         maxYaxis= self.dimensions(2,2) + yFrame;
         minZaxis= self.dimensions(3,1) - zFrame;
         maxZaxis= self.dimensions(3,2) + zFrame;
-        figure('Name','Environment','pos',[10 10 1350 900]),hold on;
+        figure('Name','Environment','pos',[10 10 1000 1000]),hold on;
         axis([ minXaxis maxXaxis minYaxis maxYaxis  minZaxis maxZaxis]);
         title('world'), xlabel('x'), ylabel('y'), zlabel('z')
         grid on

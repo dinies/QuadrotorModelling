@@ -22,15 +22,6 @@ agent = FixedWingsUav(q_0,20,[0.5,0.2,0.9], clock, v_max,v_min, u_phi_max, radiu
 
 
 
-                                %  Unicycle
-                                % state       x      y     psi    phi
-%q_0 =  [x_0(1,1) ; x_0(2,1);  0 ];
-%v_max = 10;
-%w_max = 4;
-%radius = 1.5;
-%agent = Unicycle(q_0,20,[0.5,0.2,0.9], clock, v_max,w_max, radius);
-
-
 dimensions = [
               0 , 2000;
               0 , 2000;
@@ -39,7 +30,6 @@ dimensions = [
 env  = Env3D( dimensions, delta_t, agent, clock);
 
 setMission(env, x_0, x_f );
-%obsNum = 10;
 
 mat = [
        1000,   1000,   100;
@@ -47,9 +37,9 @@ mat = [
        1500,   500,   70;
 ];
 
-                               %artificial potential gains
+%artificial potential gains
 Ka = 0.5;
-Kb = 23;
+Kb = 3;
 Kr = 10^8;
 Kwall = 10;
 gamma = 2;
@@ -60,14 +50,7 @@ addObstacles(env, mat ,  Kr);
 artPotPlanner =  ArtPotPlanner( env, Ka, Kb, Kwall, gamma, rho );
 
 
-planner = RRTplanner(env,agent);
-
-
-%{
- normalized unit to perform path  generation, it is not the real delta_t
- it defines the magnitude of the displacement of the agent into the environment after each step
-%}
-delta_s = delta_t*10;
-treeDrawing = true;
-path = env.generatePathRRT( artPotPlanner,planner,delta_s,treeDrawing);
+%env.drawMeshArtPotentials(artPotPlanner)
+env.drawMeshArtForces(artPotPlanner,true);
+env.drawMeshArtForces(artPotPlanner,false);
 

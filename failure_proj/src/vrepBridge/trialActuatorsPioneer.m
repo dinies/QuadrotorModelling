@@ -18,8 +18,8 @@ function trialActuatorsPioneer()
     [returnCode,right_Motor]=vrep.simxGetObjectHandle(clientID,'Pioneer_p3dx_rightMotor',vrep.simx_opmode_blocking );
 
                                 %other code
-    [returnCode]=vrep.simxSetJointTargetVelocity(clientID,left_Motor,20.1,vrep.simx_opmode_blocking );
-    [returnCode]=vrep.simxSetJointTargetVelocity(clientID,right_Motor,70.4,vrep.simx_opmode_blocking );
+    [returnCode]=vrep.simxSetJointTargetVelocity(clientID,left_Motor,-10.4,vrep.simx_opmode_blocking );
+    [returnCode]=vrep.simxSetJointTargetVelocity(clientID,right_Motor,-10.4,vrep.simx_opmode_blocking );
 
                                 %tic
     for i=1:100

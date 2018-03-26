@@ -156,11 +156,12 @@ classdef RRTplanner< handle
 
           setUavState(self.agent,qNear.value.conf,qNear.value.time );
 
-          artForce = computeArtificialVortexForce( artPotPlanner, );
-          "TODO"
+          artForce = computeArtificialVortexForce( artPotPlanner);
 
           artPos.x = self.agent.q(1,1) + artForce(1,1);
           artPos.y = self.agent.q(2,1) + artForce(2,1);
+          drawer = Drawer();
+          drawer.drawLine3D([ self.agent.q(1:2,1)', 0], [artPos.x, artPos.y , 0], [0.8,0.3,0.5]);
 
           orderedNodesFromPrim = RRTplanner.recSortByNearerChild(nodesFromPrimitives, artPos);
           qNewFound = false;

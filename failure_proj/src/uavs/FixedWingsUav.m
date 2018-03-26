@@ -152,7 +152,7 @@ classdef FixedWingsUav < Uav
 
     function drawStatistics(self, data)
 
-      figure('Name','State')
+      figure('Name','State','pos',[10 10 1350 900])
 
       ax1 = subplot(2,2,1);
       plot(data(:,5),data(:,1));
@@ -171,7 +171,7 @@ classdef FixedWingsUav < Uav
       title(ax4,'phi');
 
 
-      figure('Name','angle of approach (alfa) variation')
+      figure('Name','angle of approach (alfa) variation','pos',[10 10 1350 900])
 
       ax1 = subplot(2,2,1);
       plot(data(:,5),data(:,3));
