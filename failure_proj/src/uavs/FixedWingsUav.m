@@ -18,7 +18,7 @@ classdef FixedWingsUav < Uav
       self.v_min= v_min;
       self.u_phi_max = u_phi_max;
       self.primitives = [
-                         v_max, 0;
+                         v_max*0.65, 0;
                          v_max, u_phi_max;
                          v_max, -u_phi_max;
                          v_min, u_phi_max;
