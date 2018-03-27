@@ -152,7 +152,7 @@ classdef RRTplanner< handle
           return;
         else
           qNear = qNearSingleton{:};
-          nodesFromPrimitives = generatePrimitives(self.agent,qNear,delta_s);
+          nodesFromPrimitives = generateLongPrimitives(self.agent,qNear,delta_s);
 
           setUavState(self.agent,qNear.value.conf,qNear.value.time );
 
@@ -172,9 +172,9 @@ classdef RRTplanner< handle
               addChild(qNear, qNew);
               if treeDrawing
                 precision = 10;
-                actualPrecision = round( size(qNew.value.middleConfs,2) /precision);
-                for j = 1:actualPrecision:size(qNew.value.middleConfs,2)
-                  coords = qNew.value.middleConfs(1:2,j);
+                actualPrecision = round( size(qNew.value.middleData,2) /precision);
+                for j = 1:actualPrecision:size(qNew.value.middleData,2)
+                  coords = qNew.value.middleData(1:2,j);
                   scatter3(coords(1,1), coords(2,1), 0 , self.agent.radius, self.agent.color);
                   pause(0.00001);
                 end

@@ -86,11 +86,11 @@ classdef FixedWingsUav < Uav
       for i = 1:size(self.primitives,1)
         setUavState(self,currConf,currTime );
         currInput = self.primitives(i,:)';
-        middleConfs = zeros(size(self.q,1),precision);
+        middleData= zeros(size(self.q,1),precision);
         for j = 1:precision
           newQDot = transitionModel(self, currInput );
           updateState(self, newQDot);
-          middleConfs(:,j) = self.q;
+          middleData(:,j) = self.q;
           tick(self.clock);
         end
         newConf = self.q;
@@ -98,7 +98,40 @@ classdef FixedWingsUav < Uav
         struct.pastInput = currInput;
         struct.time = self.clock.curr_t;
         struct.burned = false;
-        struct.middleConfs = middleConfs;
+        struct.middleData= middleData;
+        elem  = Node( struct );
+        if abs(newConf(4,1)) <= self.phi_bound
+          res = Node.addInTail(elem, res);
+        else
+          scatter3(newConf(1,1),newConf(2,1),0, 30 ,[0.8,0.2,0.2]);
+        end
+      end
+    end
+
+
+
+    function res = generateLongPrimitives(self,node,delta_s)
+      currConf = node.value.conf;
+      currTime = node.value.time;
+      precision = delta_s / self.clock.delta_t;
+      res = {};
+      for i = 1:size(self.primitives,1)
+        setUavState(self,currConf,currTime );
+        middleData= zeros(size(self.q,1)+size(self.primitives,3),precision);
+        for j = 1:precision
+          currInput = self.primitives(i,j,:)';
+          newQDot = transitionModel(self, currInput );
+          updateState(self, newQDot);
+          middleData(1:size(self.q,1),j) = self.q;
+          middleData(size(self.q,1)+1:size(self.q,1)+size(self.primitives,3),j) = currInput;
+          tick(self.clock);
+        end
+        newConf = self.q;
+        struct.conf = newConf;
+        struct.pastInput = currInput;
+        struct.time = self.clock.curr_t;
+        struct.burned = false;
+        struct.middleData= middleData;
         elem  = Node( struct );
         if abs(newConf(4,1)) <= self.phi_bound
           res = Node.addInTail(elem, res);
