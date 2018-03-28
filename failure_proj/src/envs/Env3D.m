@@ -174,7 +174,8 @@ classdef Env3D < Env
                             %  path = generatePath(planner,self);
 
     function result = generatePathRRT(self,artPotPlanner, planner,delta_s, treeDrawing)
-      figure('Name','RRT','pos',[10 10 1000 1000]),hold on;
+       if treeDrawing
+        figure('Name','RRT','pos',[10 10 1000 1000]),hold on;
         xFrame= self.xLength* 0.1;
         yFrame= self.yLength* 0.1;
         zFrame= self.zLength* 0.1;
@@ -190,13 +191,17 @@ classdef Env3D < Env
         el = 90;
         view(az, el);
         title('RRT Tree Evolution'), xlabel('x'), ylabel('y');
-        draw3D(self.start);
-        draw3D(self.goal);
-        for i = 1:size(self.obstacles,1)
-          draw3D(self.obstacles(i,1));
-        end
+            draw3D(self.start);
+            draw3D(self.goal);
+            for i = 1:size(self.obstacles,1)
+              draw3D(self.obstacles(i,1));
+            end
+       end
+        tic %It measures time for path planning%
         result = runAlgo(planner,artPotPlanner, self.obstacles, self.unitaryDim ,delta_s, treeDrawing );
-
+        toc
+        
+        
         if ~isempty(result)
           rootNode=  result{1};
           setUavState(self.agent, rootNode.value.conf, rootNode.value.time);
