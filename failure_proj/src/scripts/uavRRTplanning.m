@@ -18,7 +18,8 @@ v_min=  20;
 u_phi_max = 0.28; %11.5 degrees
 radius = 2;
 
-agent = FixedWingsUav(q_0,20,[0.5,0.2,0.9], clock, v_max,v_min, u_phi_max, radius);
+delta_s = delta_t*10;
+agent = FixedWingsUav(q_0,20,[0.5,0.2,0.9], clock, v_max,v_min, u_phi_max, radius, delta_s);
 
 
 
@@ -67,7 +68,6 @@ planner = RRTplanner(env,agent);
  normalized unit to perform path  generation, it is not the real delta_t
  it defines the magnitude of the displacement of the agent into the environment after each step
 %}
-delta_s = delta_t*10;
 treeDrawing = true;
 path = env.generatePathRRT( artPotPlanner,planner,delta_s,treeDrawing);
 

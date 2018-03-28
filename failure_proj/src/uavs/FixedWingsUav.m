@@ -10,8 +10,109 @@ classdef FixedWingsUav < Uav
     primitives
   end
 
+  methods( Static = true)
+    function res = definePrimitives(self,v_max,v_min,u_phi_max,delta_t,delta_s)
+
+      avg_v = (v_max - v_min)/2;
+
+      % v
+      knot1.pos = avg_v;
+      knot1.vel = 0;
+      knot1.acc = 0;
+      knot1.time = 0;
+      knot2.pos = avg_v;
+      knot2.vel = 0;
+      knot2.acc = 0;
+      knot2.time = delta_s;
+      knots_v = [ knot1 , knot2]
+
+                                % u_phi
+                                %straight
+      knot3.pos = 0;
+      knot3.vel = 0;
+      knot3.acc = 0;
+      knot3.time = 0;
+      knot4.pos = 0;
+      knot4.vel = 0;
+      knot4.acc = 0;
+      knot4.time = delta_s;
+      knots_u_phi_straight = [ knot3 , knot4]
+
+                                %curve_right
+
+      knot5.pos = 0;
+      knot5.vel = 0;
+      knot5.acc = 0;
+      knot5.time = 0;
+
+      knot6.pos = -u_phi_max;
+      knot6.vel = 0;
+      knot6.acc = 0;
+      knot6.time = delta_s/10;
+
+      knot7.pos = -u_phi_max;
+      knot7.vel = 0;
+      knot7.acc = 0;
+      knot7.time = 9*delta_s/10;
+
+      knot8.pos = 0;
+      knot8.vel = 0;
+      knot8.acc = 0;
+      knot8.time = delta_s;
+
+
+      knots_u_phi_curve_right= [ knot5 , knot6, knots7 , knots8];
+
+
+                                %curve_left
+      knot9.pos = 0;
+      knot9.vel = 0;
+      knot9.acc = 0;
+      knot9.time = 0;
+
+      knot10.pos = u_phi_max;
+      knot10.vel = 0;
+      knot10.acc = 0;
+      knot10.time = delta_s/10;
+
+      knot11.pos = u_phi_max;
+      knot11.vel = 0;
+      knot11.acc = 0;
+      knot11.time = 9*delta_s/10;
+
+      knot12.pos = 0;
+      knot12.vel = 0;
+      knot12.acc = 0;
+      knot12.time = delta_s;
+
+
+      knots_u_phi_curve_left= [ knot5 , knot6, knots7 , knots8];
+
+
+
+
+"TODO"
+
+
+
+      p_straight = PolynomialKnotSequencer(knots_v,delta_t)
+
+      p_straight = PolynomialKnotSequencer(knots_v,delta_t)
+
+
+
+      knots_u_phi = [
+
+      ]
+
+      res.straight = p_straight.getReferences();
+      res.curve_right= p_curve.getReferences();
+      res.curve_left= p_straight.getReferences();
+
+    end
+  end
   methods
-    function self = FixedWingsUav (q_0, h , color, clock, v_max, v_min, u_phi_max, radius)
+    function self = FixedWingsUav (q_0, h , color, clock, v_max, v_min, u_phi_max, radius, delta_s)
       self@Uav(q_0, color, clock )
       self.h= h;
       self.v_max = v_max;
@@ -24,7 +125,7 @@ classdef FixedWingsUav < Uav
         %                 v_min, u_phi_max;
       %                   v_min, -u_phi_max;
       %];
-      self.primitives = "TODO"
+      self.primitives = FixedWingsUav.definePrimitives(v_max, v_min, u_phi_max,clock.delta_t, delta_s)
       self.coords.x = q_0(1,1);
       self.coords.y = q_0(2,1);
       self.coords.z = 0;
