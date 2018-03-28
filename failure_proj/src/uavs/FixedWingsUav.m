@@ -17,13 +17,14 @@ classdef FixedWingsUav < Uav
       self.v_max = v_max;
       self.v_min= v_min;
       self.u_phi_max = u_phi_max;
-      self.primitives = [
-                         v_max*0.65, 0;
-                         v_max, u_phi_max;
-                         v_max, -u_phi_max;
-                         v_min, u_phi_max;
-                         v_min, -u_phi_max;
-      ];
+      %self.primitives = [
+      %%%                   v_max*0.65, 0;
+      %                   v_max, u_phi_max;
+      %                   v_max, -u_phi_max;
+        %                 v_min, u_phi_max;
+      %                   v_min, -u_phi_max;
+      %];
+      self.primitives = "TODO"
       self.coords.x = q_0(1,1);
       self.coords.y = q_0(2,1);
       self.coords.z = 0;
