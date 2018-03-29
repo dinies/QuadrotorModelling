@@ -152,7 +152,7 @@ classdef RRTplanner< handle
           return;
         else
           qNear = qNearSingleton{:};
-          nodesFromPrimitives = generatePrimitives(self.agent,qNear,delta_s);
+          nodesFromPrimitives = generatePrimitives(self.agent,qNear,delta_s,treeDrawing);
 
           setUavState(self.agent,qNear.value.conf,qNear.value.time );
 

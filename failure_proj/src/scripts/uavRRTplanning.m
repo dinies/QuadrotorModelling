@@ -24,12 +24,12 @@ agent = FixedWingsUav(q_0,20,[0.5,0.2,0.9], clock, v_max,v_min, u_phi_max, radiu
 
 
                                 %  Unicycle
-                                % state       x      y     psi    phi
-%q_0 =  [x_0(1,1) ; x_0(2,1);  0 ];
-%v_max = 10;
-%w_max = 4;
-%radius = 1.5;
-%agent = Unicycle(q_0,20,[0.5,0.2,0.9], clock, v_max,w_max, radius);
+                                % state       x      y     theta
+% q_0 =  [x_0(1,1) ; x_0(2,1);  0 ];
+% v_max = 10;
+% w_max = 4;
+% radius = 1.5;
+% agent = Unicycle(q_0,20,[0.5,0.2,0.9], clock, v_max,w_max, radius);
 
 
 dimensions = [
