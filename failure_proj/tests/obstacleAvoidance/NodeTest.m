@@ -52,7 +52,7 @@ classdef  NodeTest < matlab.unittest.TestCase
     end
     function testConcatListsNodesTwoSigletons(testCase)
       firstList = { testCase.A };
-      secondList = {testCase.B };
+      secondList = { testCase.B };
       truth = { testCase.A , testCase.B };
       list = Node.concatLists( firstList, secondList);
       testCase.verifyEqual( list, truth );

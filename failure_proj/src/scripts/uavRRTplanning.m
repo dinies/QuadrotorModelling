@@ -11,14 +11,14 @@ clock= Clock(delta_t);
 
 %   fixed Wings
  % state       x      y     psi    phi
-q_0 =  [x_0(1,1) ; x_0(2,1);  0 ;  0  ];
+q_0 =  [x_0(1,1) ; x_0(2,1);  pi/2 ;  0  ];
 
 v_max = 30;
 v_min=  20;
 u_phi_max = 0.28; %11.5 degrees
 radius = 2;
 
-delta_s = delta_t*10;
+delta_s = delta_t*200;
 agent = FixedWingsUav(q_0,20,[0.5,0.2,0.9], clock, v_max,v_min, u_phi_max, radius, delta_s);
 
 

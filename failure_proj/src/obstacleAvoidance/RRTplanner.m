@@ -46,8 +46,7 @@ classdef RRTplanner< handle
       end
     end
 
-
-    function orderedList = insertInCrescentOrder( list, elem, pos)
+    function orderedList = insertInCrescentOrderByEuclidean( list, elem, pos)
       euclideanDist = sqrt((elem.value.conf(1,1) - pos.x)^2 + (elem.value.conf(2,1) - pos.y)^2);
       inserted = false;
       for i = 1:size(list,2)
@@ -68,21 +67,51 @@ classdef RRTplanner< handle
       end
     end
 
-    function orderedChildren = recSortByNearerChild(children, pos)
+
+
+    function orderedList = insertInCrescentOrderByAtan( list, elem, forcePos, agentPos)
+      % angles are computed wtr to world frame
+      angleForceWorld = atan2( forcePos.y - agentPos.y, forcePos.x - agentPos.x);
+
+      angleElemWorld = atan2( elem.value.conf(2,1) - agentPos.y, elem.value.conf(1,1) - agentPos.x);
+      angleForceElem = angleElemWorld - angleForceWorld;
+
+      inserted = false;
+      for i = 1:size(list,2)
+        if ~inserted
+          angleCurrWorld = atan2( list{i}.value.conf(2,1) - agentPos.y, list{i}.value.conf(1,1) - agentPos.x);
+
+          angleForceCurr = angleCurrWorld - angleForceWorld;
+          if abs( angleForceElem)< abs(angleForceCurr)
+            inserted = true;
+            if i == 1
+              orderedList = Node.addInHead( elem, list);
+            else
+              orderedList = Node.concatLists( {list{1:i-1}}, Node.addInHead( elem,list(i:size(list,2)) ));
+            end
+          end
+        end
+      end
+      if ~inserted
+        orderedList = Node.concatLists( list , {elem});
+      end
+    end
+
+    function orderedChildren = recSortByNearerChild(children, forcePos, agentPos)
       if size(children,2) == 0
         orderedChildren = {};
       elseif size(children,2) == 1
         orderedChildren = children;
       else
-        orderedChildren = RRTplanner.insertInCrescentOrder( RRTplanner.recSortByNearerChild( {children{2:size(children,2)}}, pos), children{1}, pos);
+        orderedChildren = RRTplanner.insertInCrescentOrderByAtan( RRTplanner.recSortByNearerChild( {children{2:size(children,2)}}, forcePos, agentPos), children{1}, forcePos, agentPos);
       end
     end
 
     function near =  isNearGoal(elem, goalCoords, threshold )
       i=1;
       near = false;
-      while  ~near && i <= size( elem.value.middleConfs,2)
-        coords = elem.value.middleConfs(1:2,i);
+      while  ~near && i <= size( elem.value.middleData,2)
+        coords = elem.value.middleData(1:2,i);
         euclideanDist = sqrt((coords(1,1) - goalCoords.x)^2 +(coords(2,1) -goalCoords.y)^2);
         near = euclideanDist < threshold;
         i = i + 1;
@@ -123,7 +152,7 @@ classdef RRTplanner< handle
       initialValue.input = [ 0; 0];
       initialValue.time = self.agent.clock.curr_t;
       initialValue.burned = false;
-      initialValue.middleConfs = self.agent.q;
+      initialValue.middleData = [self.agent.q; 0; 0];
       root = Node( initialValue);
 
       if treeDrawing
@@ -163,7 +192,10 @@ classdef RRTplanner< handle
           drawer = Drawer();
           drawer.drawLine3D([ self.agent.q(1:2,1)', 0], [artPos.x, artPos.y , 0], [0.8,0.3,0.5]);
 
-          orderedNodesFromPrim = RRTplanner.recSortByNearerChild(nodesFromPrimitives, artPos);
+          agentPos.x = qNear.value.conf(1,1);
+          agentPos.y = qNear.value.conf(2,1);
+
+          orderedNodesFromPrim = RRTplanner.recSortByNearerChild(nodesFromPrimitives, artPos, agentPos);
           qNewFound = false;
           i = 1;
           while  ~qNewFound && i <= size(orderedNodesFromPrim,2)
