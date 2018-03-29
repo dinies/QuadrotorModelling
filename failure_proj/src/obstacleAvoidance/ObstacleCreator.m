@@ -2,15 +2,21 @@ classdef ObstacleCreator  < handle
   properties
     obstacles
     color
+    Kr
   end
 
   methods
-    function self= ObstacleCreator(env, arg ,currObs)
+    function self= ObstacleCreator(env, arg ,currObs, Kr)
 
       if nargin > 2
         self.obstacles= currObs;
       else
         self.obstacles= [] ;
+      end
+      if nargin > 3
+        self.Kr = Kr;
+      else
+        self.Kr = 10;
       end
       self.color = [0.3, 0.84, 0.8 ];
       if isscalar(arg)
@@ -28,13 +34,18 @@ classdef ObstacleCreator  < handle
 
       coords.x = offset + rand()*extension_x;
       coords.y = offset + rand()*extension_y;
+      coords.z = 0;
     end
 
 
 
     function r=  createRandRadius(~,env)
-      avgWidth= env.unitaryDim*2;
-      variance = avgWidth/6;
+      %avgWidth= env.unitaryDim*2;
+      %variance = avgWidth/6;
+
+      avgWidth = 50; % auv-si specific values
+      variance = 43;
+
       if rand() >= 0.5
         willBePos= 1;
       else
@@ -50,7 +61,7 @@ classdef ObstacleCreator  < handle
 
     function insertObstacle( self, coords,radius, env)
       epsilon = env.unitaryDim/1000;
-      obs = Obstacle(coords.x, coords.y,0,  radius, self.color);
+      obs = Obstacle(coords.x, coords.y, coords.z,  radius, self.color, self.Kr);
       distFromGoal= sqrt( (obs.coords.x - env.goal.coords.x)^2 + (obs.coords.y - env.goal.coords.y)^2);
       if distFromGoal <= (env.agent.radius + obs.influenceRange + obs.radius)
         obs.influenceRange= distFromGoal - (env.agent.radius + obs.radius + epsilon);
@@ -90,6 +101,7 @@ classdef ObstacleCreator  < handle
 
         coords.x=  mat(i,1);
         coords.y=  mat(i,2);
+        coords.z= 0;
         radius= mat(i,3);
         collision = collisionCheck(self,coords,radius, obsInsertedNum, env);
         if ~collision

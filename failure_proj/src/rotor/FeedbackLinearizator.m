@@ -81,7 +81,7 @@ classdef FeedbackLinearizator < handle
     end
 
     function input = computeInput( self, v, state )
-      invDelta = inv(delta(self,state));
+      invDelta = inv(delta(self,state) + 40.5*eye(4));
       alfa = - invDelta * bVec(self,state);
       beta = invDelta;
       input = alfa + beta * v;

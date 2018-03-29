@@ -1,52 +1,46 @@
-classdef FixedWingsUav < Uav
+classdef Unicycle < Uav
   properties
     h
     radius
     coords
     v_max
-    v_min
-    u_phi_max
-    phi_bound
+    w_max
     primitives
   end
 
   methods
-    function self = FixedWingsUav (q_0, h , color, clock, v_max, v_min, u_phi_max, radius)
+    function self = Unicycle(q_0, h , color, clock, v_max, w_max, radius)
       self@Uav(q_0, color, clock )
       self.h= h;
       self.v_max = v_max;
-      self.v_min= v_min;
-      self.u_phi_max = u_phi_max;
+      self.w_max = w_max;
       self.primitives = [
-                         v_max*0.65, 0;
-                         v_max, u_phi_max;
-                         v_max, -u_phi_max;
-                         v_min, u_phi_max;
-                         v_min, -u_phi_max;
+                         v_max, 0;
+                         v_max, w_max/2;
+                         v_max, -w_max/2;
+                         v_max, w_max;
+                         v_max, -w_max
       ];
       self.coords.x = q_0(1,1);
       self.coords.y = q_0(2,1);
       self.coords.z = 0;
       self.radius = radius;
-      self.phi_bound=  0.7;   % 40 degrees
     end
 
 
     function q_dot= transitionModel( self, u)
 
-      % q :  x  ,  y ,  psi  ,  phi
+      % q :  x  ,  y ,  theta
 
       v = u(1,1);
-      u_phi = u(2,1);
+      w = u(2,1);
 
       q3 = self.q(3,1);
-      q4 = self.q(4,1);
 
       q_dot= [
               v* cos(q3);
               v* sin(q3);
-              - self.g*tan(q4)/v;
-              u_phi;
+              w
       ];
     end
 
@@ -78,7 +72,7 @@ classdef FixedWingsUav < Uav
     end
 
 
-    function res = generatePrimitives(self,node,delta_s, treeDrawing)
+    function res = generatePrimitives(self,node,delta_s,~)
       currConf = node.value.conf;
       currTime = node.value.time;
       precision = delta_s / self.clock.delta_t;
@@ -100,11 +94,7 @@ classdef FixedWingsUav < Uav
         struct.burned = false;
         struct.middleConfs = middleConfs;
         elem  = Node( struct );
-        if abs(newConf(4,1)) <= self.phi_bound
-          res = Node.addInTail(elem, res);
-        elseif treeDrawing
-          scatter3(newConf(1,1),newConf(2,1),0, 30 ,[0.8,0.2,0.2]);
-        end
+        res = Node.addInTail(elem, res);
       end
     end
 
@@ -114,7 +104,7 @@ classdef FixedWingsUav < Uav
 
     function draw(self)
       drawer = Drawer();
-      scale = 20;
+      scale = 0.4;
 
       vertices = [
                   - 1.0*scale, 1.6*scale, -0.2*scale ;
@@ -124,7 +114,7 @@ classdef FixedWingsUav < Uav
       ];
 
 
-      rotPsi= [
+      rotTheta= [
                   cos(self.q(3,1)) , -sin(self.q(3,1)), 0;
                   sin(self.q(3,1)) , cos(self.q(3,1)),  0;
                   0     ,     0     ,     1      ;
@@ -132,7 +122,7 @@ classdef FixedWingsUav < Uav
 
       transl = [ self.q(1,1);self.q(2,1);self.h];
       for i = 1:size(vertices,1)
-        newVertex = rotPsi*vertices(i,:)';
+        newVertex = rotTheta*vertices(i,:)';
         vertices(i,:)= (newVertex+transl)';
       end
 
@@ -152,44 +142,38 @@ classdef FixedWingsUav < Uav
 
     function drawStatistics(self, data)
 
-      figure('Name','State','pos',[10 10 1350 900])
+      figure('Name','State')
 
-      ax1 = subplot(2,2,1);
-      plot(data(:,5),data(:,1));
+      ax1 = subplot(1,3,1);
+
+      plot(data(:,4),data(:,1));
       title(ax1,'x axis');
 
-      ax2 = subplot(2,2,2);
-      plot(data(:,5),data(:,2));
+      ax2 = subplot(1,3,2);
+      plot(data(:,4),data(:,2));
       title(ax2,'y axis');
 
-      ax3 = subplot(2,2,3);
-      plot(data(:,5),data(:,3));
-      title(ax3,'psi');
+      ax3 = subplot(1,3,3);
+      plot(data(:,4),data(:,3));
+      title(ax3,'theta');
 
-      ax4 = subplot(2,2,4);
-      plot(data(:,5),data(:,4));
-      title(ax4,'phi');
-
-
-      figure('Name','angle of approach (alfa) variation','pos',[10 10 1350 900])
+      figure('Name','angle of approach (alfa) variation')
 
       ax1 = subplot(2,2,1);
-      plot(data(:,5),data(:,3));
+      plot(data(:,4),data(:,3));
       title(ax1,'alfa');
 
       ax2 = subplot(2,2,2);
-      plot(data(:,5),data(:,6));
+      plot(data(:,4),data(:,5));
       title(ax2,'d_alfa');
 
       ax3 = subplot(2,2,3);
-      plot(data(:,5),data(:,7));
+      plot(data(:,4),data(:,6));
       title(ax3,'dd_alfa');
 
       ax4 = subplot(2,2,4);
-      plot(data(:,5),data(:,8));
+      plot(data(:,4),data(:,7));
       title(ax4,'ddd_alfa');
-
-
 
     end
   end

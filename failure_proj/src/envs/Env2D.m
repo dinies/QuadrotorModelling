@@ -46,6 +46,12 @@ classdef Env2D < Env
       self.obstacles = obsCreator.obstacles;
     end
 
+    function bool = goalReached(self)
+      dist =sqrt( (self.goal.coords.x - self.agent.coords.x)^2 + (self.goal.coords.y - self.agent.coords.y)^2 );
+      threshold = self.unitaryDim/100;
+      bool = dist < threshold;
+    end
+
     function runSimulation( self, planner , timeTot)
       xFrame= self.xLength* 0.1;
       yFrame= self.yLength* 0.1;
@@ -53,27 +59,27 @@ classdef Env2D < Env
       maxXaxis= self.dimensions(1,2) + xFrame;
       minYaxis= self.dimensions(2,1) - yFrame;
       maxYaxis= self.dimensions(2,2) + yFrame;
-     figure('Name','Environment'),hold on;
+      figure('Name','Environment'),hold on;
       axis([ minXaxis maxXaxis minYaxis maxYaxis]);
       title('world'), xlabel('x'), ylabel('y')
       drawRectangle2D(self.drawer,self.vertices,self.colors.black);
 
-
       draw(self);
       pause(0.7);
-      while self.clock.curr_t <= timeTot
+      gReached = goalReached(self);
+      while self.clock.curr_t <= timeTot && ~gReached
         dynamicDeleteDrawing(self.agent);
         doAction(self.agent, planner, self.clock);
         dynamicDraw(self.agent, planner);
         pause(0.04);
         tick(self.clock);
-
+        gReached = goalReached(self);
         scatter( self.agent.coords.x , self.agent.coords.y, 2 ,self.colors.cyan);
       end
     end
     function draw(self)
       for i = 1:size(self.obstacles,1)
-        draw(self.obstacles(i,1));
+        draw2D(self.obstacles(i,1));
       end
       draw2D(self.start);
       draw2D(self.agent);

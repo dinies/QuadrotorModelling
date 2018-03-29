@@ -133,46 +133,46 @@ classdef XYPlaneUav  < Uav
       figure('Name','State')
 
       ax1 = subplot(2,3,1);
-      plot(data(:,7),data(:,1), '-o');
+      plot(data(:,7),data(:,1));
       title(ax1,'x axis');
 
       ax2 = subplot(2,3,2);
-      plot(data(:,7),data(:,2), '-o');
+      plot(data(:,7),data(:,2));
       title(ax2,'y axis');
 
       ax3 = subplot(2,3,3);
-      plot(data(:,7),data(:,3), '-o');
+      plot(data(:,7),data(:,3));
       title(ax3,'psi');
 
       ax4 = subplot(2,3,4);
-      plot(data(:,7),data(:,4), '-o');
+      plot(data(:,7),data(:,4));
       title(ax4,'phi');
 
       ax5 = subplot(2,3,5);
-      plot(data(:,7),data(:,5), 'r-o');
+      plot(data(:,7),data(:,5));
       title(ax5,'v');
 
       ax6 = subplot(2,3,6);
-      plot(data(:,7),data(:,6), 'r-o');
+      plot(data(:,7),data(:,6));
       title(ax6,'ksi');
 
 
       figure('Name','controller and feedbacklin outputs')
 
       ax1 = subplot(2,2,1);
-      plot(data(:,7),data(:,8), '-o');
+      plot(data(:,7),data(:,8));
       title(ax1,'output controller x axis');
 
       ax2 = subplot(2,2,2);
-      plot(data(:,7),data(:,9), '-o');
+      plot(data(:,7),data(:,9));
       title(ax2,'output controller y axis');
 
       ax3 = subplot(2,2,3);
-      plot(data(:,7),data(:,10), '-o');
+      plot(data(:,7),data(:,10));
       title(ax3,'u1');
 
       ax4 = subplot(2,2,4);
-      plot(data(:,7),data(:,11), '-o');
+      plot(data(:,7),data(:,11));
       title(ax4,'u2');
 
 
