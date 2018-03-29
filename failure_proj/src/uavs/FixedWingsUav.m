@@ -11,7 +11,7 @@ classdef FixedWingsUav < Uav
   end
 
   methods( Static = true)
-    function res = definePrimitives(self,v_max,v_min,u_phi_max,delta_t,delta_s)
+    function res = definePrimitives(v_max,v_min,u_phi_max,delta_t,delta_s)
 
       avg_v = (v_max - v_min)/2;
 
@@ -24,7 +24,7 @@ classdef FixedWingsUav < Uav
       knot2.vel = 0;
       knot2.acc = 0;
       knot2.time = delta_s;
-      knots_v = [ knot1 , knot2]
+      knots_v = [ knot1 ; knot2];
 
                                 % u_phi
                                 %straight
@@ -36,7 +36,7 @@ classdef FixedWingsUav < Uav
       knot4.vel = 0;
       knot4.acc = 0;
       knot4.time = delta_s;
-      knots_u_phi_straight = [ knot3 , knot4]
+      knots_u_phi_straight = [ knot3 ; knot4];
 
                                 %curve_right
 
@@ -45,12 +45,12 @@ classdef FixedWingsUav < Uav
       knot5.acc = 0;
       knot5.time = 0;
 
-      knot6.pos = -u_phi_max;
+      knot6.pos = -u_phi_max/4;
       knot6.vel = 0;
       knot6.acc = 0;
       knot6.time = delta_s/10;
 
-      knot7.pos = -u_phi_max;
+      knot7.pos = -u_phi_max/4;
       knot7.vel = 0;
       knot7.acc = 0;
       knot7.time = 9*delta_s/10;
@@ -61,7 +61,7 @@ classdef FixedWingsUav < Uav
       knot8.time = delta_s;
 
 
-      knots_u_phi_curve_right= [ knot5 , knot6, knots7 , knots8];
+      knots_u_phi_curveRight= [ knot5 ; knot6; knot7 ; knot8];
 
 
                                 %curve_left
@@ -70,12 +70,12 @@ classdef FixedWingsUav < Uav
       knot9.acc = 0;
       knot9.time = 0;
 
-      knot10.pos = u_phi_max;
+      knot10.pos = u_phi_max/4;
       knot10.vel = 0;
       knot10.acc = 0;
       knot10.time = delta_s/10;
 
-      knot11.pos = u_phi_max;
+      knot11.pos = u_phi_max/4;
       knot11.vel = 0;
       knot11.acc = 0;
       knot11.time = 9*delta_s/10;
@@ -85,31 +85,39 @@ classdef FixedWingsUav < Uav
       knot12.acc = 0;
       knot12.time = delta_s;
 
-
-      knots_u_phi_curve_left= [ knot5 , knot6, knots7 , knots8];
-
+      knots_u_phi_curveLeft= [ knot9 ; knot10; knot11 ; knot12];
 
 
+      %define polinomials, compute references and fix size of returning matrix
+      poly_v_straight = PolynomialKnotSequencer(knots_v,delta_t);
+      poly_phi_straight= PolynomialKnotSequencer(knots_u_phi_straight,delta_t);
+      poly_phi_curve_r = PolynomialKnotSequencer(knots_u_phi_curveRight,delta_t);
+      poly_phi_curve_l = PolynomialKnotSequencer(knots_u_phi_curveLeft,delta_t);
 
-"TODO"
+      totSteps = delta_s/delta_t;
+      numOfPrimitives = 3;
+      sizeInputVec = 2;
+
+      res = zeros( numOfPrimitives,totSteps,sizeInputVec);
+
+      v = poly_v_straight.getReferences();
+      u_phi_f = poly_v_straight.getReferences();
+      u_phi_r = poly_v_straight.getReferences();
+      u_phi_l = poly_v_straight.getReferences();
 
 
+      % forward
+      res(1,:,1)= v(:,1);
+      res(1,:,2)= u_phi_f(:,1);
 
-      p_straight = PolynomialKnotSequencer(knots_v,delta_t)
+      % right
+      res(2,:,1)= v(:,1);
+      res(2,:,2)= u_phi_r(:,1);
 
-      p_straight = PolynomialKnotSequencer(knots_v,delta_t)
-
-
-
-      knots_u_phi = [
-
-      ]
-
-      res.straight = p_straight.getReferences();
-      res.curve_right= p_curve.getReferences();
-      res.curve_left= p_straight.getReferences();
-
-    end
+      %left
+      res(3,:,1)= v(:,1);
+      res(3,:,2)= u_phi_l(:,1);
+   end
   end
   methods
     function self = FixedWingsUav (q_0, h , color, clock, v_max, v_min, u_phi_max, radius, delta_s)
@@ -118,13 +126,6 @@ classdef FixedWingsUav < Uav
       self.v_max = v_max;
       self.v_min= v_min;
       self.u_phi_max = u_phi_max;
-      %self.primitives = [
-      %%%                   v_max*0.65, 0;
-      %                   v_max, u_phi_max;
-      %                   v_max, -u_phi_max;
-        %                 v_min, u_phi_max;
-      %                   v_min, -u_phi_max;
-      %];
       self.primitives = FixedWingsUav.definePrimitives(v_max, v_min, u_phi_max,clock.delta_t, delta_s)
       self.coords.x = q_0(1,1);
       self.coords.y = q_0(2,1);
