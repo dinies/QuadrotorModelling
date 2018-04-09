@@ -22,6 +22,6 @@ Denv = 1;
 Kenv = 2;
 
 %Observer
-g_reac = 500;
+g_reac = 200;
 D = 0.01;
 F = 0.01;
