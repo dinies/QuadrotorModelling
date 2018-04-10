@@ -147,12 +147,13 @@ classdef RRTplanner< handle
 
 
 
-    function path = runAlgo(self,artPotPlanner,obstacles,threshold,delta_s, treeDrawing)
+    function path = runAlgo(self,artPotPlanner,obstacles,threshold,delta_s_coeff, treeDrawing)
       initialValue.conf = self.agent.q;
       initialValue.input = [ 0; 0];
       initialValue.time = self.agent.clock.curr_t;
       initialValue.burned = false;
       initialValue.middleData = [self.agent.q; 0; 0];
+      initialValue.delta_s = delta_s_coeff;
       root = Node( initialValue);
 
       if treeDrawing
@@ -181,8 +182,10 @@ classdef RRTplanner< handle
           return;
         else
           qNear = qNearSingleton{:};
-          nodesFromPrimitives = generateLongPrimitives(self.agent,qNear,delta_s);
 
+          setUavState(self.agent,qNear.value.conf,qNear.value.time );
+          delta_s = computeCurrDeltaS(self.env,delta_s_coeff);
+          nodesFromPrimitives = generateLongPrimitives(self.agent,qNear,delta_s);
           setUavState(self.agent,qNear.value.conf,qNear.value.time );
 
           artForce = computeArtificialVortexForce( artPotPlanner);

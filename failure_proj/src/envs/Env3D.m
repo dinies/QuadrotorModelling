@@ -99,6 +99,19 @@ classdef Env3D < Env
       self.obstacleCreator = obsCreator;
     end
 
+    function delta_s = computeCurrDeltaS( self, delta_s_coeff)
+      clearance = 1; %TODO
+      distFromGoal = sqrt((self.goal.coords.x - self.agent.coords.x)^2 +(self.goal.coords.y -self.agent.coords.y)^2);
+      threshold  = self.unitaryDim*30; %around 1000 m
+      if distFromGoal < threshold
+        m = 0.8/threshold;
+        y = m*distFromGoal + 0.2;
+      else
+        y = 1;
+      end
+      delta_s = y*delta_s_coeff;
+    end
+
     function drawMeshArtForces(self, artPotPlanner, vortexFlag)
 
       if ~vortexFlag
@@ -195,13 +208,17 @@ classdef Env3D < Env
         for i = 1:size(self.obstacles,1)
           draw3D(self.obstacles(i,1));
         end
-        result = runAlgo(planner,artPotPlanner, self.obstacles, self.unitaryDim ,delta_s, treeDrawing );
+        for i= 1:size(self.borders,1)
+          first=  self.borders(i,1:3);
+          second=  self.borders(i,4:6);
+          self.drawer.drawLine3D(first,second,self.colors.black);
+        end
+        primitiveList= runAlgo(planner,artPotPlanner, self.obstacles, self.unitaryDim ,delta_s, treeDrawing );
 
-        if ~isempty(result)
-          rootNode=  result{1};
+        if ~isempty(primitiveList)
+          rootNode=  primitiveList{1};
           setUavState(self.agent, rootNode.value.conf, rootNode.value.time);
-          primitiveList = Env3D.extractPrimitives( {result{2:size(result,2)}});
-          data = runPrimitives(self, primitiveList, delta_s,  treeDrawing  );
+          data = runPrimitives(self, primitiveList );
           path = GeometricPath(data);
           wPoints = extractWayPoints(path);
 
@@ -210,7 +227,7 @@ classdef Env3D < Env
         end
     end
 
-    function data = runPrimitives( self, primitives , delta_s, treeDrawing )
+    function data = runPrimitives( self, primitives )
 
         xFrame= self.xLength* 0.1;
         yFrame= self.yLength* 0.1;
@@ -229,31 +246,36 @@ classdef Env3D < Env
         el = 90;
         view(az, el);
 
-        %theta variation in vel, acc and jerk
-        theta_diff = DifferentiatorBlock(self.clock.delta_t,3);
 
-        precision =3;
-        numOfIntegrations =delta_s/self.clock.delta_t;
-        actualPrecision = round( numOfIntegrations / precision);
-        numPrimitives = size(primitives,1);
-        data = zeros(numPrimitives*numOfIntegrations , self.agent.dimState +4);
-        draw(self);
-        pause(0.2);
-        for i = 1:numPrimitives
-          for j = 1:numOfIntegrations
-            agentData = doAction(self.agent, primitives, i);
-            if rem(j,actualPrecision) == 0
-              deleteDrawing(self.agent);
-              draw(self.agent);
-            end
-            dataIndex = ( i -1 )*numOfIntegrations + j;
-            data(dataIndex, 1:self.agent.dimState)= agentData.state';
-            data(dataIndex, self.agent.dimState+1) = self.clock.curr_t;
-            data(dataIndex, self.agent.dimState+2:self.agent.dimState +4) = differentiate(theta_diff,agentData.state(3,1))';
-            pause(0.000001);
-            tick(self.clock);
-          end
+        numOfIntegrations = 1;
+        for i=2:size(primitives,2)
+          currNumOfIntegr = primitives{i}.value.delta_s/self.clock.delta_t;
+          numOfIntegrations = numOfIntegrations + currNumOfIntegr;
         end
+
+        precision = 10;
+        % time and two values for inputs
+        data = zeros(numOfIntegrations , self.agent.dimState +3);
+        draw(self);
+        dataIndex = 1;
+        data( dataIndex,:) = [ self.agent.q',0,0, 0];
+        for i = 2:size(primitives,2)
+          prim = primitives{i};
+          currTime = data( i-1,self.agent.dimState +1);
+          currNumOfIntegr = prim.value.delta_s/self.clock.delta_t;
+          finalTime = prim.value.time;
+          timeVec = currTime:self.clock.delta_t:finalTime;
+          data(dataIndex+1:dataIndex+currNumOfIntegr,:)= [ prim.value.middleData', timeVec'];
+          actualPrecision = round( size(prim.value.middleData,2) /precision);
+          for j = 1:actualPrecision:size(prim.value.middleData,2)
+            coords = prim.value.middleData(1:2,j);
+            scatter3(coords(1,1), coords(2,1), 0 , self.agent.radius, self.agent.color);
+            pause(0.00001);
+          end
+          scatter3(prim.value.conf(1,1), prim.value.conf(2,1), 0 , self.agent.radius*5, self.agent.color*0.5);
+          dataIndex = dataIndex+ currNumOfIntegr;
+        end
+
         drawStatistics( self, data);
     end
 

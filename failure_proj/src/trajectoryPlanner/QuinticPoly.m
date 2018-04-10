@@ -42,6 +42,7 @@ classdef QuinticPoly < handle
     function ref = getReferences(self)
       computeRealDeltaT(self);
       numOfSteps= self.totTime/ self.delta_t;
+      numOfSteps = round( numOfSteps, 0);
       poly = getPolynomial(self);
 
       ref.positions= zeros(numOfSteps,1 );

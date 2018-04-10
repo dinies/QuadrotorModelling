@@ -7,10 +7,9 @@ classdef FixedWingsUav < Uav
     v_min
     u_phi_max
     phi_bound
-    primitives
   end
   methods
-    function self = FixedWingsUav (q_0, h , color, clock, v_max, v_min, u_phi_max, radius, delta_s)
+    function self = FixedWingsUav (q_0, h , color, clock, v_max, v_min, u_phi_max, radius)
       self@Uav(q_0, color, clock )
       self.h= h;
       self.v_max = v_max;
@@ -102,10 +101,14 @@ classdef FixedWingsUav < Uav
 
 
 
-    function res = generateLongPrimitives(self,node,delta_s)
+    function res = generateLongPrimitives(self,node,raw_delta_s)
       currConf = node.value.conf;
       currTime = node.value.time;
+      rest = mod( raw_delta_s, self.clock.delta_t);
+      delta_s = raw_delta_s - rest;
+      delta_s = round(delta_s,0);
       precision = delta_s / self.clock.delta_t;
+
       res = {};
       primitives = self.definePrimitives(self.clock.delta_t,delta_s);
       for i = 1:size(primitives,1)
@@ -125,6 +128,7 @@ classdef FixedWingsUav < Uav
         struct.time = self.clock.curr_t;
         struct.burned = false;
         struct.middleData= middleData;
+        struct.delta_s = delta_s;
         elem  = Node( struct );
         if abs(newConf(4,1)) <= self.phi_bound
           res = Node.addInTail(elem, res);
@@ -167,10 +171,10 @@ classdef FixedWingsUav < Uav
       knot5.acc = 0;
       knot5.time = 0;
 
-      knot6.pos = self.u_phi_max/23;
+      knot6.pos = self.u_phi_max/16;
       knot6.vel = 0;
       knot6.acc = 0;
-      knot6.time = delta_s*7/10;
+      knot6.time = delta_s/2 - mod(delta_s/2,delta_t);
 
       knot7.pos = 0;
       knot7.vel = 0;
@@ -187,10 +191,10 @@ classdef FixedWingsUav < Uav
       knot8.acc = 0;
       knot8.time = 0;
 
-      knot9.pos = -self.u_phi_max/23;
+      knot9.pos = -self.u_phi_max/16;
       knot9.vel = 0;
       knot9.acc = 0;
-      knot9.time = delta_s*7/10;
+      knot9.time = delta_s/2 -  mod(delta_s/2,delta_t);
 
       knot10.pos = 0;
       knot10.vel = 0;
@@ -269,44 +273,36 @@ classdef FixedWingsUav < Uav
       scatter3( self.q(1,1), self.q(2,1), self.h, 3 ,[0.8,0.2,0.2]);
     end
 
-    function drawStatistics(self, data)
+    function drawStatistics(~, data)
 
       figure('Name','State','pos',[10 10 1350 900])
 
       ax1 = subplot(2,2,1);
-      plot(data(:,5),data(:,1));
+      plot(data(:,7),data(:,1));
       title(ax1,'x axis');
 
       ax2 = subplot(2,2,2);
-      plot(data(:,5),data(:,2));
+      plot(data(:,7),data(:,2));
       title(ax2,'y axis');
 
       ax3 = subplot(2,2,3);
-      plot(data(:,5),data(:,3));
+      plot(data(:,7),data(:,3));
       title(ax3,'psi');
 
       ax4 = subplot(2,2,4);
-      plot(data(:,5),data(:,4));
+      plot(data(:,7),data(:,4));
       title(ax4,'phi');
 
 
-      figure('Name','angle of approach (alfa) variation','pos',[10 10 1350 900])
+      figure('Name','inputs: v and u_phi','pos',[10 10 1350 450])
 
-      ax1 = subplot(2,2,1);
-      plot(data(:,5),data(:,3));
-      title(ax1,'alfa');
+      ax1 = subplot(2,1,1);
+      plot(data(:,7),data(:,5));
+      title(ax1,'v');
 
-      ax2 = subplot(2,2,2);
-      plot(data(:,5),data(:,6));
-      title(ax2,'d_alfa');
-
-      ax3 = subplot(2,2,3);
-      plot(data(:,5),data(:,7));
-      title(ax3,'dd_alfa');
-
-      ax4 = subplot(2,2,4);
-      plot(data(:,5),data(:,8));
-      title(ax4,'ddd_alfa');
+      ax2 = subplot(2,1,2);
+      plot(data(:,7),data(:,6));
+      title(ax2,'u_phi');
     end
   end
 end

@@ -63,12 +63,12 @@ classdef ObstacleCreator  < handle
       epsilon = env.unitaryDim/1000;
       obs = Obstacle(coords.x, coords.y, coords.z,  radius, self.color, self.Kr);
       distFromGoal= sqrt( (obs.coords.x - env.goal.coords.x)^2 + (obs.coords.y - env.goal.coords.y)^2);
-      if distFromGoal <= (env.agent.radius + obs.influenceRange + obs.radius)
-        obs.influenceRange= distFromGoal - (env.agent.radius + obs.radius + epsilon);
+      if distFromGoal <= (env.goal.radius + obs.influenceRange + obs.radius)
+        obs.influenceRange= distFromGoal - (env.goal.radius + obs.radius + epsilon);
       end
       distFromStart= sqrt( (obs.coords.x - env.start.coords.x)^2 + (obs.coords.y - env.start.coords.y)^2);
-      if distFromStart <= (env.agent.radius + obs.influenceRange + obs.radius)
-        obs.influenceRange= distFromStart- (env.agent.radius + obs.radius + epsilon);
+      if distFromStart <= (env.start.radius + obs.influenceRange + obs.radius)
+        obs.influenceRange= distFromStart- (env.start.radius + obs.radius + epsilon);
       end
 
       if obs.influenceRange < 0
@@ -137,7 +137,7 @@ classdef ObstacleCreator  < handle
 
       distFromAgent = sqrt((coords.x - env.agent.coords.x)^2 +(coords.y - env.agent.coords.y)^2);
       distFromGoal  = sqrt((coords.x - env.goal.coords.x)^2  +(coords.y - env.goal.coords.y )^2);
-      if distFromAgent - ( radius + env.agent.radius) <= 0 || distFromGoal - ( radius + env.agent.radius) <= 0
+      if distFromAgent - ( radius + env.agent.radius) <= 0 || distFromGoal - ( radius + env.goal.radius) <= 0
         collision= 1;
       end
     end

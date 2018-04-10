@@ -18,8 +18,8 @@ v_min=  20;
 u_phi_max = 0.28; %11.5 degrees
 radius = 2;
 
-delta_s = delta_t*200;
-agent = FixedWingsUav(q_0,20,[0.5,0.2,0.9], clock, v_max,v_min, u_phi_max, radius, delta_s);
+delta_s = delta_t*100;
+agent = FixedWingsUav(q_0,20,[0.5,0.2,0.9], clock, v_max,v_min, u_phi_max, radius);
 
 
 
@@ -40,13 +40,13 @@ dimensions = [
 env  = Env3D( dimensions, delta_t, agent, clock);
 
 setMission(env, x_0, x_f );
-%obsNum = 10;
+obsNum = 10;
 
 mat = [
        1000,   1000,   100;
        500,   1500,   70;
        1500,   500,   70;
-];
+       ];
 
                                %artificial potential gains
 Ka = 0.5;
