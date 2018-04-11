@@ -69,5 +69,5 @@ planner = RRTplanner(env,agent);
  it defines the magnitude of the displacement of the agent into the environment after each step
 %}
 treeDrawing = true;
-path = env.generatePathRRT( artPotPlanner,planner,delta_s,treeDrawing);
+env.generatePathRRT( artPotPlanner,planner,delta_s,treeDrawing);
 

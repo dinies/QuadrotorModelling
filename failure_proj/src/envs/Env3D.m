@@ -186,7 +186,7 @@ classdef Env3D < Env
                             %function waypoints= generateWayPoints(self,planner)
                             %  path = generatePath(planner,self);
 
-    function result = generatePathRRT(self,artPotPlanner, planner,delta_s, treeDrawing)
+    function generatePathRRT(self,artPotPlanner, planner,delta_s, treeDrawing)
       figure('Name','RRT','pos',[10 10 1000 1000]),hold on;
         xFrame= self.xLength* 0.1;
         yFrame= self.yLength* 0.1;
@@ -261,15 +261,21 @@ classdef Env3D < Env
         data( dataIndex,:) = [ self.agent.q',0,0, 0];
         for i = 2:size(primitives,2)
           prim = primitives{i};
-          currTime = data( i-1,self.agent.dimState +1);
           currNumOfIntegr = prim.value.delta_s/self.clock.delta_t;
-          finalTime = prim.value.time;
-          timeVec = currTime:self.clock.delta_t:finalTime;
-          data(dataIndex+1:dataIndex+currNumOfIntegr,:)= [ prim.value.middleData', timeVec'];
+          currTime = primitives{i-1}.value.time;
+          timeVec = zeros(currNumOfIntegr,1);
+          for k=1:currNumOfIntegr
+            currTime = currTime + self.clock.delta_t;
+            timeVec( k,1) = currTime;
+          end
+          data(dataIndex+1:dataIndex+currNumOfIntegr,:)= [ prim.value.middleData', timeVec];
           actualPrecision = round( size(prim.value.middleData,2) /precision);
           for j = 1:actualPrecision:size(prim.value.middleData,2)
-            coords = prim.value.middleData(1:2,j);
-            scatter3(coords(1,1), coords(2,1), 0 , self.agent.radius, self.agent.color);
+            conf= prim.value.middleData(1:self.agent.dimState,j);
+            self.agent.deleteDrawing();
+            self.agent.setUavState(conf, timeVec(j,1));
+            scatter3(conf(1,1), conf(2,1), 0 , self.agent.radius, self.agent.color);
+            self.agent.draw();
             pause(0.00001);
           end
           scatter3(prim.value.conf(1,1), prim.value.conf(2,1), 0 , self.agent.radius*5, self.agent.color*0.5);
