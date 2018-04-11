@@ -101,7 +101,7 @@ classdef FixedWingsUav < Uav
 
 
 
-    function res = generateLongPrimitives(self,node,raw_delta_s)
+    function res = generateLongPrimitives(self,node,raw_delta_s, delta_s_max)
       currConf = node.value.conf;
       currTime = node.value.time;
       rest = mod( raw_delta_s, self.clock.delta_t);
@@ -109,8 +109,10 @@ classdef FixedWingsUav < Uav
       delta_s = round(delta_s,0);
       precision = delta_s / self.clock.delta_t;
 
+      disp(delta_s);
       res = {};
-      primitives = self.definePrimitives(self.clock.delta_t,delta_s);
+      old_v = node.value.pastInput(1,1);
+      primitives = self.definePrimitives(self.clock.delta_t,delta_s,delta_s_max, old_v);
       for i = 1:size(primitives,1)
         setUavState(self,currConf,currTime );
         middleData= zeros(size(self.q,1)+size(primitives,3),precision);
@@ -138,15 +140,31 @@ classdef FixedWingsUav < Uav
       end
     end
 
-    function res = definePrimitives(self,delta_t,delta_s)
-      avg_v = (self.v_max + self.v_min)/2;
+%define a bounded linear inversely proportional relation, between lin velocity and coeff
+    function vel = findVel(self,coeff)
+               % both  9, 1, and -9 come from an extimate of coeff value [1, 10]
+      m = (self.v_max - self.v_min)/-9;
+      b = 1;
+      theta = pi - atan2( self.v_max - self.v_min, -9);
+      a = b* tan(theta);
+      q = self.v_max + a;
+      vel = m* coeff + q;
+    end
+
+    function res = definePrimitives(self,delta_t,delta_s,delta_s_max, old_v)
+
+
+      coeff = delta_s_max/ delta_s;
+
+
+      new_v = self.findVel(coeff)
 
                                 % v
-      knot1.pos = avg_v;
+      knot1.pos = old_v;
       knot1.vel = 0;
       knot1.acc = 0;
       knot1.time = 0;
-      knot2.pos = avg_v;
+      knot2.pos = new_v;
       knot2.vel = 0;
       knot2.acc = 0;
       knot2.time = delta_s;
@@ -171,7 +189,7 @@ classdef FixedWingsUav < Uav
       knot5.acc = 0;
       knot5.time = 0;
 
-      knot6.pos = self.u_phi_max/16;
+      knot6.pos = (self.u_phi_max*coeff)/12;
       knot6.vel = 0;
       knot6.acc = 0;
       knot6.time = delta_s/2 - mod(delta_s/2,delta_t);
@@ -191,7 +209,7 @@ classdef FixedWingsUav < Uav
       knot8.acc = 0;
       knot8.time = 0;
 
-      knot9.pos = -self.u_phi_max/16;
+      knot9.pos = (-self.u_phi_max*coeff)/12;
       knot9.vel = 0;
       knot9.acc = 0;
       knot9.time = delta_s/2 -  mod(delta_s/2,delta_t);

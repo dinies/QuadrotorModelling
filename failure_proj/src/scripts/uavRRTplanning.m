@@ -56,7 +56,7 @@ Kwall = 10;
 gamma = 2;
 rho = 200;
 
-addObstacles(env, mat ,  Kr);
+addObstacles(env, obsNum ,  Kr);
 
 artPotPlanner =  ArtPotPlanner( env, Ka, Kb, Kwall, gamma, rho );
 

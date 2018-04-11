@@ -99,17 +99,61 @@ classdef Env3D < Env
       self.obstacleCreator = obsCreator;
     end
 
-    function delta_s = computeCurrDeltaS( self, delta_s_coeff)
-      clearance = 1; %TODO
-      distFromGoal = sqrt((self.goal.coords.x - self.agent.coords.x)^2 +(self.goal.coords.y -self.agent.coords.y)^2);
-      threshold  = self.unitaryDim*30; %around 1000 m
-      if distFromGoal < threshold
-        m = 0.8/threshold;
-        y = m*distFromGoal + 0.2;
-      else
-        y = 1;
+    function delta_s = computeCurrDeltaS( self, delta_s_max)
+
+      clearanceObs = self.xLength;
+      for i=1:size(self.obstacles,1)
+        obstacle= self.obstacles(i,1);
+        distFromObs= sqrt((self.agent.coords.x - obstacle.coords.x)^2 +(self.agent.coords.y - obstacle.coords.y)^2);
+        currObsClearance= distFromObs - obstacle.radius - self.agent.radius;
+        if currObsClearance < clearanceObs
+          clearanceObs = currObsClearance;
+        end
       end
-      delta_s = y*delta_s_coeff;
+
+      coordsWalls = [
+                     self.agent.coords.x, self.dimensions(2,1);
+                     self.dimensions(1,2), self.agent.coords.y;
+                     self.agent.coords.x, self.dimensions(2,2);
+                     self.dimensions(1,1), self.agent.coords.y
+      ];
+      clearanceWalls = self.xLength;
+      for i= 1:size(coordsWalls,1)
+        dist =sqrt( (coordsWalls(i,1) - self.agent.coords.x)^2 + (coordsWalls(i,2) - self.agent.coords.y)^2 );
+        currWallClearance = dist - ( self.agent.radius);
+        if currWallClearance < clearanceWalls
+          clearanceWalls = currWallClearance;
+        end
+      end
+
+      distFromGoal = sqrt((self.goal.coords.x - self.agent.coords.x)^2 +(self.goal.coords.y -self.agent.coords.y)^2);
+
+      thresholdGoal  = self.unitaryDim*15; %around  m
+      thresholdObst = self.unitaryDim*15; %around 500 m
+      thresholdWall = self.unitaryDim*15; %around  m
+      if distFromGoal < thresholdGoal
+        m1 = 0.9/thresholdGoal;
+        y1 = m1*distFromGoal + 0.1;
+      else
+        y1 = 1;
+      end
+
+      if clearanceObs < thresholdObst
+        m2 = 0.9/thresholdObst;
+        y2 = m2*clearanceObs + 0.1;
+      else
+        y2 = 1;
+      end
+
+      if clearanceWalls < thresholdWall
+        m3 = 0.9/thresholdWall;
+        y3 = m3*clearanceWalls + 0.1;
+      else
+        y3 = 1;
+      end
+
+
+      delta_s = y1*y2*y3*delta_s_max;
     end
 
     function drawMeshArtForces(self, artPotPlanner, vortexFlag)
