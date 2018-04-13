@@ -1,4 +1,4 @@
-function quadrotorBridge()
+function droneBridge()
   vrep=remApi('remoteApi'); % using the prototype file (remoteApiProto.m)
 
   vrep.simxFinish(-1); % just in case, close all opened connections
@@ -11,13 +11,13 @@ function quadrotorBridge()
     vrep.simxSynchronous(clientID,true);
     vrep.simxStartSimulation(clientID,vrep.simx_opmode_oneshot);
 
-    inputFloats=[];
+    inputInts=[];
     inputStrings='';
     inputBuffer= [];
 
-    for i=1:100
+    for i=1:200
           %input torques
-          inputInts=[8,8,8,8];
+          inputFloats=[1.1,1.1,1.1,1.1];
           [returnCode,~,~,~,~]=vrep.simxCallScriptFunction(clientID,'Quadricopter',vrep.sim_scripttype_childscript,'actuateQuadrotor',inputInts,inputFloats,inputStrings,inputBuffer,vrep.simx_opmode_blocking);
           disp(returnCode);
           vrep.simxSynchronousTrigger(clientID);
