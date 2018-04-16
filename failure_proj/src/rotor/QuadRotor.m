@@ -11,6 +11,7 @@ classdef QuadRotor < handle
     vertices= zeros(6,3);
     lines_drawn= zeros(5,1);
     y;
+    drag;
   end
 %              1 2 3  4    5    6  7  8  9   10  11   12 13 14
 % State q = (  x y z phi theta psi dx dy dz zeta ksi  p  q  r );
@@ -25,6 +26,7 @@ classdef QuadRotor < handle
       self.stateDim = size(self.q , 1);
       self.y = zeros(6,1);
       self.t = 0;
+      self.drag = 2.4*10^-3;
 
     end
     function f = fFun(self)
@@ -127,7 +129,97 @@ classdef QuadRotor < handle
       draw_statistics( self, data, 0 , false);
     end
 
+    %input u : T, tauX, tauY, tauZ   --> output : T1, T2, T3, T4
+    function res = mapThrusts(self, u )
 
+      M = [
+           1,1,1,1;
+           0, -self.d, 0, self.d;
+           -self.d, 0, self.d,0;
+           self.drag,-self.drag,self.drag,-self.drag
+      ];
+
+      res = inv(M)*u;
+    end
+
+    function vRepLoop(self, tot_t, trajPlanners, gains)
+
+      numOfSteps = tot_t / self.delta_t;
+      for j= 1:size(trajPlanners,1)
+        references(j,1)= getReferences( trajPlanners(j,1));
+        plotTrajectory(trajPlanners(j,1), references(j,1));
+      end
+      pause(0.001);
+      controller= PID( gains, numOfSteps );
+      FBlin = FeedbackLinearizator( self.M, self.I ,self.d);
+
+      DiffBlock_x = DifferentiatorBlock(self.delta_t, 3 );
+      DiffBlock_y = DifferentiatorBlock(self.delta_t, 3 );
+      DiffBlock_z = DifferentiatorBlock(self.delta_t, 3 );
+      DiffBlock_psi = DifferentiatorBlock(self.delta_t, 1 );
+      IntegrBlock_thrust = IntegratorBlock(self.delta_t, 2);
+
+      self.y = [self.q(1,1), self.q(2,1), self.q(3,1), self.q(4,1), self.q(5,1), self.q(6,1)]';
+
+
+
+      vrep=remApi('remoteApi'); % using the prototype file (remoteApiProto.m)
+      vrep.simxFinish(-1); % just in case, close all opened connections
+      clientID=vrep.simxStart('127.0.0.1',19997,true,true,5000,5);
+                                %check for connection
+      if (clientID>-1)
+        disp('Connected to remote API server');
+
+        vrep.simxSynchronous(clientID,true);
+        vrep.simxStartSimulation(clientID,vrep.simx_opmode_oneshot);
+
+        inputInts=[];
+        inputStrings='';
+        inputBuffer= [];
+
+
+
+        for i=1:numOfSteps
+
+          outputDeriv_xyz= [
+                            differentiate( DiffBlock_x, self.y(1,1))';
+                            differentiate( DiffBlock_y, self.y(2,1))';
+                            differentiate( DiffBlock_z, self.y(3,1))';
+          ];
+          outputDeriv_psi= differentiate( DiffBlock_psi, self.y(6,1));
+
+          stateDiff = [ self.y(1:3,1), outputDeriv_xyz;
+                        self.y(6,1), [ outputDeriv_psi 0 0];
+                      ];
+
+          referenceMat = extractCurrRefs(self, references, i);
+          orderOfInput = [5;5;5;3];
+
+          % v_input : dddddx, dddddy, dddddz, dddpsi
+          v_input = computeInput( controller, referenceMat, stateDiff , orderOfInput , i);
+
+          %u_input : ddT , tauX, tauY, tauZ
+          u_input = computeInput( FBlin, v_input, self.q );
+          thrustInput = IntegrBlock_thrust.integrate( u_input(1,1));
+          u = [ thrustInput ; u_input(2:4,1)];
+          thrusts = self.mapThrusts(u );
+          inputThrusts =  thrusts';
+
+%also remeber that the thrusts have to be reoriented accordingly to the pose of the quandrotor so we have to compute rotation matrices R(phi,theta,psi) and apply them to the thrust vectors (maybe is better to send vectors already rotated to vrep internal functions)
+          [returnCode,~,~,~,~]=vrep.simxCallScriptFunction(clientID,'Quadricopter',vrep.sim_scripttype_childscript,'actuateQuadrotor',inputInts,inputThrusts,inputStrings,inputBuffer,vrep.simx_opmode_blocking);
+
+%now missing the function that allows to see the new state of the system namely y or the output pose.
+          disp(returnCode);
+          vrep.simxSynchronousTrigger(clientID);
+        end
+        vrep.simxStopSimulation(clientID,vrep.simx_opmode_blocking);
+
+        vrep.simxFinish(clientID);
+
+      end
+
+      vrep.delete(); % call the destructor!
+    end
 
 
     function closedLoop(self, tot_t , trajPlanners, gains)
