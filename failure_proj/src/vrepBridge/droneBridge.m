@@ -14,10 +14,17 @@ function droneBridge()
     inputInts=[];
     inputStrings='';
     inputBuffer= [];
+    [returnCode,quadBase]=vrep.simxGetObjectHandle(clientID,'Quadricopter_base',vrep.simx_opmode_blocking);
+    [returnCode,floor]=vrep.simxGetObjectHandle(clientID,'ResizableFloor_5_25',vrep.simx_opmode_blocking);
+    
+    [returnCode,position]=vrep.simxGetObjectPosition(clientID,quadBase,floor,vrep.simx_opmode_streaming);
+    desider_z = 2.5;
 
-    for i=1:200
+    for i=1:500
           %input torques
-          inputFloats=[1.1,1.1,1.1,1.1];
+          [returnCode,position]=vrep.simxGetObjectPosition(clientID,quadBase,floor,vrep.simx_opmode_buffer);
+          f = 10.0*(desider_z-position(3)) + ((1.200e-1)*9.81); %% 
+          inputFloats=[f/4,f/4,f/4,f/4];
           [returnCode,~,~,~,~]=vrep.simxCallScriptFunction(clientID,'Quadricopter',vrep.sim_scripttype_childscript,'actuateQuadrotor',inputInts,inputFloats,inputStrings,inputBuffer,vrep.simx_opmode_blocking);
           disp(returnCode);
           vrep.simxSynchronousTrigger(clientID);
