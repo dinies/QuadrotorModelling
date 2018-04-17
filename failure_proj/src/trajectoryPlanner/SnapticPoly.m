@@ -7,9 +7,12 @@ classdef SnapticPoly < handle
   end
 
   methods
-    function  self =  SnapticPoly( q_0, v_0, a_0 , j_0 , s_0 , q_f, v_f, a_f, j_f, s_f, t_0, t_f, delta_t_des)
+    function  self =  SnapticPoly( q_0, v_0, a_0 , j_0 , s_0 , q_f, v_f, a_f, j_f, s_f, t_initial, t_final, delta_t_des)
 
-      self.totTime= t_f - t_0;
+      self.totTime= t_final - t_initial;
+
+      t_0 = 0; %always because each polinomial is time relative
+      t_f = t_final - t_initial;
       self.delta_t = delta_t_des;
       known= [ q_0; v_0; a_0; j_0; s_0; q_f; v_f; a_f; s_f; j_f];
       A= [

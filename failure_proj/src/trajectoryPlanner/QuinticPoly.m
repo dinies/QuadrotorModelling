@@ -7,9 +7,12 @@ classdef QuinticPoly < handle
   end
 
   methods
-    function  self =  QuinticPoly( q_0, v_0, a_0, q_f, v_f, a_f, t_0, t_f, delta_t_des)
+    function  self =  QuinticPoly( q_0, v_0, a_0, q_f, v_f, a_f, t_initial, t_final, delta_t_des)
 
-      self.totTime= t_f - t_0;
+      self.totTime= t_final - t_initial;
+
+      t_0 = 0; %always because each polinomial is time relative
+      t_f = t_final - t_initial;
       self.delta_t = delta_t_des;
       known= [ q_0; v_0; a_0; q_f; v_f; a_f];
       A= [
@@ -39,6 +42,7 @@ classdef QuinticPoly < handle
     function ref = getReferences(self)
       computeRealDeltaT(self);
       numOfSteps= self.totTime/ self.delta_t;
+      numOfSteps = round( numOfSteps, 0);
       poly = getPolynomial(self);
 
       ref.positions= zeros(numOfSteps,1 );
