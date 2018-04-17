@@ -173,6 +173,15 @@ classdef QuadRotor < handle
         vrep.simxSynchronous(clientID,true);
         vrep.simxStartSimulation(clientID,vrep.simx_opmode_oneshot);
 
+        [returnCode,quadBase]=vrep.simxGetObjectHandle(clientID,'Quadricopter_base',vrep.simx_opmode_blocking);
+        [returnCode,floor]=vrep.simxGetObjectHandle(clientID,'ResizableFloor_5_25',vrep.simx_opmode_blocking);
+
+
+
+        [returnCode,position]=vrep.simxGetObjectPosition(clientID,quadBase,floor,vrep.simx_opmode_streaming);
+        [returnCode,orientation]=vrep.simxGetObjectOrientation(clientID,quadBase,floor,vrep.simx_opmode_streaming);
+
+
         inputInts=[];
         inputStrings='';
         inputBuffer= [];
@@ -208,8 +217,13 @@ classdef QuadRotor < handle
 %also remeber that the thrusts have to be reoriented accordingly to the pose of the quandrotor so we have to compute rotation matrices R(phi,theta,psi) and apply them to the thrust vectors (maybe is better to send vectors already rotated to vrep internal functions)
           [returnCode,~,~,~,~]=vrep.simxCallScriptFunction(clientID,'Quadricopter',vrep.sim_scripttype_childscript,'actuateQuadrotor',inputInts,inputThrusts,inputStrings,inputBuffer,vrep.simx_opmode_blocking);
 
-%now missing the function that allows to see the new state of the system namely y or the output pose.
-          disp(returnCode);
+          % get the nominal output ( after that we should remove this information since it may not be directly observable and try to use an extimate from a filtering of measurements of sensors such as IMU)
+          [returnCode,position]=vrep.simxGetObjectPosition(clientID,quadBase,floor,vrep.simx_opmode_buffer);
+          [returnCode,orientation]=vrep.simxGetObjectOrientation(clientID,quadBase,floor,vrep.simx_opmode_buffer);
+
+
+          self.y = [position, orientation]';
+
           vrep.simxSynchronousTrigger(clientID);
         end
         vrep.simxStopSimulation(clientID,vrep.simx_opmode_blocking);

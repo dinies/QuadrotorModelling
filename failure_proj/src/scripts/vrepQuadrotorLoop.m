@@ -7,7 +7,7 @@ clc
 q_0= zeros(14,1);
 q_0(1,1)= 0;
 q_0(2,1)= 0;
-q_0(3,1)= 0;
+q_0(3,1)= 5;
 q_0(6,1)= 0;
 
 q_0(10,1)= 9.81; %to avoid singularities in feedback lin invertion
@@ -28,7 +28,7 @@ Iz = 1.2416;                %[kg*m^2]
 d = 0.255;                    %[m]
 
 
-delta_t_des = 0.01;
+delta_t_des = 0.05;
 
 
 v_0=0; %vel
