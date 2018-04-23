@@ -50,7 +50,7 @@ addObstacles(env, mat ,  Kr);
 artPotPlanner =  ArtPotPlanner( env, Ka, Kb, Kwall, gamma, rho );
 
 
-%env.drawMeshArtPotentials(artPotPlanner)
-env.drawMeshArtForces(artPotPlanner,true);
-env.drawMeshArtForces(artPotPlanner,false);
+env.drawMeshArtPotentials(artPotPlanner)
+% env.drawMeshArtForces(artPotPlanner,true);
+% env.drawMeshArtForces(artPotPlanner,false);
 

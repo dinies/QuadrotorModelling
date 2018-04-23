@@ -40,15 +40,15 @@ j_f=0;
 s_0=0; %snap
 s_f=0;
 t_0=0; %time
-t_f=10;
+t_f=5;
 
 timeSim= t_f - t_0;
 
 q_f= zeros(14,1);
-q_f(1,1)= 200;
-q_f(2,1)= 300;
-q_f(3,1)= 300;
-q_f(6,1)= 3.14;
+q_f(1,1)= 0;
+q_f(2,1)= 0;
+q_f(3,1)= 100;
+q_f(6,1)= 0;
 
 
 
@@ -65,13 +65,13 @@ planners = [  xPlanner; yPlanner; zPlanner; psiPlanner ];
 
 Igains= [0.0;0.0;0.0;0.0];
                                 % taken from ---Exact Lin paper
-PDgains = [ 625,500,150,20;
-            625,500,150,20;
-            625,500,150,20;
-            4,4,0,0
+PDgains = [ 60,0,0,0;
+            150,0,0,0;
+            150,0,0,0;
+            40,0,0,0
           ];
 gains= [ PDgains, Igains];
 
 
-rotor = QuadRotor( m , [Ix , Iy, Iz]' , d , delta_t, q_0);
+rotor = vrepQuadrotor( m , [Ix , Iy, Iz]' , d , delta_t, q_0);
 rotor.vRepLoop(timeSim, planners, gains);

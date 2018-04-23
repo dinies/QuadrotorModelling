@@ -13,6 +13,22 @@ classdef QuadRotor < handle
     y;
     drag;
   end
+
+
+  methods( Static = true)
+    function  ref = extractCurrRefs(refs, iterNum)
+      ref = zeros( size(refs,1), 5);
+      for i = 1:size(refs,1)
+        ref(i,:) = [
+                    refs(i,1).positions(iterNum);
+                    refs(i,1).velocities(iterNum);
+                    refs(i,1).accelerations(iterNum);
+                    refs(i,1).jerks(iterNum);
+                    refs(i,1).snaps(iterNum)
+        ]';
+      end
+    end
+  end
 %              1 2 3  4    5    6  7  8  9   10  11   12 13 14
 % State q = (  x y z phi theta psi dx dy dz zeta ksi  p  q  r );
   methods
@@ -147,9 +163,7 @@ classdef QuadRotor < handle
       numOfSteps = tot_t / self.delta_t;
       for j= 1:size(trajPlanners,1)
         references(j,1)= getReferences( trajPlanners(j,1));
-        plotTrajectory(trajPlanners(j,1), references(j,1));
       end
-      pause(0.001);
       controller= PID( gains, numOfSteps );
       FBlin = FeedbackLinearizator( self.M, self.I ,self.d);
 
@@ -162,6 +176,8 @@ classdef QuadRotor < handle
       self.y = [self.q(1,1), self.q(2,1), self.q(3,1), self.q(4,1), self.q(5,1), self.q(6,1)]';
 
 
+
+      data = zeros( numOfSteps, 6+4+4+4);
 
       vrep=remApi('remoteApi'); % using the prototype file (remoteApiProto.m)
       vrep.simxFinish(-1); % just in case, close all opened connections
@@ -221,14 +237,18 @@ classdef QuadRotor < handle
           [returnCode,position]=vrep.simxGetObjectPosition(clientID,quadBase,floor,vrep.simx_opmode_buffer);
           [returnCode,orientation]=vrep.simxGetObjectOrientation(clientID,quadBase,floor,vrep.simx_opmode_buffer);
 
+          data(i, :)= [self.y',v_input',u_input',inputThrusts];
 
           self.y = [position, orientation]';
+
 
           vrep.simxSynchronousTrigger(clientID);
         end
         vrep.simxStopSimulation(clientID,vrep.simx_opmode_blocking);
 
         vrep.simxFinish(clientID);
+
+        disp(data);
 
       end
 
@@ -309,19 +329,6 @@ classdef QuadRotor < handle
         pause(0.0001);
       end
       draw_statistics( self, data, controller.errors , true);
-    end
-
-    function  ref = extractCurrRefs(~, refs, iterNum)
-      ref = zeros( size(refs,1), 5);
-      for i = 1:size(refs,1)
-        ref(i,:) = [
-                    refs(i,1).positions(iterNum);
-                    refs(i,1).velocities(iterNum);
-                    refs(i,1).accelerations(iterNum);
-                    refs(i,1).jerks(iterNum);
-                    refs(i,1).snaps(iterNum)
-        ]';
-      end
     end
 
     function draw_statistics(self, data, error, flag_error)
