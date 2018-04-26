@@ -259,46 +259,46 @@ classdef vrepQuadrotor < handle
       error = controller.errors;
 
       ax1 = subplot(2,3,1);hold on
-        plot(data(:,1),reshape( error( 1,1,:),size(data,1),1),'Color', red );
-        plot(data(:,1),reshape( error( 2,1,:),size(data,1),1),'Color', green);
-        plot(data(:,1),reshape( error( 3,1,:),size(data,1),1),'Color', blue );
-        plot(data(:,1),reshape( error( 4,1,:),size(data,1),1),'Color', orange);
-        title(ax1,'prop on position');
-        legend('x','y','z','psi','Location','southwest')
+      plot(data(:,1),reshape( error( 1,1,:),size(data,1),1),'Color', red );
+      plot(data(:,1),reshape( error( 2,1,:),size(data,1),1),'Color', green);
+      plot(data(:,1),reshape( error( 3,1,:),size(data,1),1),'Color', blue );
+      plot(data(:,1),reshape( error( 4,1,:),size(data,1),1),'Color', orange);
+      title(ax1,'prop on position');
+      legend('x','y','z','psi','Location','southwest')
 
 
-        ax2 = subplot(2,3,2);hold on
-        plot(data(:,1),reshape( error( 1,2,:),size(data,1),1),'Color', red );
-        plot(data(:,1),reshape( error( 2,2,:),size(data,1),1),'Color', green);
-        plot(data(:,1),reshape( error( 3,2,:),size(data,1),1),'Color', blue );
-        plot(data(:,1),reshape( error( 4,2,:),size(data,1),1),'Color', orange);
-        title(ax2,'prop on velocities');
-        legend('dx','dy','dz','dpsi','Location','southwest')
+      ax2 = subplot(2,3,2);hold on
+      plot(data(:,1),reshape( error( 1,2,:),size(data,1),1),'Color', red );
+      plot(data(:,1),reshape( error( 2,2,:),size(data,1),1),'Color', green);
+      plot(data(:,1),reshape( error( 3,2,:),size(data,1),1),'Color', blue );
+      plot(data(:,1),reshape( error( 4,2,:),size(data,1),1),'Color', orange);
+      title(ax2,'prop on velocities');
+      legend('dx','dy','dz','dpsi','Location','southwest')
 
 
-        ax3 = subplot(2,3,3);hold on
-        plot(data(:,1),reshape( error( 1,3,:),size(data,1),1),'Color', red );
-        plot(data(:,1),reshape( error( 2,3,:),size(data,1),1),'Color', green);
-        plot(data(:,1),reshape( error( 3,3,:),size(data,1),1),'Color', blue );
-        plot(data(:,1),reshape( error( 4,3,:),size(data,1),1),'Color', orange);
-        title(ax3,'prop on accelerations');
-        legend('ddx','ddy','ddz','ddpsi','Location','southwest')
+      ax3 = subplot(2,3,3);hold on
+      plot(data(:,1),reshape( error( 1,3,:),size(data,1),1),'Color', red );
+      plot(data(:,1),reshape( error( 2,3,:),size(data,1),1),'Color', green);
+      plot(data(:,1),reshape( error( 3,3,:),size(data,1),1),'Color', blue );
+      plot(data(:,1),reshape( error( 4,3,:),size(data,1),1),'Color', orange);
+      title(ax3,'prop on accelerations');
+      legend('ddx','ddy','ddz','ddpsi','Location','southwest')
 
-        ax4 = subplot(2,3,4);hold on
-        plot(data(:,1),reshape( error( 1,4,:),size(data,1),1),'Color', red );
-        plot(data(:,1),reshape( error( 2,4,:),size(data,1),1),'Color', green);
-        plot(data(:,1),reshape( error( 3,4,:),size(data,1),1),'Color', blue );
-        title(ax4,'prop on jerks');
-        legend('dddx','dddy','dddz','Location','southwest')
+      ax4 = subplot(2,3,4);hold on
+      plot(data(:,1),reshape( error( 1,4,:),size(data,1),1),'Color', red );
+      plot(data(:,1),reshape( error( 2,4,:),size(data,1),1),'Color', green);
+      plot(data(:,1),reshape( error( 3,4,:),size(data,1),1),'Color', blue );
+      title(ax4,'prop on jerks');
+      legend('dddx','dddy','dddz','Location','southwest')
 
 
 
-        ax5 = subplot(2,3,5);hold on
-        plot(data(:,1),reshape( error( 1,5,:),size(data,1),1),'Color', red );
-        plot(data(:,1),reshape( error( 2,5,:),size(data,1),1),'Color', green);
-        plot(data(:,1),reshape( error( 3,5,:),size(data,1),1),'Color', blue );
-        title(ax5,'integrative on position');
-        legend('ddddx','ddddy','ddddz','Location','southwest')
+      ax5 = subplot(2,3,5);hold on
+      plot(data(:,1),reshape( error( 1,5,:),size(data,1),1),'Color', red );
+      plot(data(:,1),reshape( error( 2,5,:),size(data,1),1),'Color', green);
+      plot(data(:,1),reshape( error( 3,5,:),size(data,1),1),'Color', blue );
+      title(ax5,'integrative on position');
+      legend('ddddx','ddddy','ddddz','Location','southwest')
     end
   end
 end
