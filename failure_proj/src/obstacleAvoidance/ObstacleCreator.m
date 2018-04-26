@@ -18,7 +18,7 @@ classdef ObstacleCreator  < handle
       else
         self.Kr = 10;
       end
-      self.color = [0.3, 0.84, 0.8 ];
+      self.color = [0, 0.4, 1 ];
       if isscalar(arg)
         generateRandomObs(self, env, arg);
       else

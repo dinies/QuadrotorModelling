@@ -13,7 +13,8 @@ classdef Obstacle < Entity
     function draw2D(self)
       drawer = Drawer();
       d1= drawCircle2D(drawer , self.coords.x, self.coords.y, self.radius, self.color);
-      colorInfluenceRange= self.color * 0.8;
+      colorInfluenceRange= [1, 0.8, 0];
+
       d2= drawCircle2D(drawer , self.coords.x, self.coords.y, self.radius + self.influenceRange, colorInfluenceRange);
 
       self.drawing = [ d1 ; d2];
@@ -21,7 +22,7 @@ classdef Obstacle < Entity
     function draw3D(self)
       drawer = Drawer();
       d1 = drawCircle3D(drawer , self.coords.x, self.coords.y, self.coords.z, self.radius, self.color);
-      colorInfluenceRange= self.color * 0.8;
+      colorInfluenceRange= [1, 0.8, 0];
       d2 = drawCircle3D(drawer , self.coords.x, self.coords.y, self.coords.z, self.radius + self.influenceRange, colorInfluenceRange);
       self.drawing = [ d1 ; d2];
     end

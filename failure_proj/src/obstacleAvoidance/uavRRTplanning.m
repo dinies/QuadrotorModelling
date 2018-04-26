@@ -44,8 +44,10 @@ obsNum = 10;
 
 mat = [
        1000,   1000,   100;
+       700,   350,   150;
+       400,   800,   200;
        500,   1500,   70;
-       1500,   500,   70;
+       1600,   1500,   170;
 ];
 
                                %artificial potential gains
@@ -56,7 +58,8 @@ Kwall = 10;
 gamma = 2;
 rho = 200;
 
-addObstacles(env, obsNum ,  Kr);
+%addObstacles(env, obsNum ,  Kr);
+addObstacles(env, mat,  Kr);
 
 artPotPlanner =  ArtPotPlanner( env, Ka, Kb, Kwall, gamma, rho );
 
@@ -69,6 +72,6 @@ planner = RRTplanner(env,agent);
  it defines the magnitude of the displacement of the agent into the environment after each step
 %}
 delta_s = delta_t*10;
-treeDrawing = false;
+treeDrawing = true;
 path = env.generatePathRRT( artPotPlanner,planner,delta_s,treeDrawing);
 

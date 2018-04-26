@@ -256,7 +256,7 @@ classdef Env3D < Env
             tick(self.clock);
           end
         end
-        drawStatistics( self, data);
+                                %        drawStatistics( self, data);
     end
 
 
