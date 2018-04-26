@@ -207,9 +207,6 @@ classdef Env3D < Env
           setUavState(self.agent, rootNode.value.conf, rootNode.value.time);
           primitiveList = Env3D.extractPrimitives( {result{2:size(result,2)}});
           data = runPrimitives(self, primitiveList, delta_s,  treeDrawing  );
-          path = GeometricPath(data);
-          wPoints = extractWayPoints(path);
-
         else
           disp("Game Over !!")
         end

@@ -21,8 +21,6 @@ classdef FixedWingsUav < Uav
                          v_max*0.65, 0;
                          v_max, u_phi_max;
                          v_max, -u_phi_max;
-                         v_min, u_phi_max;
-                         v_min, -u_phi_max;
       ];
       self.coords.x = q_0(1,1);
       self.coords.y = q_0(2,1);

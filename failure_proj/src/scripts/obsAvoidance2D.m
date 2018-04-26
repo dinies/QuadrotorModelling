@@ -32,6 +32,6 @@ mat = [
 
 addObstacles(env, 10);
 
-planner =  MotionPlanner( env);
+planner = ArtPotPlanner( env);
 runSimulation( env,planner,t_f);
 
