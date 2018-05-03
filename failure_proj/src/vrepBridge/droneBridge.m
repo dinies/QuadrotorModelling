@@ -1,4 +1,4 @@
-function quadrotorBridge()
+function droneBridge()
   vrep=remApi('remoteApi'); % using the prototype file (remoteApiProto.m)
 
   vrep.simxFinish(-1); % just in case, close all opened connections
@@ -11,15 +11,21 @@ function quadrotorBridge()
     vrep.simxSynchronous(clientID,true);
     vrep.simxStartSimulation(clientID,vrep.simx_opmode_oneshot);
 
-    inputFloats=[];
+    inputInts=[];
     inputStrings='';
     inputBuffer= [];
+    [returnCode,quadBase]=vrep.simxGetObjectHandle(clientID,'Quadricopter_base',vrep.simx_opmode_blocking);
+    [returnCode,floor]=vrep.simxGetObjectHandle(clientID,'ResizableFloor_5_25',vrep.simx_opmode_blocking);
 
-    for i=1:100
+    [returnCode,position]=vrep.simxGetObjectPosition(clientID,quadBase,floor,vrep.simx_opmode_streaming);
+    desider_z = 2.5;
+
+    for i=1:500
           %input torques
-          inputInts=[8,8,8,8];
+          [returnCode,position]=vrep.simxGetObjectPosition(clientID,quadBase,floor,vrep.simx_opmode_buffer);
+          f = 10.0*(desider_z-position(3)) + ((1.200e-1)*9.81); %% 
+          inputFloats=[f/4,f/4,f/4,f/4];
           [returnCode,~,~,~,~]=vrep.simxCallScriptFunction(clientID,'Quadricopter',vrep.sim_scripttype_childscript,'actuateQuadrotor',inputInts,inputFloats,inputStrings,inputBuffer,vrep.simx_opmode_blocking);
-          disp(returnCode);
           vrep.simxSynchronousTrigger(clientID);
     end
     vrep.simxStopSimulation(clientID,vrep.simx_opmode_blocking);

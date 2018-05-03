@@ -72,7 +72,7 @@ classdef Unicycle < Uav
     end
 
 
-    function res = generatePrimitives(self,node,delta_s)
+    function res = generatePrimitives(self,node,delta_s,~)
       currConf = node.value.conf;
       currTime = node.value.time;
       precision = delta_s / self.clock.delta_t;

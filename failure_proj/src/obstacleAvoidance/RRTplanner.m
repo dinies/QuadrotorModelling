@@ -152,17 +152,19 @@ classdef RRTplanner< handle
           return;
         else
           qNear = qNearSingleton{:};
-          nodesFromPrimitives = generatePrimitives(self.agent,qNear,delta_s);
+          nodesFromPrimitives = generatePrimitives(self.agent,qNear,delta_s,treeDrawing);
 
           setUavState(self.agent,qNear.value.conf,qNear.value.time );
 
           artForce = computeArtificialVortexForce( artPotPlanner);
-
+          
           artPos.x = self.agent.q(1,1) + artForce(1,1);
           artPos.y = self.agent.q(2,1) + artForce(2,1);
-          drawer = Drawer();
-          drawer.drawLine3D([ self.agent.q(1:2,1)', 0], [artPos.x, artPos.y , 0], [0.8,0.3,0.5]);
-
+          if treeDrawing
+              drawer = Drawer();
+              drawer.drawLine3D([ self.agent.q(1:2,1)', 0], [artPos.x, artPos.y , 0], [0.8,0.3,0.5]);
+          end
+          
           orderedNodesFromPrim = RRTplanner.recSortByNearerChild(nodesFromPrimitives, artPos);
           qNewFound = false;
           i = 1;
