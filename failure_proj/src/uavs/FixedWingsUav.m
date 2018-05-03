@@ -78,7 +78,7 @@ classdef FixedWingsUav < Uav
     end
 
 
-    function res = generatePrimitives(self,node,delta_s)
+    function res = generatePrimitives(self,node,delta_s, treeDrawing)
       currConf = node.value.conf;
       currTime = node.value.time;
       precision = delta_s / self.clock.delta_t;
@@ -102,7 +102,7 @@ classdef FixedWingsUav < Uav
         elem  = Node( struct );
         if abs(newConf(4,1)) <= self.phi_bound
           res = Node.addInTail(elem, res);
-        else
+        elseif treeDrawing
           scatter3(newConf(1,1),newConf(2,1),0, 30 ,[0.8,0.2,0.2]);
         end
       end
