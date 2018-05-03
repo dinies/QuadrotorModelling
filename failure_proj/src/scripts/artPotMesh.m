@@ -31,8 +31,6 @@ env  = Env3D( dimensions, delta_t, agent, clock);
 
 setMission(env, x_0, x_f );
 
-obsNum = 10;
-
 mat = [
        1000,   1000,   100;
        500,   1500,   70;
@@ -47,9 +45,10 @@ Kwall = 10;
 gamma = 2;
 rho = 200;
 
-addObstacles(env, obsNum,  Kr);
+addObstacles(env, mat ,  Kr);
 
 artPotPlanner =  ArtPotPlanner( env, Ka, Kb, Kwall, gamma, rho );
+
 
 env.drawMeshArtPotentials(artPotPlanner)
 % env.drawMeshArtForces(artPotPlanner,true);

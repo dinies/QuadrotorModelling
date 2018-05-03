@@ -8,9 +8,12 @@ classdef CubicPoly < handle
 
   %TODO   check if the values after getPolynomials are computed in the right way : e.g. if the parameters are taken into account
   methods
-    function  self =  CubicPoly( q_0, v_0, q_f, v_f, t_0, t_f, delta_t_des)
+    function  self =  CubicPoly( q_0, v_0, q_f, v_f, t_initial, t_final, delta_t_des)
 
-      self.totTime= t_f - t_0;
+      self.totTime= t_final - t_initial;
+
+      t_0 = 0; %always because each polinomial is time relative
+      t_f = t_final - t_initial;
       self.delta_t = delta_t_des;
       known= [ q_0; v_0; q_f; v_f];
       A= [
