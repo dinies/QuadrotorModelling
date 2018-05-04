@@ -18,7 +18,7 @@ l= 0.255;
 
 xd = 0;
 yd = 0;
-zd = 90;
+zd = 
 % Initial state %
 
 x0 = 0;
