@@ -10,10 +10,15 @@ classdef Graph < handle
     end
 
     function mat = adjacencyMatrix(self)
+  % ADJANCENCYMATRIX Compute the adjacency reletion betwwen vertices of a graph.
       N = size( self.vertices,1);
       mat = zeros( N,N );
-      ew
-
+      for e = self.edges
+        mat(e.vertexTo.id,vertexFrom.id) = mat(e.vertexTo.id,vertexFrom.id) +1;
+        if ~e.directed
+          mat(e.vertexFrom.id,vertexTo.id) = mat(e.vertexFrom.id,vertexTo.id) +1;
+        end
+      end
     end
 
     function draw(self)
