@@ -3,6 +3,9 @@ clear
 clc
 
 
-testClass = GraphTest();
-res = run(testClass);
+testClass1 = GraphTestDirected();
+testClass2 = GraphTestUndirected();
+
+res1 = run(testClass1);
+res2 = run(testClass2);
 
