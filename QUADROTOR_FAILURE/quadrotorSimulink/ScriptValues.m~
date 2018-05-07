@@ -11,19 +11,19 @@
 
 m= 0.5;
 g= 9.81;
-d= 1/2; %2.4*10^-3;
+d= 2.4*10^-3;
 kr = 1/2; %2*10^-3; %extimate for r = 6 (1 rounds /second) 
 l= 0.255;
 
 
 xd = 0;
 yd = 0;
-zd = 0;
+zd = 1;
 % Initial state %
 
-x0 = 1;
-y0 = 1;
-z0 = 1;
+x0 = 0;
+y0 = 0;
+z0 = 0;
 dx0 = 0;
 dy0 = 0;
 dz0 = 0;
@@ -39,14 +39,12 @@ psi0 = pi/4;
 t = 60;
 
 A = [0, 0, 0, 1;
-    t^3, t^2, t, 1;
+    1, 1, 1, 1;
     0, 0, 1, 0;
-    3*t^2, 2*t, 1, 0];
+    3, 2, 1, 0];
 
-x_constr = [x0, xd, 0, 0]';
-y_constr = [y0, yd, 0, 0]';
+x_constr = [x0, zd, 0, 0]';
+y_constr = [y0, zd, 0, 0]';
 z_constr = [z0, zd, 0, 0]';
 
-x_coeff = A^-1*x_constr;
-y_coeff = A^-1*y_constr;
-z_coeff = A^-1*z_constr;
+z_coeff = A^-1*b
