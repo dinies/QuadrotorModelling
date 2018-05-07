@@ -32,6 +32,50 @@ classdef Graph < handle
       end
     end
 
+    function mat = degreeMatrix(self)
+                % DEGREEMATRIX Compute the degree of all vertices of a graph,...
+                % if the graph is directed it woll compute the inDegree..
+      N = size( self.vertices,1);
+      mat = zeros( N,N );
+      for i = 1:size(self.edges,1)
+        edge = self.edges(i,1);
+        mat( edge.vertexTo.id, edge.vertexTo.id) = mat( edge.vertexTo.id, edge.vertexTo.id) +1;
+        if ~edge.directed
+          mat( edge.vertexFrom.id, edge.vertexFrom.id) = mat( edge.vertexFrom.id, edge.vertexFrom.id) +1;
+        end
+      end
+    end
+    function mat = incidenceMatrix(self)
+  % INCEDENCEMATRIX Compute the incidence reletion betwwen vertices of a graph.Only directed graphs
+      N = size( self.vertices,1);
+      epsilon = size(self.edges,1);
+      mat = zeros( N,epsilon );
+      for i = 1:size(self.edges,1)
+        edge = self.edges(i,1);
+        mat(edge.vertexFrom.id ,i) = mat(edge.vertexFrom.id, i) -1;  %tail
+        mat(edge.vertexTo.id ,i) = mat(edge.vertexTo.id, i) +1;  %head
+      end
+    end
+    function mat = laplacianMatrixDirected(self)
+% LAPLACIANMATRIX Compute the laplacian reletion betwwen vertices of a directed graph.
+      mat = self.incidenceMatrix * self.incidenceMatrix' ;
+    end
+
+    function mat = laplacianMatrixUndirected(self)
+% LAPLACIANMATRIX Compute the laplacian reletion betwwen vertices of a undirected graph.
+      mat =  self.degreeMatrix() - self.adjacencyMatrix();
+    end
+
+    function res = isConnected(self)
+
+      if self.edges(size(self.edges,1)).directed  %check if the graph is directed
+        singularValues= svd( self.laplacianMatrixDirected);
+      else
+        singularValues= svd( self.laplacianMatrixUndirected);
+      end
+      res = singularValues( size(self.edges,1)-1 ) > 0;
+    end
+
     function draw(self)
       figure('Name','Graph representation','pos',[10 10 1600 1200]),hold on;
       axis([-1 3 -1 3 -1 3]);

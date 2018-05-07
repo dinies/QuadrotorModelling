@@ -75,7 +75,7 @@ classdef  GraphTestDirected < matlab.unittest.TestCase
     function testIncidenceMatrix(testCase)
 
       graph = Graph( testCase.vertices, testCase.edges);
-      res = graph.IncidenceMatrix();
+      res = graph.incidenceMatrix();
       truth = [
                -1 0  0  0  0  0;
                1  1  0 -1  0  0;
@@ -89,7 +89,7 @@ classdef  GraphTestDirected < matlab.unittest.TestCase
     function testLaplacianMatrix(testCase)
 
       graph = Graph( testCase.vertices, testCase.edges);
-      res = graph.laplacianMatrix();
+      res = graph.laplacianMatrixDirected();
       truth = [
                1 -1  0  0  0;
               -1  3 -1  0 -1;
@@ -100,5 +100,8 @@ classdef  GraphTestDirected < matlab.unittest.TestCase
       testCase.verifyEqual( res, truth);
     end
 
+    function testIsConnected(testCase)
+
+    end
   end
 end
