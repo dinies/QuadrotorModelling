@@ -1,6 +1,13 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{Methods}{}% 2
-\BOOKMARK [1][-]{section.3}{Results}{}% 3
-\BOOKMARK [1][-]{section.4}{Discussion}{}% 4
-\BOOKMARK [2][-]{subsection.4.1}{Subsection One}{section.4}% 5
-\BOOKMARK [2][-]{subsection.4.2}{Subsection Two}{section.4}% 6
+\BOOKMARK [1][-]{section.2}{Problem Statement}{}% 2
+\BOOKMARK [1][-]{section.3}{Hardware components}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Structural design}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{On board computing}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.3}{Sensing instruments}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.4}{Communication devices}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.5}{Auto pilot framework}{section.3}% 8
+\BOOKMARK [1][-]{section.4}{Hybrid planner}{}% 9
+\BOOKMARK [2][-]{subsection.4.1}{RRT}{section.4}% 10
+\BOOKMARK [2][-]{subsection.4.2}{Artificial potentials}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.3}{Implementation}{section.4}% 12
+\BOOKMARK [1][-]{section.5}{Conclusion}{}% 13
