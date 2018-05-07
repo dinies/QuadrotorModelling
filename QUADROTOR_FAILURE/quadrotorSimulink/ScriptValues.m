@@ -16,19 +16,19 @@ kr = 1/2; %2*10^-3; %extimate for r = 6 (1 rounds /second)
 l= 0.255;
 
 
-xd = 0;
-yd = 0;
+xd = 1;
+yd = 1;
 zd = 0;
 % Initial state %
 
-x0 = 1;
-y0 = 1;
-z0 = 1;
+x0 = 2;
+y0 = 2;
+z0 = 2;
 dx0 = 0;
 dy0 = 0;
 dz0 = 0;
-p0 = -0.5;
-q0 = 0.5;
+p0 = 0; %-0.5;
+q0 = 0; %0.5;
 r0 = 2.7;
 phi0 = 0;
 theta0 = 0;
@@ -36,7 +36,7 @@ psi0 = pi/4;
 
 %% Compute cubic trajectory
 
-t = 60;
+t = 200;
 
 A = [0, 0, 0, 1;
     t^3, t^2, t, 1;
