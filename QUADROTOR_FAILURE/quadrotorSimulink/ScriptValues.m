@@ -18,14 +18,14 @@ kr = 1/2; %2*10^-3; %extimate for r = 6 (1 rounds /second)
 l= 0.255;
 
 
-xd = 1;
-yd = 1;
-zd = 0;
+xd = 0;
+yd = 0;
+zd = 5;
 % Initial state %
 
-x0 = 2;
-y0 = 2;
-z0 = 2;
+x0 = 0;
+y0 = 0;
+z0 = 5;
 dx0 = 0;
 dy0 = 0;
 dz0 = 0;
@@ -38,7 +38,7 @@ psi0 = pi/4;
 
 %% Compute cubic trajectory
 
-t = 1;
+t = 10;
 
 A = [0, 0, 0, 1;
     t^3, t^2, t, 1;
@@ -73,6 +73,5 @@ if (clientID>-1)
     
     
     open_system('quadSimulink');
-    set_param('quadSimulink','AlgebraicLoopSolver','LineSearch')
     sim('quadSimulink');
 end

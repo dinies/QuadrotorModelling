@@ -80,8 +80,8 @@ block.RegBlockMethod('Terminate', @Terminate); % Required
 %%   C-MEX counterpart: mdlStart
 %%
 function Start(block)
-vrep=remApi('remoteApi');
-set_param(block.BlockHandle, 'UserData', vrep);
+
+block.Dwork(1).Data = 0;
 
 
 %%
@@ -99,7 +99,8 @@ f3 = block.InputPort(3).Data;
 f4 = block.InputPort(4).Data;
 clientID = block.InputPort(5).Data;
 
-vrep = get_param(block.BlockHandle, 'UserData');
+
+vrep=remApi('remoteApi'); %% using the prototype file (remoteApiProto.m)
 inputInts=[];
 inputStrings='';
 inputBuffer= [];
@@ -163,7 +164,7 @@ function SetInputPortFrameData(block, idx, fd)
 %%
 function Terminate(block)
   clientID = block.InputPort(5).Data;
-  vrep = get_param(block.BlockHandle, 'UserData');
+  vrep=remApi('remoteApi'); %% using the prototype file (remoteApiProto.m)
   vrep.simxStopSimulation(clientID,vrep.simx_opmode_blocking);
   vrep.simxFinish(clientID);
 
