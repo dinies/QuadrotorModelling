@@ -1,3 +1,5 @@
+clc
+clear
 % Constant values %
 
 % g = 9.81;
@@ -36,7 +38,7 @@ psi0 = pi/4;
 
 %% Compute cubic trajectory
 
-t = 200;
+t = 1;
 
 A = [0, 0, 0, 1;
     t^3, t^2, t, 1;
@@ -71,5 +73,6 @@ if (clientID>-1)
     
     
     open_system('quadSimulink');
+    set_param('quadSimulink','AlgebraicLoopSolver','LineSearch')
     sim('quadSimulink');
 end
