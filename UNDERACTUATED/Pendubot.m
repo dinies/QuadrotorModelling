@@ -26,6 +26,9 @@ classdef Pendubot < handle
       theta4 = 0.215;
       theta5 = 0.073;
       g= -9.81;
+      % check the correctness of this sign since in the simple doublependulum
+      % it seems that the correct one is a plus ( maybe this is different
+      % for how we have defined the linearization, H_e matrix etc.
 
       % Notation of notes
       a1 = theta1 + theta2;
@@ -81,7 +84,7 @@ classdef Pendubot < handle
     end
 
     % euler integration of the state : new_x  =  old_x + delta_T * state_evolution
-    function newState = updateState(self, x_dot)
+    function updateState(self, x_dot)
       new_t= self.clock.curr_t+self.clock.delta_t;
       for i= 1:size(self.x,1)
         integral = ode45( @(t, unused) x_dot(i,1) , [ self.clock.curr_t new_t], self.x(i,1));
@@ -187,9 +190,12 @@ classdef Pendubot < handle
       turquoise=[0.02,0.88,0.88];
       blue=[0.02,0.45,0.88];
       red = [ 0.88, 0.02, 0.02];
+      az=0;
+      el=90;
       figure('Name','State','pos',[10 10 1900 1200]),hold on;
 
-      ax1 = subplot(1,3,1);hold on
+      ax1 = subplot(1,3,1);
+      hold on;
       plot(data(:,1),data(:,2),'Color', orange);
       plot(data(:,1),data(:,3),'Color', green);
       plot(data(:,1),data(:,4),'Color', turquoise);
@@ -205,15 +211,17 @@ classdef Pendubot < handle
         legend('x1','x2','x3','x4','Location','southwest')
       end
 
-      ax2 = subplot(1,3,2),hold on;
+      ax2 = subplot(1,3,2);
+      plot3(data(:,2),data(:,4),data(:,1),'Color', blue);
       title(ax2,'phase plane first joint');
-      xlabel('q1'),ylabel('_dq1');
-      plot(data(:,2),data(:,4),'Color', blue);
+      xlabel('q1'),ylabel('_dq1'),zlabel('t');
+      view(az,el);
 
-      ax3 = subplot(1,3,3),hold on;
+      ax3 = subplot(1,3,3);
+      plot3(data(:,3),data(:,5),data(:,1),'Color', turquoise);
       title(ax3,'phase plane second joint');
-      xlabel('q2'),ylabel('_dq2');
-      plot(data(:,3),data(:,5),'Color', turquoise);
+      xlabel('q2'),ylabel('_dq2'),zlabel('t');
+      view(az,el);
     end
   end
 end
