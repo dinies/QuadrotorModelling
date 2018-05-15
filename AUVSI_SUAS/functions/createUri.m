@@ -1,4 +1,4 @@
-function createUri( hostname,port, endpoint)
+function uri = createUri( hostname,port, endpoint)
                        % param @1 and @2 will be combined to create a valid URI,
                        % an example would be a string containing this text
                        % “http://192.168.1.2:80/api/login” namely
@@ -9,6 +9,5 @@ function createUri( hostname,port, endpoint)
                        % in case modify the return of this function accordingly
 % http://auvsi-suas-competition-interoperability-system.readthedocs.io/en/latest/specification.html
 
-  fullUri = "http://" + hostname + ":" + port + endpoint;
-  return fullUri;
+  uri = "http://" + hostname + ":" + port + endpoint;
 end

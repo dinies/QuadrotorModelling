@@ -1,8 +1,12 @@
+function struct = parseJsonToStruct( json)
+       % PARSEJSONTOSTRUCT this func will return a customised function that will
+       % contain all the useful informations received from the judges server
+       % organised in a struct which will have the fields described above.
+       % STRUCT MISSION : TODO
+       % STRUCT OBSTACLES : TODO
 
-
-
-function parseJsonToStruct( json)
   decoded = jsondecode( json );
+  struct = -1; %TODO
 
 end
 
