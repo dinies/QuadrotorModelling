@@ -1,14 +1,14 @@
 clc
 clear
 % Constant values 
-m= 0.5;
-g= 9.81;
-d= 2.4*10^-3;
-l= 0.255;% 0.127;vrep measurement
-kr = 1/2;%2*10^-3; %extimate for r = 6 (1 rounds /second) 
-Ixx= 5.9*10-3;
-Iyy= 5.9*10-3;
-Izz= 1.16*10-3;
+% m= 0.5;
+% g= 9.81;
+% d= 2.4*10^-3;
+% l= 0.255;% 0.127;vrep measurement
+% kr = 1/2;%2*10^3; %extimate for r = 6 (1 rounds /second) 
+% Ixx= 5.9*10-3;
+% Iyy= 5.9*10-3;
+% Izz= 1.16*10-3;
 quadrotorInitialValues;
 
 % Desired state
@@ -19,7 +19,7 @@ z_d = 6;
 % Initial state
 x0 = 0;
 y0 = 0;
-z0 = 9;
+z0 = 6;
 dx0 = 0;
 dy0 = 0;
 dz0 = 0;
@@ -29,6 +29,8 @@ r0 = 0.0;
 phi0 = 0.000;
 theta0 = 0.000;
 psi0 = 0.0;
+
+MapMatrix = diag([ 1, -1, -1, -1, -1, 1, 1, -1, -1, -1, -1, 1]);
 
 %% Compute cubic trajectory
 

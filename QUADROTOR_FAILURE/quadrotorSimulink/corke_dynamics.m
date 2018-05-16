@@ -1,5 +1,5 @@
 
-function [sys,x0,str,ts] = quadrotor_dynamics(t,x,u,flag, quad, x0, groundflag)
+    function [sys,x0,str,ts] = corke_dynamics(t,x,u,flag, quad, x0, groundflag)
     % Flyer2dynamics lovingly coded by Paul Pounds, first coded 12/4/04
     % A simulation of idealised X-4 Flyer II flight dynamics.
     % version 2.0 2005 modified to be compatible with latest version of Matlab
