@@ -75,7 +75,7 @@ function [sys,x0,str,ts] = mdlInitializeSizes(ts,plot,enable)
     
     if enable == 1
         figure(plot);
-        set(plot,'pos',[10 10 1900 1200]);
+        set(plot,'pos',[10 10 950 600]);
         clf;
         %colordef(1,'none');
         %global anim

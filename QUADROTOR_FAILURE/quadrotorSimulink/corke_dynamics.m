@@ -48,7 +48,7 @@
     %   x = [z1 z2 z3 n1 n2 n3 z1 z2 z3 o1 o2 o3 w1 w2 w3 w4]
     
     %INITIAL CONDITIONS
-    n0 = [pi/8 pi/8 0];               %   n0      Ang. position initial conditions    1x3
+    n0 = [0 0 0];               %   n0      Ang. position initial conditions    1x3
     v0 = [0 0 0];               %   v0      Velocity Initial conditions         1x3
     o0 = [0 0 0];               %   o0      Ang. velocity initial conditions    1x3
     init = [x0 n0 v0 o0];       % x0 is the passed initial position 1x3

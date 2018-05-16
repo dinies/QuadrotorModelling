@@ -14,21 +14,21 @@ quadrotorInitialValues;
 % Desired state
 x_d = 0;
 y_d = 0;
-z_d = 6;
+z_d = 4;
 
-% Initial state
-x0 = 0;
-y0 = 0;
-z0 = 6;
-dx0 = 0;
-dy0 = 0;
-dz0 = 0;
-p0 = 0.00; %-0.5;
-q0 = 0.00; %0.5;
-r0 = 0.0;
-phi0 = 0.000;
-theta0 = 0.000;
-psi0 = 0.0;
+% % Initial state
+% x0 = 0;
+% y0 = 0;
+% z0 = 5;
+% dx0 = 0;
+% dy0 = 0;
+% dz0 = 0;
+% p0 = 0.00; %-0.5;
+% q0 = 0.00; %0.5;
+% r0 = 0.0;
+% phi0 = 0.000;
+% theta0 = 0.000;
+% psi0 = 0.0;
 
 MapMatrix = diag([ 1, -1, -1, -1, -1, 1, 1, -1, -1, -1, -1, 1]);
 
