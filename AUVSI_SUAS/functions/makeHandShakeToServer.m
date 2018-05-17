@@ -1,4 +1,4 @@
-function makeHandShakeToServer(hostname, port)
+function cookie = makeHandShakeToServer(hostname, port)
   %% MAKEHANDSHAKETOSERVER will start a session with the competition server
   % param @1 String  hostname : address to which the request has to be sent, it
   % will be made of the IP address of the judges endpoint eg.192.168.1.2
@@ -9,8 +9,6 @@ function makeHandShakeToServer(hostname, port)
 
   import matlab.net.*
   import matlab.net.http.*
-
-
 
   endpoint= "/api/login";
   uriString =createUri( hostname,port, endpoint);
@@ -23,7 +21,4 @@ function makeHandShakeToServer(hostname, port)
   [response,completedrequest,history] = send(request,uri);
 
   cookie =-1; % TODO
-
-
-  return cookie
 end

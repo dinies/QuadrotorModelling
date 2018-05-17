@@ -1,3 +1,10 @@
+%% Paper Values
+quadrotor.ratioDT= 2.4*10^-3; %ratio between drag and thrust coefficients of a rotor, m
+quadrotor.kr =1/2;  %  2*10^3;    %extimate for r = 6 (1 rounds /second)
+%quadrotor.kt missing
+
+%% Corke Values
+
 quadrotor.nrotors = 4;                %   4 rotors
 quadrotor.g = 9.81;                   %   g       Gravity                             1x1
 quadrotor.rho = 1.184;                %   rho     Density of air                      1x1
@@ -5,14 +12,14 @@ quadrotor.muv = 1.5e-5;               %   muv     Viscosity of air              
 
 % Airframe
 % Airframe
-quadrotor.M = 0.5;                      %   M       Mass                                1x1
-Ixx= 5.9*10-3;
-Iyy= 5.9*10-3;
-Izz= 1.16*10-3;
-quadrotor.J = diag([Ixx Iyy Izz]);    %   I       Flyer rotational inertia matrix     3x3
+quadrotor.M = 4;                      %   M       Mass                                1x1
+quadrotor.Ixx= 0.082;
+quadrotor.Iyy= 0.082;
+quadrotor.Izz= 0.149;
+quadrotor.J = diag([quadrotor.Ixx quadrotor.Iyy quadrotor.Izz]);    %   I       Flyer rotational inertia matrix     3x3
 
 quadrotor.h = -0.007;                 %   h       Height of rotors above CoG          1x1
-quadrotor.d = 0.255;                  %   d       Length of flyer arms                1x1
+quadrotor.d = 0.315;                  %   d       Length of flyer arms                1x1
 
 %Rotor
 quadrotor.nb = 2;                      %   b       Number of blades per rotor          1x1
@@ -29,7 +36,7 @@ quadrotor.Ic = quadrotor.Mc*(quadrotor.ec)^2/4;           %   Ic      Estimated 
 quadrotor.mb = quadrotor.g*(quadrotor.Mc*quadrotor.ec/2+quadrotor.Mb*quadrotor.r/2);    %   mb      Static blade moment                 1x1
 quadrotor.Ir = quadrotor.nb*(quadrotor.Ib+quadrotor.Ic);             %   Ir      Total rotor inertia                 1x1
 
-quadrotor.Ct = 2.4*10^-3;                %   Ct      Non-dim. thrust coefficient         1x1
+quadrotor.Ct = 0.0048;                %   Ct      Non-dim. thrust coefficient         1x1
 quadrotor.Cq = quadrotor.Ct*sqrt(quadrotor.Ct/2);         %   Cq      Non-dim. torque coefficient         1x1
 
 quadrotor.sigma = quadrotor.c*quadrotor.nb/(pi*quadrotor.r);         %   sigma   Rotor solidity ratio                1x1

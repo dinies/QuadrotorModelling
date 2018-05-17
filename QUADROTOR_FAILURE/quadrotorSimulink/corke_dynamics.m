@@ -1,5 +1,5 @@
 
-function [sys,x0,str,ts] = quadrotor_dynamics(t,x,u,flag, quad, x0, groundflag)
+    function [sys,x0,str,ts] = corke_dynamics(t,x,u,flag, quad, x0, groundflag)
     % Flyer2dynamics lovingly coded by Paul Pounds, first coded 12/4/04
     % A simulation of idealised X-4 Flyer II flight dynamics.
     % version 2.0 2005 modified to be compatible with latest version of Matlab
@@ -48,7 +48,7 @@ function [sys,x0,str,ts] = quadrotor_dynamics(t,x,u,flag, quad, x0, groundflag)
     %   x = [z1 z2 z3 n1 n2 n3 z1 z2 z3 o1 o2 o3 w1 w2 w3 w4]
     
     %INITIAL CONDITIONS
-    n0 = [pi/8 pi/8 0];               %   n0      Ang. position initial conditions    1x3
+    n0 = [0 0 0];               %   n0      Ang. position initial conditions    1x3
     v0 = [0 0 0];               %   v0      Velocity Initial conditions         1x3
     o0 = [0 0 0];               %   o0      Ang. velocity initial conditions    1x3
     init = [x0 n0 v0 o0];       % x0 is the passed initial position 1x3

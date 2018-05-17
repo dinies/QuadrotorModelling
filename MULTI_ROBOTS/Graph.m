@@ -2,10 +2,11 @@ classdef Graph < handle
   properties
     edges
     vertices
+    clock
   end
   methods
 
-    function self = Graph( vertices, edges )
+    function self = Graph( vertices, edges, clock )
       if size(vertices,2) == 1
         self.vertices = vertices;
       else
@@ -15,6 +16,10 @@ classdef Graph < handle
         self.edges = edges;
       else
         self.edges = edges';
+      end
+
+      if nargin > 2
+        self.clock = clock;
       end
     end
 
@@ -56,25 +61,84 @@ classdef Graph < handle
         mat(edge.vertexTo.id ,i) = mat(edge.vertexTo.id, i) +1;  %head
       end
     end
-    function mat = laplacianMatrixDirected(self)
-% LAPLACIANMATRIX Compute the laplacian reletion betwwen vertices of a directed graph.
-      mat = self.incidenceMatrix * self.incidenceMatrix' ;
-    end
-
-    function mat = laplacianMatrixUndirected(self)
-% LAPLACIANMATRIX Compute the laplacian reletion betwwen vertices of a undirected graph.
-      mat =  self.degreeMatrix() - self.adjacencyMatrix();
+    function mat = laplacianMatrix(self)
+% LAPLACIANMATRIX Compute the laplacian reletion between vertices.
+      if self.isDirected()
+        mat = self.incidenceMatrix * self.incidenceMatrix' ;
+      else
+        mat =  self.degreeMatrix() - self.adjacencyMatrix();
+      end
     end
 
     function res = isConnected(self)
-
-      if self.edges(size(self.edges,1)).directed  %check if the graph is directed
-        singularValues= svd( self.laplacianMatrixDirected);
-      else
-        singularValues= svd( self.laplacianMatrixUndirected);
-      end
+      singularValues= svd( self.laplacianMatrix);
       res = singularValues( size(self.edges,1)-1 ) > 0;
     end
+
+    function bool = isDirected(self)
+           %ISDIRECTED it says if the graph is undirected ( there is at least an
+           % edge that is bidirectional) or directed ( otherwise )
+
+      bool= false;
+      for i = 1:size(self.edges,1)
+        if self.edges(i).directed
+          bool = true;
+        end
+      end
+    end
+
+    function x_curr = getCurrentAgentState(self)
+  % GETCURRENTAGENTSTATE returns all the states x of all the agents in the graph
+      x_curr = zeros( size(self.vertices) );
+      for i = 1:size(self.vertices)
+        x_curr(i,1) = self.vertices(i,1).getState();
+      end
+    end
+
+    function err =  error( self, x_target)
+         % ERROR will ruturn a a difference between the target and current state
+      x_curr = self.getCurrentAgentState();
+      err = x_target - x_curr;
+    end
+
+    function updateStateVertices(self,x_dot)
+      for i = 1:size(self.vertices,1)
+        self.vertices(i,1).updateState( x_dot(i,1));
+      end
+    end
+
+    function consensusProtocol(self,t_f)
+% CONSENSUSPROTOCOL is a function that will operate an iterative control strategy
+% to bring all the agent present on the graph to a common state ( a consensus value
+% which will be equal to the average of the initial values for a connected undirected
+% graph, this will be more difficult in the case of a not completely connencted
+% directed graph)
+
+      numOfSteps = round(t_f/self.clock.delta_t);
+      data = zeros(numOfSteps, size(self.vertices,1)+1);
+      self.draw();
+      for i = 1:numOfSteps
+        x_curr = self.getCurrentAgentState();
+        t= self.clock.curr_t();
+        data( i, :) = [t, x_curr'];
+        L = self.laplacianMatrix();
+        x_dot = - L*x_curr;
+        self.clock.tick();
+        self.updateStateVertices(x_dot);
+        self.deleteDrawing();
+        self.dynamicDraw();
+        pause(0.000001);
+      end
+      self.drawStatisticsAgents(data);
+    end
+
+    function drawStatisticsAgents(self, data, lastIterationNum)
+      figure('Name','State','pos',[10 10 950 600]),hold on;
+      for i = 1:size(self.vertices,1)
+        plot(data(:,1),data(:,1+i));
+      end
+    end
+
 
     function draw(self)
       figure('Name','Graph representation','pos',[10 10 1600 1200]),hold on;
@@ -90,12 +154,21 @@ classdef Graph < handle
         draw(self.edges(i,1));
       end
     end
-    function delete(self)
+
+    function dynamicDraw(self)
       for i = 1:size(self.vertices,1)
-        delete(self.vertices(i,1));
+        draw(self.vertices(i,1));
       end
       for i = 1:size(self.edges,1)
-        delete(self.edges(i,1));
+        draw(self.edges(i,1));
+      end
+    end
+    function deleteDrawing(self)
+      for i = 1:size(self.vertices,1)
+        delete(self.vertices(i,1).drawing);
+      end
+      for i = 1:size(self.edges,1)
+        delete(self.edges(i,1).drawing);
       end
     end
   end

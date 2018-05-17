@@ -1,14 +1,18 @@
+function struct = parseJsonToStruct( json)
+       % PARSEJSONTOSTRUCT this func will return a customised function that will
+       % contain all the useful informations received from the judges server
+       % organised in a struct which will have the fields described above.
+       % STRUCT MISSION : TODO
+       % STRUCT OBSTACLES : TODO
 
 
-
-function parseJsonToStruct( json)
-  decoded = jsondecode( json );
+  decoded = jsondecode( j1 );
+  struct = -1; %TODO
 
 end
 
-
-
-%% example json
+%{
+  %% example json
 
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -43,3 +47,69 @@ Content-Type: application/json
                           }
  ]
 }
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+    {
+        "id": 1,
+        "active": true,
+        "air_drop_pos": {
+            "latitude": 38.141833,
+            "longitude": -76.425263
+        },
+        "fly_zones": [
+            {
+                "altitude_msl_max": 200.0,
+                "altitude_msl_min": 100.0,
+                "boundary_pts": [
+                    {
+                        "latitude": 38.142544,
+                        "longitude": -76.434088,
+                        "order": 1
+                    },
+                    {
+                        "latitude": 38.141833,
+                        "longitude": -76.425263,
+                        "order": 2
+                    },
+                    {
+                        "latitude": 38.144678,
+                        "longitude": -76.427995,
+                        "order": 3
+                    }
+                ]
+            }
+        ],
+        "home_pos": {
+            "latitude": 38.14792,
+            "longitude": -76.427995
+        },
+        "mission_waypoints": [
+            {
+                "altitude_msl": 200.0,
+                "latitude": 38.142544,
+                "longitude": -76.434088,
+                "order": 1
+            }
+        ],
+        "off_axis_odlc_pos": {
+            "latitude": 38.142544,
+            "longitude": -76.434088
+        },
+        "emergent_last_known_pos": {
+            "latitude": 38.145823,
+            "longitude": -76.422396
+        },
+        "search_grid_points": [
+            {
+                "altitude_msl": 200.0,
+                "latitude": 38.142544,
+                "longitude": -76.434088,
+                "order": 1
+            }
+        ]
+    }
+]
+%}

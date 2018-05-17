@@ -55,7 +55,7 @@ classdef  GraphTestUndirected < matlab.unittest.TestCase
     end
     function testLaplacianMatrix(testCase)
       graph = Graph( testCase.vertices, testCase.edges);
-      res = graph.laplacianMatrixUndirected();
+      res = graph.laplacianMatrix();
       truth = [
                1 -1  0  0  0;
                -1  3 -1  0 -1;
@@ -67,7 +67,17 @@ classdef  GraphTestUndirected < matlab.unittest.TestCase
     end
 
 
- end
+    function testIsConnected(testCase)
+      graph = Graph( testCase.vertices, testCase.edges);
+      testCase.verifyTrue( graph.isConnected() );
+    end
+
+
+    function testIsDirected(testCase)
+      graph = Graph( testCase.vertices, testCase.edges);
+      testCase.verifyFalse( graph.isDirected() );
+    end
+  end
 end
 
 
