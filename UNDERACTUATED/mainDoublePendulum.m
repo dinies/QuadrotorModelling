@@ -10,5 +10,5 @@ x_0 = [0;pi/60;0;0];
 
 penduBot = DoublePendulum( clock,x_0);
 
-penduBot.loop(t_f);
+penduBot.freeEvolutionLoop(t_f);
 

@@ -22,3 +22,5 @@ function cookie = makeHandShakeToServer(hostname, port)
 
   cookie =-1; % TODO
 end
+
+%% TODO   USE THE PYTHON API AND TEST IT WITH THE APACHE AUTOMATION SERVER ( CHECK REPO AUVSI)

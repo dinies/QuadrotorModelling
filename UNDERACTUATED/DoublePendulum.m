@@ -68,6 +68,9 @@ classdef DoublePendulum < handle
         integral = ode45( @(t, unused) x_dot(i,1) , [ self.clock.curr_t new_t], self.x(i,1));
         self.x(i,1)= deval( integral, new_t);
       end
+      for i = 1:2
+        self.x(i) = BoxOp.boxWrap(self.x(i));
+      end
     end
 
     function deleteDrawing(self)
@@ -107,7 +110,7 @@ classdef DoublePendulum < handle
       drawing = [d1;d2;d3;d4];
     end
 
-    function loop( self, t_f)
+    function freeEvolutionLoop( self, t_f)
 
       figure('Name','Double pendulum','pos',[10 10 800 600]),hold on;
 

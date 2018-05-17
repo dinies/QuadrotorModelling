@@ -25,7 +25,7 @@ classdef Pendubot < handle
       theta3 = 0.01;
       theta4 = 0.215;
       theta5 = 0.073;
-      g= -9.81;
+      g= 9.81;
       % check the correctness of this sign since in the simple doublependulum
       % it seems that the correct one is a plus ( maybe this is different
       % for how we have defined the linearization, H_e matrix etc.
@@ -124,11 +124,11 @@ classdef Pendubot < handle
       Q = diag([k,k,18*k,k]);
       R = 8*k;
       N = zeros(4,1);
-      %[K,~,~] = lqr(self.A,self.B,Q,R,N);
+      [K,~,~] = lqr(self.A,self.B,Q,R,N);
       %from book
-      K = [
-           16.46,3.13,16.24,2.07
-      ];
+      %K = [
+      %     16.46,3.13,16.24,2.07
+      %];
 
       numOfSteps = round(t_f/self.clock.delta_t);
       data= zeros( numOfSteps, 1+size(self.x,1)+1);
