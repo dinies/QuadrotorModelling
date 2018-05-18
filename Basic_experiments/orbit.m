@@ -2,6 +2,7 @@ close all
 clear
 clc
 
+recFlag = 0;  %flag to record a video of the animation
 
 l_0=340;   %average distance frome centre of Earth
 theta=pi/4;
@@ -34,8 +35,10 @@ view(az,el);
 title('iss orbital'),xlabel('x'),ylabel('y'),zlabel('z');
 
 %inizialization
-video = VideoWriter('orbitIss.avi');
-open(video);
+if recFlag
+  video = VideoWriter('orbitIss.avi');
+  open(video);
+end
 
 mi=398600.4;
 q0=[r0';v0'];
@@ -44,7 +47,7 @@ h0=cross(r0,v0);
 e0=cross(v0,h0)/mi-(r0/norm(r0));
 delta_t=0.5;
 t=0;
-numOfSteps=19;
+numOfSteps=500;
 data=zeros(numOfSteps+1,17);
 data(1,:)=[t,r0',v0',h0',e0',norm(e0),0,0,0];
 for i=2:numOfSteps+1
@@ -56,15 +59,22 @@ for i=2:numOfSteps+1
             q(j,k)=deval(integral,new_t);
         end
     end
-    drawSatellite(q(1,:)',q(2,:)', video);
+    if recFlag
+      drawSatellite(q(1,:)',q(2,:)',recFlag, video);
+    else
+      drawSatellite(q(1,:)',q(2,:)',recFlag);
+    end
     t=t+delta_t;
     h=cross(q(1,:)',q(2,:)');
     e=cross(q(2,:)',h)/mi-(q(1,:)'/norm(q(1,:)'));
     data(i,:)=[t,q(1,:),q(2,:),h',e',norm(e),dq(2,:)];
     pause(0.0001);
 end
-close(video);
+
 drawStatistics(data);
+if recFlag
+  close(video);
+end
 
 function dq = stateEvolution(q)
 mi=398600.4;
@@ -74,7 +84,7 @@ dq=[
     ];
 end
 
-function frame = drawSatellite(r,v, video)
+function frame = drawSatellite(r,v, recordingFlag ,video)
     h=cross(r,v);   %angolar momentum
     red=[1,0,0];
     green=[0,1,0];
@@ -84,11 +94,13 @@ function frame = drawSatellite(r,v, video)
     p1=p0+r;
     p2=p1+v;
     p3=r+h;
-    animatedline([p0(1,1),p1(1,1)],[p0(2,1),p1(2,1)],[p0(3,1),p1(3,1)],'Color',green,'LineWidth',2);
-    animatedline([p1(1,1),p2(1,1)],[p1(2,1),p2(2,1)],[p1(3,1),p2(3,1)],'Color',blue,'LineWidth',3);
-    animatedline([p1(1,1),p3(1,1)],[p1(2,1),p3(2,1)],[p1(3,1),p3(3,1)],'Color',orange,'LineWidth',3);
-    frame = getframe(gcf);
-    video.writeVideo(frame);
+    line([p0(1,1),p1(1,1)],[p0(2,1),p1(2,1)],[p0(3,1),p1(3,1)],'Color',green,'LineWidth',2);
+    line([p1(1,1),p2(1,1)],[p1(2,1),p2(2,1)],[p1(3,1),p2(3,1)],'Color',blue,'LineWidth',3);
+    line([p1(1,1),p3(1,1)],[p1(2,1),p3(2,1)],[p1(3,1),p3(3,1)],'Color',orange,'LineWidth',3);
+    if recordingFlag
+      frame = getframe(gcf);
+      video.writeVideo(frame);
+    end
 
 end
 

@@ -2,13 +2,13 @@ close all
 clear
 clc
 
-t_f = 7;
-delta_t= 0.005;
+t_f = 2;
+delta_t= 0.001;
 clock = Clock(delta_t);
 
-x_0 = [0;pi/60;0;0];
+x_0 = [3*pi/4;pi/60;0;0];
 
 penduBot = DoublePendulum( clock,x_0);
 
-penduBot.freeEvolutionLoop(t_f);
+penduBot.freeEvolutionLoop(t_f,0);
 

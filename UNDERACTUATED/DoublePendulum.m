@@ -13,7 +13,7 @@ classdef DoublePendulum < handle
   end
   methods
     function self = DoublePendulum( clock,x_0)
-      %% PENDULUM  it will give assurance that the dynimics of a pendulum is well defined
+      % PENDULUM  it will give assurance that the dynimics of a pendulum is well defined
       % param x_0: initial state q1 , q2 , dq1 dq2
 
       self.l1= 0.2032;
@@ -35,11 +35,17 @@ classdef DoublePendulum < handle
       self.a5 = theta5*g;
       self.x = x_0;
       self.clock = clock;
+
+      if nargin > 1
+        self.x = x_0;
+      else
+        self.x = zeros(4,1);
+      end
     end
 
-    function  x_dot = stateEvolution(self )
-      %% System Dynamics
-   % M(q)*ddq + c(q,dq)*dq + e(q) = tau   open loop, free evolution, then tau =0
+    function  x_dot = stateEvolution(self, tau )
+      % System Dynamics
+   % M(q)*ddq + c(q,dq)*dq + e(q) = tau
       M = [
            self.a1 + 2*self.a2*cos(self.x(2,1)) , self.a3 + self.a2*cos(self.x(2,1));
            self.a3 + self.a2*cos(self.x(2,1))   , self.a3];
@@ -51,7 +57,7 @@ classdef DoublePendulum < handle
            self.a4*sin(self.x(1,1)) + self.a5*sin( self.x(1,1)+ self.x(2,1));
            self.a5*sin(self.x(1,1)+ self.x(2,1));
       ];
-      ddq = - inv( M )*( c + e );
+      ddq = - inv( M )*( c + e - tau  );
 
       x_dot = [
                self.x(3,1);
@@ -79,8 +85,43 @@ classdef DoublePendulum < handle
       end
     end
 
+    function freeEvolutionLoop( self, t_f, recFlag)
 
-    function drawing = draw(self)
+      figure('Name','Double pendulum','pos',[10 10 800 600]),hold on;
+      axis([ -1 1 -1 1]);
+      title('plant'), xlabel('x'), ylabel('y')
+
+      if recFlag
+        video = VideoWriter('doublePendulumFreeEvo.avi');
+        open(video);
+      end
+
+      numOfSteps = round(t_f/self.clock.delta_t);
+      data= zeros( numOfSteps, 1+size(self.x,1));
+      for i = 1:numOfSteps
+        tau = [0;0];
+        x_dot = self.stateEvolution(tau);
+        self.updateState(x_dot);
+        self.deleteDrawing();
+        if recFlag
+          self.drawing= self.draw(recFlag,video);
+        else
+          self.drawing= self.draw(recFlag);
+        end
+        self.clock.tick();
+        pause(0.000001);
+        data(i,:) = [self.clock.curr_t,self.x'];
+      end
+
+      self.drawStatistics(data);
+      if recFlag
+        close(video);
+      end
+    end
+
+
+
+    function drawing = draw(self, recordingFlag, video)
       orange =[0.88,0.45,0.02];
       blue=[0.02,0.45,0.88];
       violet= [0.45, 0.02,0.88];
@@ -107,29 +148,13 @@ classdef DoublePendulum < handle
       d3= drawCircle2D(d, p1(1,1), p1(2,1), radius, orange);
 
       d4= drawLine2D(d, p1(1:2,1)', p2(1:2,1)', blue );
+
+      if recordingFlag
+        frame = getframe(gcf);
+        video.writeVideo(frame);
+      end
       drawing = [d1;d2;d3;d4];
     end
-
-    function freeEvolutionLoop( self, t_f)
-
-      figure('Name','Double pendulum','pos',[10 10 800 600]),hold on;
-
-      axis([ -1 1 -1 1]);
-      title('plant'), xlabel('x'), ylabel('y')
-      numOfSteps = round(t_f/self.clock.delta_t);
-      data= zeros( numOfSteps, 1+size(self.x,1));
-      for i = 1:numOfSteps
-        x_dot = self.stateEvolution();
-        self.updateState( x_dot );
-        self.deleteDrawing();
-        self.drawing= self.draw();
-        self.clock.tick();
-        pause(0.000001);
-        data(i,:) = [self.clock.curr_t,self.x'];
-      end
-      self.drawStatistics(data);
-    end
-
 
     function drawStatistics(~,data)
       orange =[0.88,0.45,0.02];
@@ -149,8 +174,15 @@ classdef DoublePendulum < handle
       plot(data(:,1),data(:,4),'Color', turquoise);
       plot(data(:,1),data(:,5),'Color', blue);
 
-      title(ax1,'x: { q1, q2, d q1, d q2}');
-      legend('x1','x2','x3','x4','Location','southwest')
+      if size(data,2) > 5
+        plot(data(:,1),data(:,6),'Color', red);
+        title(ax1,'x: { q1, q2, d q1, d q2, tau}');
+        legend('x1','x2','x3','x4','tau','Location','southwest')
+      else
+        title(ax1,'x: { q1, q2, d q1, d q2}');
+        legend('x1','x2','x3','x4','Location','southwest')
+      end
+
 
       ax2 = subplot(1,3,2);
       plot3(data(:,2),data(:,4),data(:,1),'Color', blue);
