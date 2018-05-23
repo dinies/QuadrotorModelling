@@ -1,9 +1,9 @@
-classdef Agent  < Vertex
+classdef SingleAgent  < Vertex
   properties
     clock
   end
   methods
-    function self= Agent(id, state, clock)
+    function self= SingleAgent(id, state, clock)
       state.coords(3,1) = state.x;
       self@Vertex(id, state );
       self.clock = clock;

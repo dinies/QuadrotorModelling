@@ -88,7 +88,7 @@ classdef Graph < handle
     end
 
     function x_curr = getCurrentAgentState(self)
-  % GETCURRENTAGENTSTATE returns all the states x of all the agents in the graph
+  % GETCURRENTAGENTSTATE returns all the states x of all the SingleAgents in the graph
       x_curr = zeros( size(self.vertices) );
       for i = 1:size(self.vertices)
         x_curr(i,1) = self.vertices(i,1).getState();
@@ -109,7 +109,7 @@ classdef Graph < handle
 
     function consensusProtocol(self,t_f)
 % CONSENSUSPROTOCOL is a function that will operate an iterative control strategy
-% to bring all the agent present on the graph to a common state ( a consensus value
+% to bring all the SingleAgents present on the graph to a common state ( a consensus value
 % which will be equal to the average of the initial values for a connected undirected
 % graph, this will be more difficult in the case of a not completely connencted
 % directed graph)
