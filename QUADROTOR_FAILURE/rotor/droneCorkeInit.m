@@ -55,7 +55,6 @@ yCoeffs = yPlanner.getCoeffs();
 zCoeffs = zPlanner.getCoeffs();
 psiCoeffs = psiPlanner.getCoeffs();
 
-coeffs = zeros( 5 ,4)
 coeffs = [ xCoeffs , yCoeffs , zCoeffs , psiCoeffs];
 
 
