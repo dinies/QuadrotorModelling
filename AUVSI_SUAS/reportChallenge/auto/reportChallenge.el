@@ -2,7 +2,7 @@
  "reportChallenge"
  (lambda ()
    (TeX-add-to-alist 'LaTeX-provided-class-options
-                     '(("article" "twoside" "twocolumn")))
+                     '(("article" "oneside" "onecolumn")))
    (TeX-add-to-alist 'LaTeX-provided-package-options
                      '(("mathpazo" "sc") ("fontenc" "T1") ("babel" "english") ("geometry" "hmarginratio=1:1" "top=32mm" "columnsep=20pt") ("caption" "hang" "small" "labelfont=bf" "up" "textfont=it")))
    (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperref")
@@ -30,8 +30,14 @@
     "titlesec"
     "fancyhdr"
     "titling"
-    "hyperref")
+    "hyperref"
+    "romannum"
+    "graphicx"
+    "wrapfig"
+    "subcaption")
    (LaTeX-add-labels
+    "wrap-fig:1"
+    "wrap-fig:2"
     "eq:emc")
    (LaTeX-add-bibitems
     "Figueredo:2009dg"))

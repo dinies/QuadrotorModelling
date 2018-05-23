@@ -47,7 +47,7 @@ block.NumDialogPrms     = 0;
 %
 %  [-1, 0]               : Inherited sample time
 %  [-2, 0]               : Variable sample time
-block.SampleTimes = [0 0];
+block.SampleTimes = [0.005 0];
 
 % Specify the block simStateCompliance. The allowed values are:
 %    'UnknownSimState', < The default setting; warn and assume DefaultSimState
@@ -65,11 +65,24 @@ block.SimStateCompliance = 'DefaultSimState';
 %% as local functions within the same file. See comments
 %% provided for each function for more information.
 %% -----------------------------------------------------------------
-
+block.RegBlockMethod('Start', @Start);
 block.RegBlockMethod('Outputs', @Outputs);     % Required
 block.RegBlockMethod('SetInputPortSamplingMode', @SetInputPortFrameData);
 block.RegBlockMethod('Terminate', @Terminate); % Required
+
 %end setup
+%%
+%% Start:
+%%   Functionality    : Called once at start of model execution. If you
+%%                      have states that should be initialized once, this 
+%%                      is the place to do it.
+%%   Required         : No
+%%   C-MEX counterpart: mdlStart
+%%
+function Start(block)
+vrep=remApi('remoteApi');
+set_param(block.BlockHandle, 'UserData', vrep);
+
 
 %%
 %% Outputs:
@@ -86,8 +99,7 @@ f3 = block.InputPort(3).Data;
 f4 = block.InputPort(4).Data;
 clientID = block.InputPort(5).Data;
 
-
-vrep=remApi('remoteApi'); %% using the prototype file (remoteApiProto.m)
+vrep = get_param(block.BlockHandle, 'UserData');
 inputInts=[];
 inputStrings='';
 inputBuffer= [];
@@ -151,7 +163,7 @@ function SetInputPortFrameData(block, idx, fd)
 %%
 function Terminate(block)
   clientID = block.InputPort(5).Data;
-  vrep=remApi('remoteApi'); %% using the prototype file (remoteApiProto.m)
+  vrep = get_param(block.BlockHandle, 'UserData');
   vrep.simxStopSimulation(clientID,vrep.simx_opmode_blocking);
   vrep.simxFinish(clientID);
 
