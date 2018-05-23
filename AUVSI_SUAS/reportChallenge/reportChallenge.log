@@ -1,13 +1,12 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.12.31)  18 MAY 2018 19:42
+This is XeTeX, Version 3.14159265-2.6-0.99998 (MiKTeX 2.9.6350 64-bit) (preloaded format=xelatex 2018.5.22)  23 MAY 2018 11:06
 entering extended mode
- restricted \write18 enabled.
- file:line:error style messages enabled.
- %&-line parsing enabled.
-**\input reportChallenge.tex
-(./reportChallenge.tex
-(/usr/local/texlive/2017/texmf-dist/tex/latex/base/article.cls
+**./reportChallenge.tex
+(reportChallenge.tex
+LaTeX2e <2017-04-15>
+Babel <3.10> and hyphenation patterns for 75 language(s) loaded.
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
-(/usr/local/texlive/2017/texmf-dist/tex/latex/base/size10.clo
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\size10.clo"
 File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
@@ -22,10 +21,10 @@ File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/blindtext/blindtext.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\blindtext\blindtext.sty"
 Package: blindtext 2012/01/06 V2.0 blindtext-Package
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/tools/xspace.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\xspace.sty"
 Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 )
 \c@blindtext=\count87
@@ -47,74 +46,90 @@ Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 \c@blind@pangramcount=\count103
 \c@blind@pangrammax=\count104
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/psnfss/mathpazo.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\mathpazo.sty"
 Package: mathpazo 2005/04/12 PSNFSS-v9.2a Palatino w/ Pazo Math (D.Puga, WaS) 
 \symupright=\mathgroup4
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/base/fontenc.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\fontenc.sty"
 Package: fontenc 2017/04/05 v2.0i Standard LaTeX package
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/base/t1enc.def
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1enc.def"
 File: t1enc.def 2017/04/05 v2.0i Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
-))
-(/usr/local/texlive/2017/texmf-dist/tex/latex/microtype/microtype.sty
-Package: microtype 2016/05/14 v2.6a Micro-typographical refinements (RS)
+)
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 105.
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/keyval.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\lm\t1lmr.fd"
+File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\microtype\microtype.sty"
+Package: microtype 2018/01/14 v2.7a Micro-typographical refinements (RS)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks14
 )
 \MT@toks=\toks15
 \MT@count=\count105
-LaTeX Info: Redefining \textls on input line 774.
+LaTeX Info: Redefining \textls on input line 793.
 \MT@outer@kern=\dimen103
-LaTeX Info: Redefining \textmicrotypecontext on input line 1310.
+LaTeX Info: Redefining \textmicrotypecontext on input line 1339.
 \MT@listname@count=\count106
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/microtype/microtype-pdftex.def
-File: microtype-pdftex.def 2016/05/14 v2.6a Definitions specific to pdftex (RS)
-
-LaTeX Info: Redefining \lsstyle on input line 916.
-LaTeX Info: Redefining \lslig on input line 916.
-\MT@outer@space=\skip43
+("C:\Program Files\MiKTeX 2.9\tex\latex\microtype\microtype-xetex.def"
+File: microtype-xetex.def 2018/01/14 v2.7a Definitions specific to xetex (RS)
+LaTeX Info: Redefining \lsstyle on input line 256.
 )
 Package microtype Info: Loading configuration file microtype.cfg.
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/microtype/microtype.cfg
-File: microtype.cfg 2016/05/14 v2.6a microtype main configuration file (RS)
+("C:\Program Files\MiKTeX 2.9\tex\latex\microtype\microtype.cfg"
+File: microtype.cfg 2018/01/14 v2.7a microtype main configuration file (RS)
 ))
-(/usr/local/texlive/2017/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2017/05/19 3.10 The Babel package
+("C:\Program Files\MiKTeX 2.9\tex\generic\babel\babel.sty"
+Package: babel 2018/05/02 3.20 The Babel package
 
-(/usr/local/texlive/2017/texmf-dist/tex/generic/babel-english/english.ldf
-Language: english 2017/01/24 v3.3q English support from the babel system
+("C:\Program Files\MiKTeX 2.9\tex\generic\babel\switch.def"
+File: switch.def 2018/05/02 3.20 Babel switching mechanism
+)
+*************************************
+* Local config file bblopts.cfg used
+*
+("C:\Program Files\MiKTeX 2.9\tex\latex\arabi\bblopts.cfg"
+File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
+ babel
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\babel-english\english.ldf"
+Language: english 2017/06/06 v3.3r English support from the babel system
 
-(/usr/local/texlive/2017/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2017/05/19 3.10 Babel common definitions
+("C:\Program Files\MiKTeX 2.9\tex\generic\babel\babel.def"
+File: babel.def 2018/05/02 3.20 Babel common definitions
 \babel@savecnt=\count107
 \U@D=\dimen104
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\babel\xebabel.def"
+("C:\Program Files\MiKTeX 2.9\tex\generic\babel\txtbabel.def"))
+\bbl@dirlevel=\count108
 )
 \l@canadian = a dialect from \language\l@american 
 \l@australian = a dialect from \language\l@british 
 \l@newzealand = a dialect from \language\l@british 
 ))
-(/usr/local/texlive/2017/texmf-dist/tex/latex/geometry/geometry.sty
-Package: geometry 2010/09/12 v5.6 Page Geometry
+("C:\Program Files\MiKTeX 2.9\tex\latex\geometry\geometry.sty"
+Package: geometry 2018/04/16 v5.8 Page Geometry
 
-(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
 Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
 )
-(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/ifvtex.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifvtex.sty"
 Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
 Package ifvtex Info: VTeX not detected.
 )
-(/usr/local/texlive/2017/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
-\Gm@cnth=\count108
-\Gm@cntv=\count109
-\c@Gm@tempcnt=\count110
+\Gm@cnth=\count109
+\Gm@cntv=\count110
+\c@Gm@tempcnt=\count111
 \Gm@bindingoffset=\dimen105
 \Gm@wd@mp=\dimen106
 \Gm@odd@mp=\dimen107
@@ -124,11 +139,12 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layouthoffset=\dimen111
 \Gm@layoutvoffset=\dimen112
 \Gm@dimlist=\toks16
-)
-(/usr/local/texlive/2017/texmf-dist/tex/latex/caption/caption.sty
+
+("C:\Program Files\MiKTeX 2.9\tex\xelatex\xetexconfig\geometry.cfg"))
+("C:\Program Files\MiKTeX 2.9\tex\latex\caption\caption.sty"
 Package: caption 2016/02/21 v3.3-144 Customizing captions (AR)
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/caption/caption3.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\caption\caption3.sty"
 Package: caption3 2016/05/22 v1.7-166 caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 67.
 \captionmargin=\dimen113
@@ -139,10 +155,10 @@ Package caption3 Info: TeX engine: e-TeX on input line 67.
 \caption@parindent=\dimen118
 \caption@hangindent=\dimen119
 )
-\c@ContinuedFloat=\count111
+\c@ContinuedFloat=\count112
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/booktabs/booktabs.sty
-Package: booktabs 2016/04/27 v1.618033 publication quality tables
+("C:\Program Files\MiKTeX 2.9\tex\latex\booktabs\booktabs.sty"
+Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \heavyrulewidth=\dimen120
 \lightrulewidth=\dimen121
 \cmidrulewidth=\dimen122
@@ -153,26 +169,26 @@ Package: booktabs 2016/04/27 v1.618033 publication quality tables
 \cmidrulesep=\dimen127
 \cmidrulekern=\dimen128
 \defaultaddspace=\dimen129
-\@cmidla=\count112
-\@cmidlb=\count113
+\@cmidla=\count113
+\@cmidlb=\count114
 \@aboverulesep=\dimen130
 \@belowrulesep=\dimen131
-\@thisruleclass=\count114
-\@lastruleclass=\count115
+\@thisruleclass=\count115
+\@lastruleclass=\count116
 \@thisrulewidth=\dimen132
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/lettrine/lettrine.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\lettrine\lettrine.sty"
 File: lettrine.sty 2015/08/31 v1.9 (Daniel Flipo)
-\c@DefaultLines=\count116
-\c@DefaultDepth=\count117
+\c@DefaultLines=\count117
+\c@DefaultDepth=\count118
 \DefaultFindent=\dimen133
 \DefaultNindent=\dimen134
 \DefaultSlope=\dimen135
 \DiscardVskip=\dimen136
 \L@lbox=\box26
 \L@tbox=\box27
-\c@L@lines=\count118
-\c@L@depth=\count119
+\c@L@lines=\count119
+\c@L@depth=\count120
 \L@Pindent=\dimen137
 \L@Findent=\dimen138
 \L@Nindent=\dimen139
@@ -187,28 +203,28 @@ File: lettrine.sty 2015/08/31 v1.9 (Daniel Flipo)
 \LettrineDepth=\dimen148
 
 Loading lettrine.cfg
-(/usr/local/texlive/2017/texmf-dist/tex/latex/lettrine/lettrine.cfg))
-(/usr/local/texlive/2017/texmf-dist/tex/latex/enumitem/enumitem.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\lettrine\lettrine.cfg"))
+("C:\Program Files\MiKTeX 2.9\tex\latex\enumitem\enumitem.sty"
 Package: enumitem 2011/09/28 v3.5.2 Customized lists
-\labelindent=\skip44
+\labelindent=\skip43
 \enit@outerparindent=\dimen149
 \enit@toks=\toks17
 \enit@inbox=\box28
-\enitdp@description=\count120
+\enitdp@description=\count121
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/abstract/abstract.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\abstract\abstract.sty"
 Package: abstract 2009/06/08 v1.2a configurable abstracts
-\abstitleskip=\skip45
-\absleftindent=\skip46
-\absrightindent=\skip47
-\absparindent=\skip48
-\absparsep=\skip49
+\abstitleskip=\skip44
+\absleftindent=\skip45
+\absrightindent=\skip46
+\absparindent=\skip47
+\absparsep=\skip48
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/titlesec/titlesec.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\titlesec\titlesec.sty"
 Package: titlesec 2016/03/21 v2.10.2 Sectioning titles
 \ttl@box=\box29
-\beforetitleunit=\skip50
-\aftertitleunit=\skip51
+\beforetitleunit=\skip49
+\aftertitleunit=\skip50
 \ttl@plus=\dimen150
 \ttl@minus=\dimen151
 \ttl@toksa=\toks18
@@ -216,35 +232,36 @@ Package: titlesec 2016/03/21 v2.10.2 Sectioning titles
 \titlewidthlast=\dimen153
 \titlewidthfirst=\dimen154
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/titlesec/block.tss
+("C:\Program Files\MiKTeX 2.9\tex\latex\titlesec\block.tss"
 File: block.tss 2016/03/15
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
-Package: fancyhdr 2016/09/06 3.8 Extensive control of page headers and footers
-\fancy@headwidth=\skip52
-\f@ncyO@elh=\skip53
-\f@ncyO@erh=\skip54
-\f@ncyO@olh=\skip55
-\f@ncyO@orh=\skip56
-\f@ncyO@elf=\skip57
-\f@ncyO@erf=\skip58
-\f@ncyO@olf=\skip59
-\f@ncyO@orf=\skip60
+("C:\Program Files\MiKTeX 2.9\tex\latex\fancyhdr\fancyhdr.sty"
+Package: fancyhdr 2017/06/30 v3.9a Extensive control of page headers and footer
+s
+\f@nch@headwidth=\skip51
+\f@nch@O@elh=\skip52
+\f@nch@O@erh=\skip53
+\f@nch@O@olh=\skip54
+\f@nch@O@orh=\skip55
+\f@nch@O@elf=\skip56
+\f@nch@O@erf=\skip57
+\f@nch@O@olf=\skip58
+\f@nch@O@orf=\skip59
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/titling/titling.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\titling\titling.sty"
 Package: titling 2009/09/04 v2.1d maketitle typesetting
-\thanksmarkwidth=\skip61
-\thanksmargin=\skip62
-\droptitle=\skip63
+\thanksmarkwidth=\skip60
+\thanksmargin=\skip61
+\droptitle=\skip62
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2017/03/14 v6.85a Hypertext links for LaTeX
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty"
+Package: hyperref 2018/02/06 v6.86b Hypertext links for LaTeX
 
-(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\hobsub-hyperref.sty"
 Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
 
 
-(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\hobsub-generic.sty"
 Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
 Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
 Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
@@ -264,9 +281,10 @@ Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
 Package: pdftexcmds 2017/03/19 v0.25 Utility functions of pdfTeX for LuaTeX (HO
 )
 Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: pdfTeX >= 1.30 not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode found.
+Package pdftexcmds Info: \pdfdraftmode not found.
 Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
 Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
 )
@@ -283,111 +301,124 @@ Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
 Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
 Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/oberdiek/auxhook.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\auxhook.sty"
 Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty"
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
 )
 \@linkdim=\dimen155
-\Hy@linkcounter=\count121
-\Hy@pagecounter=\count122
+\Hy@linkcounter=\count122
+\Hy@pagecounter=\count123
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2017/03/14 v6.85a Hyperref: PDFDocEncoding definition (HO)
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def"
+File: pd1enc.def 2018/02/06 v6.86b Hyperref: PDFDocEncoding definition (HO)
 )
-\Hy@SavedSpaceFactor=\count123
+\Hy@SavedSpaceFactor=\count124
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg"
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
-Package hyperref Info: Hyper figures OFF on input line 4498.
-Package hyperref Info: Link nesting OFF on input line 4503.
-Package hyperref Info: Hyper index ON on input line 4506.
-Package hyperref Info: Plain pages OFF on input line 4513.
-Package hyperref Info: Backreferencing OFF on input line 4518.
+Package hyperref Info: Hyper figures OFF on input line 4509.
+Package hyperref Info: Link nesting OFF on input line 4514.
+Package hyperref Info: Hyper index ON on input line 4517.
+Package hyperref Info: Plain pages OFF on input line 4524.
+Package hyperref Info: Backreferencing OFF on input line 4529.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4751.
-\c@Hy@tempcnt=\count124
+Package hyperref Info: Bookmarks ON on input line 4762.
+\c@Hy@tempcnt=\count125
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/url/url.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\url\url.sty"
 \Urlmuskip=\muskip10
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 5104.
+LaTeX Info: Redefining \url on input line 5115.
 \XeTeXLinkMargin=\dimen156
-\Fld@menulength=\count125
+\Fld@menulength=\count126
 \Field@Width=\dimen157
 \Fld@charsize=\dimen158
-Package hyperref Info: Hyper figures OFF on input line 6358.
-Package hyperref Info: Link nesting OFF on input line 6363.
-Package hyperref Info: Hyper index ON on input line 6366.
-Package hyperref Info: backreferencing OFF on input line 6373.
-Package hyperref Info: Link coloring OFF on input line 6378.
-Package hyperref Info: Link coloring with OCG OFF on input line 6383.
-Package hyperref Info: PDF/A mode OFF on input line 6388.
-LaTeX Info: Redefining \ref on input line 6428.
-LaTeX Info: Redefining \pageref on input line 6432.
-\Hy@abspage=\count126
-\c@Item=\count127
-\c@Hfootnote=\count128
+Package hyperref Info: Hyper figures OFF on input line 6369.
+Package hyperref Info: Link nesting OFF on input line 6374.
+Package hyperref Info: Hyper index ON on input line 6377.
+Package hyperref Info: backreferencing OFF on input line 6384.
+Package hyperref Info: Link coloring OFF on input line 6389.
+Package hyperref Info: Link coloring with OCG OFF on input line 6394.
+Package hyperref Info: PDF/A mode OFF on input line 6399.
+LaTeX Info: Redefining \ref on input line 6439.
+LaTeX Info: Redefining \pageref on input line 6443.
+\Hy@abspage=\count127
+\c@Item=\count128
+\c@Hfootnote=\count129
 )
+Package hyperref Info: Driver (autodetected): hxetex.
 
-Package hyperref Message: Driver (autodetected): hpdftex.
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\hxetex.def"
+File: hxetex.def 2018/02/06 v6.86b Hyperref driver for XeTeX
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/hyperref/hpdftex.def
-File: hpdftex.def 2017/03/14 v6.85a Hyperref driver for pdfTeX
-\Fld@listcount=\count129
-\c@bookmark@seq@number=\count130
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\puenc.def"
+File: puenc.def 2018/02/06 v6.86b Hyperref: PDF Unicode definition (HO)
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\stringenc.sty"
+Package: stringenc 2016/05/16 v1.11 Convert strings between diff. encodings (HO
+)
+)
+\pdfm@box=\box30
+\c@Hy@AnnotLevel=\count130
+\HyField@AnnotCount=\count131
+\Fld@listcount=\count132
+\c@bookmark@seq@number=\count133
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty"
 Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
-Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
-82.
+Package rerunfilecheck Info: Feature \pdfmdfivesum is not available
+(rerunfilecheck)             (e.g. pdfTeX or LuaTeX with package `pdftexcmds').
+
+(rerunfilecheck)             Therefore file contents cannot be checked efficien
+tly
+(rerunfilecheck)             and the loading of the package is aborted.
 )
-\Hy@SectionHShift=\skip64
+\Hy@SectionHShift=\skip63
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/romannum/romannum.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\romannum\romannum.sty"
 Package: romannum 2009/09/03 v1.0b roman numerals
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/stdclsdv/stdclsdv.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\stdclsdv\stdclsdv.sty"
 Package: stdclsdv 2009/09/04 v1.1a Sectional divisions
 ))
-(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2017/04/14 v1.1b Standard LaTeX Graphics (DPC,SPQR)
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/trig.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics-cfg\graphics.cfg"
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
-Package graphics Info: Driver file: pdftex.def on input line 99.
+Package graphics Info: Driver file: xetex.def on input line 99.
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics-def/pdftex.def
-File: pdftex.def 2017/01/12 v0.06k Graphics/color for pdfTeX
-\Gread@gobject=\count131
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics-def\xetex.def"
+File: xetex.def 2017/06/24 v5.0h Graphics/color driver for xetex
 ))
 \Gin@req@height=\dimen159
 \Gin@req@width=\dimen160
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\wrapfig\wrapfig.sty"
 \wrapoverhang=\dimen161
 \WF@size=\dimen162
-\c@WF@wrappedlines=\count132
-\WF@box=\box30
+\c@WF@wrappedlines=\count134
+\WF@box=\box31
 \WF@everypar=\toks19
 Package: wrapfig 2003/01/31  v 3.6
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/caption/subcaption.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\caption\subcaption.sty"
 Package: subcaption 2016/05/22 v1.1-161 Sub-captions (AR)
-\c@subfigure=\count133
-\c@subtable=\count134
+\c@subfigure=\count135
+\c@subtable=\count136
 )
-(./reportChallenge.aux)
+(reportChallenge.aux)
 \openout1 = `reportChallenge.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 76.
@@ -398,33 +429,30 @@ LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 76.
 LaTeX Font Info:    ... okay on input line 76.
 LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 76.
 LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
 LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 76.
 LaTeX Font Info:    ... okay on input line 76.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 76.
 LaTeX Font Info:    ... okay on input line 76.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 76.
 LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
 LaTeX Font Info:    Try loading font information for T1+pplx on input line 76.
-
-(/usr/local/texlive/2017/texmf-dist/tex/latex/psnfss/t1pplx.fd
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1pplx.fd"
 File: t1pplx.fd 2004/09/06 font definitions for T1/pplx.
 )
 \big@size=\dimen163
 LaTeX Info: Redefining \microtypecontext on input line 76.
-Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
-Package microtype Info: Automatic font expansion enabled (level 2),
-(microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
-Package microtype Info: Using default expansion set `basictext'.
 Package microtype Info: No adjustment of tracking.
-Package microtype Info: No adjustment of interword spacing.
-Package microtype Info: No adjustment of character kerning.
-
-(/usr/local/texlive/2017/texmf-dist/tex/latex/microtype/mt-ppl.cfg
+Package microtype Info: No adjustment of spacing.
+Package microtype Info: No adjustment of kerning.
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\microtype\mt-ppl.cfg"
 File: mt-ppl.cfg 2005/11/16 v1.6 microtype config. file: Palatino (RS)
 )
-*geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
 * driver: pdftex
@@ -463,130 +491,104 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\AtBeginShipoutBox=\box31
+\AtBeginShipoutBox=\box32
 Package hyperref Info: Link coloring OFF on input line 76.
-(/usr/local/texlive/2017/texmf-dist/tex/latex/hyperref/nameref.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 
-(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty"
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count135
+\c@section@level=\count137
 )
 LaTeX Info: Redefining \ref on input line 76.
 LaTeX Info: Redefining \pageref on input line 76.
 LaTeX Info: Redefining \nameref on input line 76.
 
-(./reportChallenge.out) (./reportChallenge.out)
+(reportChallenge.out) (reportChallenge.out)
 \@outlinefile=\write3
 \openout3 = `reportChallenge.out'.
 
-
-(/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count136
-\scratchdimen=\dimen164
-\scratchbox=\box32
-\nofMPsegments=\count137
-\nofMParguments=\count138
-\everyMPshowfont=\toks20
-\MPscratchCnt=\count139
-\MPscratchDim=\dimen165
-\MPnumerator=\count140
-\makeMPintoPDFobject=\count141
-\everyMPtoPDFconversion=\toks21
-) (/usr/local/texlive/2017/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
-Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
-
-(/usr/local/texlive/2017/texmf-dist/tex/latex/oberdiek/grfext.sty
-Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
-)
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
-38.
-Package grfext Info: Graphics extension search list:
-(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
-G,.JBIG2,.JB2,.eps]
-(grfext)             \AppendGraphicsExtensions on input line 456.
-
-(/usr/local/texlive/2017/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
-e
-))
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <24.88> not available
 (Font)              Font shape `T1/pplx/b/n' tried instead on input line 80.
 LaTeX Font Info:    Try loading font information for OT1+pplx on input line 80.
 
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/psnfss/ot1pplx.fd
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1pplx.fd"
 File: ot1pplx.fd 2004/09/06 font definitions for OT1/pplx.
 )
 LaTeX Font Info:    Try loading font information for OML+zplm on input line 80.
 
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/psnfss/omlzplm.fd
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omlzplm.fd"
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
 LaTeX Font Info:    Try loading font information for OMS+zplm on input line 80.
 
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/psnfss/omszplm.fd
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omszplm.fd"
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
 LaTeX Font Info:    Try loading font information for OMX+zplm on input line 80.
 
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/psnfss/omxzplm.fd
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omxzplm.fd"
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
 LaTeX Font Info:    Try loading font information for OT1+zplm on input line 80.
 
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/psnfss/ot1zplm.fd
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1zplm.fd"
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
-Package microtype Info: Loading generic settings for font family
+Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `zplm' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplx/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
+File: images/laSapienza.png Graphic file (type bmp)
+<images/laSapienza.png>
 
-<images/laSapienza.png, id=66, 325.215pt x 342.27875pt>
-File: images/laSapienza.png Graphic file (type png)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\se-ascii-print.def"
+File: se-ascii-print.def 2016/05/16 v1.11 stringenc: Printable ASCII characters
 
-<use images/laSapienza.png>
-Package pdftex.def Info: images/laSapienza.png used on input line 85.
-(pdftex.def)             Requested size: 129.00269pt x 135.77573pt.
- [1
+)
+[1
 
-{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./image
-s/laSapienza.png>]
+]
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplx/m/sc/10'.
 (microtype)             Ignoring protrusion settings for this character.
  [2]
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <9> not available
 (Font)              Font shape `T1/pplx/b/n' tried instead on input line 136.
-
-<images/YAK1.png, id=89, 632.3625pt x 409.53pt>
-File: images/YAK1.png Graphic file (type png)
- <use images/YAK1.png>
-Package pdftex.def Info: images/YAK1.png used on input line 137.
-(pdftex.def)             Requested size: 156.49014pt x 101.34492pt.
+File: images/YAK1.png Graphic file (type bmp)
+<images/YAK1.png>
 
 Underfull \hbox (badness 10000) in paragraph at lines 128--138
 
  []
 
 
-Underfull \hbox (badness 3989) in paragraph at lines 140--144
-[]\T1/pplx/m/n/10 (+20) In this way the air-craft will likely fol-low a
+Underfull \hbox (badness 4872) in paragraph at lines 140--144
+[]\T1/pplx/m/n/10 In this way the air-craft will likely fol-low a
  []
 
 
-Underfull \hbox (badness 1755) in paragraph at lines 140--144
-\T1/pplx/m/n/10 (+20) puter and to com-mu-ni-cate with a ground sta-tion
+Underfull \hbox (badness 1460) in paragraph at lines 140--144
+\T1/pplx/m/n/10 path made of lines that in-ter-sects sub-se-quent way-
+ []
+
+
+Underfull \hbox (badness 2495) in paragraph at lines 140--144
+\T1/pplx/m/n/10 puter and to com-mu-ni-cate with a ground sta-tion
+ []
+
+
+Underfull \hbox (badness 1092) in paragraph at lines 140--144
+\T1/pplx/m/n/10 judges's server, tele-met-ri-cal data and mis-sion ob-jec-
  []
 
 
@@ -596,41 +598,91 @@ Underfull \hbox (badness 10000) in paragraph at lines 140--144
 
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <10> not available
 (Font)              Font shape `T1/pplx/b/n' tried instead on input line 154.
-<images/YAK3.png, id=92, 518.93875pt x 480.79625pt>
-File: images/YAK3.png Graphic file (type png)
- <use images/YAK3.png>
-Package pdftex.def Info: images/YAK3.png used on input line 172.
-(pdftex.def)             Requested size: 156.49014pt x 144.98828pt.
+File: images/YAK3.png Graphic file (type bmp)
+<images/YAK3.png>
+[3]
+LaTeX Font Info:    Try loading font information for OMS+pplx on input line 211
+.
+LaTeX Font Info:    No file OMSpplx.fd. on input line 211.
 
-[3 <./images/YAK1.png> <./images/YAK3.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 256.
- [4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 256.
- (./reportChallenge.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 256.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 256.
-Package rerunfilecheck Info: File `reportChallenge.out' has not changed.
-(rerunfilecheck)             Checksum: 3B5D12CC6268CAB5AA27BC91C18C7025;892.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 256.
+
+LaTeX Font Warning: Font shape `OMS/pplx/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbullet' on input line 211.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 216--217
+
+ []
+
+[4]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.219 \dot{x} & = & vcos$ \psi
+                               $ \\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.220 \dot
+          {y} & = & vsin$ \psi $ \\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.220 \dot{y} & = & vsin$ \psi
+                               $ \\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.221 \dot
+          {\psi} & = & -\frac{g}{v}tan$ \phi $ \\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.221 \dot{\psi} & = & -\frac{g}{v}tan$ \phi
+                                             $ \\
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.222 \dot
+          {\phi} & = & u_{\phi }
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 271.
+[5]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 271.
+ (reportChallenge.aux)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 271.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 271.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 271.
  ) 
 Here is how much of TeX's memory you used:
- 10336 strings out of 492995
- 160402 string characters out of 6132703
- 287934 words of memory out of 5000000
- 13552 multiletter control sequences out of 15000+600000
- 67321 words of font info for 179 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 36i,10n,43p,257b,356s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/tex
-live/2017/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/local/texlive/201
-7/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2017/texmf
--dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2017/texmf-dist/f
-onts/type1/urw/palatino/uplri8a.pfb>
-Output written on reportChallenge.pdf (4 pages, 4047768 bytes).
-PDF statistics:
- 142 PDF objects out of 1000 (max. 8388607)
- 123 compressed objects within 2 object streams
- 35 named destinations out of 1000 (max. 500000)
- 61576 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 12863 strings out of 427834
+ 188978 string characters out of 3152470
+ 312375 words of memory out of 3000000
+ 16694 multiletter control sequences out of 15000+200000
+ 50885 words of font info for 73 fonts, out of 3000000 for 9000
+ 1328 hyphenation exceptions out of 8191
+ 36i,11n,48p,282b,359s stack positions out of 5000i,500n,10000p,200000b,50000s
 
+Output written on reportChallenge.pdf (5 pages).
