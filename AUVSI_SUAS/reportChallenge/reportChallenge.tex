@@ -203,11 +203,24 @@ We implemented two different strategies, since both present some shortcomings
 and advantages, we tried to take the best of the two worlds
 
 \subsection{RRT}
-Maecenas sed ultricies felis. Sed imperdiet dictum arcu a egestas. 
+RRT (Rapidly-exploring Random Tree) is a probabilistic planner that randomly builds a space-building tree.\\
+It has been used offline considering some motion primitives (produced by some specific velocity inputs) to define a path for the UAV, biasing it towards the unexplored areas closest to the goal.
 \subsection{Artificial potentials}
-Maecenas sed ultricies felis. Sed imperdiet dictum arcu a egestas. 
+Artificial Potential Fields (APF) have been considered for two main reasons:
+\begin{itemize}
+	\item the world can be approximated to a "world of spheres" (since there are cylindrical obstacles that we consider in 2D), that prevents the UAV entering the basin of attraction of some local minima
+	\item when the UAV faces an obstacle, RRT must expand many branches before getting around it. This leads to a significant slowdown
+\end{itemize}
+Using APF the UAV can react as soon as entering the range of influence of the obstacle, with a smooth movement. This also because an implementation with vertex fields has been made, replacing repulsive actions with actions forcing the robot to get around it.
 \subsection{Implementation}
-Maecenas sed ultricies felis. Sed imperdiet dictum arcu a egestas. 
+We consider the kinematic model of a fixed-wing UAV flying at a constant altitude. So, we can neglect the pitch angle, obtaining:\\
+\begin{array}{lcc}
+$ \dot{x} $ & = & $vcos \psi $ \\
+$ \dot{y} $ & = & $vsin \psi $ \\
+$ \dot{\psi} $ & = & -$ \frac{g}{v} tan \phi $ \\
+$ \dot{\phi} $ & = & $ u_{\phi } $
+\end{array}\\
+in which the speed $v$ and roll rate $u_{\phi}$ are the control inputs.
 
 %% \footnote{Example footnote}.
 

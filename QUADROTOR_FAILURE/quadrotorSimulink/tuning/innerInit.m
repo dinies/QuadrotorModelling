@@ -10,5 +10,5 @@ Ixx= 0.082;
 Iyy= 0.082;
 Izz= 0.149;
 
-open_system('innerControllerTuning2');
-sim('innerControllerTuning2');
+open_system('innerControllerTuning');
+sim('innerControllerTuning');

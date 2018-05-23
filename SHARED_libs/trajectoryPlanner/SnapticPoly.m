@@ -49,6 +49,21 @@ classdef SnapticPoly < handle
                    3024*a*t^5+ 1680*b*t^4 + 840*c*t^3  + 360*d*t^2 + 120*e*t  + 24*f
               ];
     end
+    function ref = getCurrentRefs(self, curr_t)
+      poly = getPolynomial(self);
+      eval= poly(curr_t);
+      res = zeros(5,1);
+      res(1,1)= eval(1,1);
+      res(2,1)= eval(2,1);
+      res(3,1)= eval(3,1);
+      res(4,1)= eval(4,1);
+      res(5,1)= eval(5,1);
+    end
+
+    function coeffs= getCoeffs(self)
+      coeffs = self.params;
+    end
+
     function ref = getReferences(self)
       computeRealDeltaT(self);
       numOfSteps= self.totTime/ self.delta_t;
