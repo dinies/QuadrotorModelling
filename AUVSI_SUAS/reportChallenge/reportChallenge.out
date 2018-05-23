@@ -1,15 +1,15 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{Problem\040Statement}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{Starting\040Points}{section.2}% 3
-\BOOKMARK [2][-]{subsection.2.2}{Our\040task}{section.2}% 4
-\BOOKMARK [1][-]{section.3}{Hardware\040components}{}% 5
+\BOOKMARK [1][-]{section.2}{Problem Statement}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Starting Points}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Our task}{section.2}% 4
+\BOOKMARK [1][-]{section.3}{Hardware components}{}% 5
 \BOOKMARK [2][-]{subsection.3.1}{Propulsion}{section.3}% 6
-\BOOKMARK [2][-]{subsection.3.2}{On\040board\040computing}{section.3}% 7
-\BOOKMARK [2][-]{subsection.3.3}{Sensing\040instruments}{section.3}% 8
-\BOOKMARK [2][-]{subsection.3.4}{Communication\040devices}{section.3}% 9
-\BOOKMARK [2][-]{subsection.3.5}{Auto\040pilot\040framework}{section.3}% 10
-\BOOKMARK [1][-]{section.4}{Hybrid\040planner}{}% 11
+\BOOKMARK [2][-]{subsection.3.2}{On board computing}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.3}{Sensing instruments}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.4}{Communication devices}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.5}{Auto pilot framework}{section.3}% 10
+\BOOKMARK [1][-]{section.4}{Hybrid planner}{}% 11
 \BOOKMARK [2][-]{subsection.4.1}{RRT}{section.4}% 12
-\BOOKMARK [2][-]{subsection.4.2}{Artificial\040potentials}{section.4}% 13
+\BOOKMARK [2][-]{subsection.4.2}{Artificial potentials}{section.4}% 13
 \BOOKMARK [2][-]{subsection.4.3}{Implementation}{section.4}% 14
 \BOOKMARK [1][-]{section.5}{Conclusion}{}% 15
