@@ -40,12 +40,15 @@ dimensions = [
 env  = Env3D( dimensions, delta_t, agent, clock);
 
 setMission(env, x_0, x_f );
-obsNum = 10;
+obsNum = 5;
 
 mat = [
        1000,   1000,   100;
        500,   1500,   70;
-       1500,   500,   70;
+       1500,   1500,   50;
+       1200,   300,   70;
+       100,   200,   50;
+       1800,  1000,  100;
 ];
 
                                %artificial potential gains
@@ -56,11 +59,13 @@ Kwall = 10;
 gamma = 2;
 rho = 200;
 
-addObstacles(env, obsNum ,  Kr);
+addObstacles(env, mat ,  Kr);
 
 artPotPlanner =  ArtPotPlanner( env, Ka, Kb, Kwall, gamma, rho );
-
-
+% env.drawMeshArtPotentials(artPotPlanner)
+% env.drawMeshArtForces(artPotPlanner,true);
+% env.drawMeshArtForces(artPotPlanner,false);
+% 
 planner = RRTplanner(env,agent);
 
 
@@ -69,6 +74,6 @@ planner = RRTplanner(env,agent);
  it defines the magnitude of the displacement of the agent into the environment after each step
 %}
 delta_s = delta_t*10;
-treeDrawing = false;
+treeDrawing = true;
 path = env.generatePathRRT( artPotPlanner,planner,delta_s,treeDrawing);
 
