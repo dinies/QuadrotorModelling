@@ -63,11 +63,7 @@ classdef Graph < handle
     end
     function mat = laplacianMatrix(self)
 % LAPLACIANMATRIX Compute the laplacian reletion between vertices.
-      if self.isDirected()
-        mat = self.incidenceMatrix * self.incidenceMatrix' ;
-      else
         mat =  self.degreeMatrix() - self.adjacencyMatrix();
-      end
     end
 
     function res = isConnected(self)

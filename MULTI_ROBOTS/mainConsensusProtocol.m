@@ -27,7 +27,7 @@ v5 = SingleAgent(5,state5,clock);
 
 vertices = [v1;v2;v3;v4;v5];
 
-%% directed case
+%% undirected case
 
 %e1 = Edge( vertices(1,1),vertices(2,1),false);
 %e2 = Edge( vertices(2,1),vertices(3,1),false);
@@ -38,7 +38,7 @@ vertices = [v1;v2;v3;v4;v5];
 
 
 
-%% undirected case
+%% directed case
 
 e1 = Edge( vertices(1,1),vertices(2,1),true);
 e2 = Edge( vertices(2,1),vertices(5,1),true);
@@ -56,5 +56,4 @@ edges = [e1, e2, e4, e5, e6,e7,e8];
 graph = Graph( vertices, edges, clock);
 
 totTime = 10;
-L = graph.laplacianMatrix()% error in the way the laplacian matrix is computed in the directed graph
-%graph.consensusProtocol(totTime);
+graph.consensusProtocol(totTime);
