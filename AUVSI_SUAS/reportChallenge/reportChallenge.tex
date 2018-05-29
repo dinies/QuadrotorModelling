@@ -71,7 +71,7 @@
 %   \noindent  This is the abstract, try to be concise !
 % \end{abstract}
 % }
-% ----------------------------------------------------------------------------------------
+%   ----------------------------------------------------------------------------------------
 
 \begin{document}
 
@@ -133,16 +133,14 @@ higher level of abstraction, its main high level control mode uses a series of
 way points that describes a trajectory.\\
 \bigskip
 \begin{wrapfigure}{r}{5.5cm}
-\caption{YAK scaled aero model}\label{wrap-fig:1}
-\includegraphics[width=5.5cm]{YAK1}
+  \caption{YAK scaled aero model}\label{wrap-fig:1}
+  \includegraphics[width=5.5cm]{YAK1}
 \end{wrapfigure} 
 
 In this way the aircraft will likely follow a path made of lines that intersects subsequent waypoints.\\
 The system is designed to work on an on-board computer and to communicate with a
 ground station that will continuously send to and receive from the judges's
 server, telemetrical data and mission objectives.\\
-
-
 We will use a fixed-wigs radio controlled aircraft model\footnote{It is a scaled
   reproduction (1:3 ratio) of the YAK 112} commonly used in hobby
 modeling as shown in Figure~\ref{wrap-fig:1}.
@@ -168,8 +166,8 @@ that will bring the UAV from a start position to a goal position without collisi
 
 \subsection{Propulsion}
 \begin{wrapfigure}{r}{5.5cm}
-\caption{DLE55 motor}\label{wrap-fig:2}
-\includegraphics[width=5.5cm]{YAK3}
+  \caption{DLE55 motor}\label{wrap-fig:2}
+  \includegraphics[width=5.5cm]{YAK3}
 \end{wrapfigure} 
 
 
@@ -208,17 +206,17 @@ It has been used offline considering some motion primitives (produced by some sp
 \subsection{Artificial potentials}
 Artificial Potential Fields (APF) have been considered for two main reasons:
 \begin{itemize}
-	\item the world can be approximated to a "world of spheres" (since there are cylindrical obstacles that we consider in 2D), that prevents the UAV entering the basin of attraction of some local minima
-	\item when the UAV faces an obstacle, RRT must expand many branches before getting around it. This leads to a significant slowdown
+\item the world can be approximated to a "world of spheres" (since there are cylindrical obstacles that we consider in 2D), that prevents the UAV entering the basin of attraction of some local minima
+\item when the UAV faces an obstacle, RRT must expand many branches before getting around it. This leads to a significant slowdown
 \end{itemize}
 Using APF the UAV can react as soon as entering the range of influence of the obstacle, with a smooth movement. This also because an implementation with vertex fields has been made, replacing repulsive actions with actions forcing the robot to get around it.
 \subsection{Implementation}
 We consider the kinematic model of a fixed-wing UAV flying at a constant altitude. So, we can neglect the pitch angle, obtaining:\\
 \begin{array}{lcc}
-$ \dot{x} $ & = & $vcos \psi $ \\
-$ \dot{y} $ & = & $vsin \psi $ \\
-$ \dot{\psi} $ & = & -$ \frac{g}{v} tan \phi $ \\
-$ \dot{\phi} $ & = & $ u_{\phi } $
+  $ \dot{x} $ & = & $vcos \psi $ \\
+  $ \dot{y} $ & = & $vsin \psi $ \\
+  $ \dot{\psi} $ & = & -$ \frac{g}{v} tan \phi $ \\
+  $ \dot{\phi} $ & = & $ u_{\phi } $
 \end{array}\\
 in which the speed $v$ and roll rate $u_{\phi}$ are the control inputs.
 
@@ -232,16 +230,16 @@ in which the speed $v$ and roll rate $u_{\phi}$ are the control inputs.
 %   \caption{Example table}
 %   \centering
 %   \begin{tabular}{llr}
-%     \toprule
-%     \multicolumn{2}{c}{Name} \\
-%     \cmidrule(r){1-2}
-%     First name & Last Name & Grade \\
-%     \midrule
-%     John & Doe & $7.5$ \\
-%     Richard & Miles & $2$ \\
-%     \bottomrule
-%   \end{tabular}
-% \end{table}
+      %       \toprule
+      %       \multicolumn{2}{c}{Name} \\
+      %       \cmidrule(r){1-2}
+      %       First name & Last Name & Grade \\
+      %       \midrule
+      %       John & Doe & $7.5$ \\
+      %       Richard & Miles & $2$ \\
+      %       \bottomrule
+      %     \end{tabular}
+      %       \end{table}
 
 
 \begin{equation}
@@ -250,9 +248,9 @@ in which the speed $v$ and roll rate $u_{\phi}$ are the control inputs.
 \end{equation}
 
 
-% ----------------------------------------------------------------------------------------
-% REFERENCE LIST
-% ----------------------------------------------------------------------------------------
+      %       ----------------------------------------------------------------------------------------
+      %       REFERENCE LIST
+      %       ----------------------------------------------------------------------------------------
 
 \begin{thebibliography}{99} % Bibliography - this is intentionally simple in this template
 
@@ -264,6 +262,6 @@ in which the speed $v$ and roll rate $u_{\phi}$ are the control inputs.
   
 \end{thebibliography}
 
-% ----------------------------------------------------------------------------------------
+      %       ----------------------------------------------------------------------------------------
 
 \end{document}
