@@ -22,14 +22,54 @@ class InteropApi(object):
         self.admin_client.get('/api/clear_cache')
         self.async_client = AsyncClient(server, username, password)
 
+
+        # stationaryObs
+#         self.latitude = float(latitude)
+#         self.longitude = float(longitude)
+#         self.cylinder_radius = float(cylinder_radius)
+#         self.cylinder_height = float(cylinder_height)
+
+        # movingObs
+#         self.latitude = float(latitude)
+#         self.longitude = float(longitude)
+#         self.altitude_msl = float(altitude_msl)
+#         self.sphere_radius = float(sphere_radius)
+
+
     def getObsta(self):
         async_future = self.async_client.get_obstacles()
-        async_stationary, async_moving = async_future.result()
-        return async_stationary, async_moving
+        stationary, moving = async_future.result()
+
+        obstacles = self.parseObstacles( stationary[0], moving[1])
+
+        return obstacles
 
 
 
     def getMis(self):
         async_missions = self.async_client.get_missions().result()
         return async_missions
+
+
+
+    def parseObstacles(self):
+        return -1
+
+    def stubReturn(self):
+
+        dict1 = {
+            "one" : 1 ,
+            "two" : 2
+        }
+        dict2 = {
+            "one" : 1 ,
+            "two" : 2,
+            "three" :3
+        }
+        dict3 = {
+            "one" : 1 ,
+            "two" : 2
+        }
+        return [ dict1, dict2, dict3 ]
+
 

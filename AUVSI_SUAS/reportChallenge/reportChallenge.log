@@ -1,11 +1,10 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.26)  29 MAY 2018 11:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.26)  30 MAY 2018 18:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**reportChallenge.tex
+**\input reportChallenge.tex
 (./reportChallenge.tex
-LaTeX2e <2018-04-01> patch level 2
 (/usr/local/texlive/2018/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/local/texlive/2018/texmf-dist/tex/latex/base/size10.clo
@@ -203,19 +202,11 @@ Package: enumitem 2011/09/28 v3.5.2 Customized lists
 \enit@inbox=\box28
 \enitdp@description=\count122
 )
-(/usr/local/texlive/2018/texmf-dist/tex/latex/abstract/abstract.sty
-Package: abstract 2009/06/08 v1.2a configurable abstracts
-\abstitleskip=\skip45
-\absleftindent=\skip46
-\absrightindent=\skip47
-\absparindent=\skip48
-\absparsep=\skip49
-)
 (/usr/local/texlive/2018/texmf-dist/tex/latex/titlesec/titlesec.sty
 Package: titlesec 2016/03/21 v2.10.2 Sectioning titles
 \ttl@box=\box29
-\beforetitleunit=\skip50
-\aftertitleunit=\skip51
+\beforetitleunit=\skip45
+\aftertitleunit=\skip46
 \ttl@plus=\dimen150
 \ttl@minus=\dimen151
 \ttl@toksa=\toks18
@@ -229,21 +220,21 @@ File: block.tss 2016/03/15
 (/usr/local/texlive/2018/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2017/06/30 v3.9a Extensive control of page headers and footer
 s
-\f@nch@headwidth=\skip52
-\f@nch@O@elh=\skip53
-\f@nch@O@erh=\skip54
-\f@nch@O@olh=\skip55
-\f@nch@O@orh=\skip56
-\f@nch@O@elf=\skip57
-\f@nch@O@erf=\skip58
-\f@nch@O@olf=\skip59
-\f@nch@O@orf=\skip60
+\f@nch@headwidth=\skip47
+\f@nch@O@elh=\skip48
+\f@nch@O@erh=\skip49
+\f@nch@O@olh=\skip50
+\f@nch@O@orh=\skip51
+\f@nch@O@elf=\skip52
+\f@nch@O@erf=\skip53
+\f@nch@O@olf=\skip54
+\f@nch@O@orf=\skip55
 )
 (/usr/local/texlive/2018/texmf-dist/tex/latex/titling/titling.sty
 Package: titling 2009/09/04 v2.1d maketitle typesetting
-\thanksmarkwidth=\skip61
-\thanksmargin=\skip62
-\droptitle=\skip63
+\thanksmarkwidth=\skip56
+\thanksmargin=\skip57
+\droptitle=\skip58
 )
 (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2018/02/06 v6.86b Hypertext links for LaTeX
@@ -354,7 +345,7 @@ Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 )
-\Hy@SectionHShift=\skip64
+\Hy@SectionHShift=\skip59
 )
 (/usr/local/texlive/2018/texmf-dist/tex/latex/romannum/romannum.sty
 Package: romannum 2009/09/03 v1.0b roman numerals
@@ -395,30 +386,110 @@ Package: subcaption 2016/05/22 v1.1-161 Sub-captions (AR)
 \c@subfigure=\count134
 \c@subtable=\count135
 )
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2017/09/02 v2.17a AMS math features
+\@mathmargin=\skip60
+
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks20
+\ex@=\dimen163
+))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen164
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count136
+LaTeX Info: Redefining \frac on input line 213.
+\uproot@=\count137
+\leftroot@=\count138
+LaTeX Info: Redefining \overline on input line 375.
+\classnum@=\count139
+\DOTSCASE@=\count140
+LaTeX Info: Redefining \ldots on input line 472.
+LaTeX Info: Redefining \dots on input line 475.
+LaTeX Info: Redefining \cdots on input line 596.
+\Mathstrutbox@=\box31
+\strutbox@=\box32
+\big@size=\dimen165
+LaTeX Font Info:    Redeclaring font encoding OML on input line 712.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
+\macc@depth=\count141
+\c@MaxMatrixCols=\count142
+\dotsspace@=\muskip11
+\c@parentequation=\count143
+\dspbrk@lvl=\count144
+\tag@help=\toks21
+\row@=\count145
+\column@=\count146
+\maxfields@=\count147
+\andhelp@=\toks22
+\eqnshift@=\dimen166
+\alignsep@=\dimen167
+\tagshift@=\dimen168
+\tagwidth@=\dimen169
+\totwidth@=\dimen170
+\lineht@=\dimen171
+\@envbody=\toks23
+\multlinegap=\skip61
+\multlinetaggap=\skip62
+\mathdisplay@stack=\toks24
+LaTeX Info: Redefining \[ on input line 2817.
+LaTeX Info: Redefining \] on input line 2818.
+)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup5
+\symAMSb=\mathgroup6
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/sidecap/sidecap.sty
+Package: sidecap 2003/06/06 v1.6f SideCap Package (RN/HjG)
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\SC@BOXWD=\dimen172
+\SC@CAPWD=\dimen173
+\SC@tempdima=\dimen174
+\SC@tempdimb=\dimen175
+\c@SC@C=\count148
+\SC@BOX=\box33
+)
 (./reportChallenge.aux)
 \openout1 = `reportChallenge.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 76.
-LaTeX Font Info:    ... okay on input line 76.
-LaTeX Font Info:    Try loading font information for T1+pplx on input line 76.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Try loading font information for T1+pplx on input line 68.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1pplx.fd
 File: t1pplx.fd 2004/09/06 font definitions for T1/pplx.
 )
-\big@size=\dimen163
-LaTeX Info: Redefining \microtypecontext on input line 76.
+LaTeX Info: Redefining \microtypecontext on input line 68.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -469,21 +540,22 @@ File: mt-ppl.cfg 2005/11/16 v1.6 microtype config. file: Palatino (RS)
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
+Package caption Info: sidecap package is loaded.
 Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\AtBeginShipoutBox=\box31
-Package hyperref Info: Link coloring OFF on input line 76.
+\AtBeginShipoutBox=\box34
+Package hyperref Info: Link coloring OFF on input line 68.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 
 (/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count136
+\c@section@level=\count149
 )
-LaTeX Info: Redefining \ref on input line 76.
-LaTeX Info: Redefining \pageref on input line 76.
-LaTeX Info: Redefining \nameref on input line 76.
+LaTeX Info: Redefining \ref on input line 68.
+LaTeX Info: Redefining \pageref on input line 68.
+LaTeX Info: Redefining \nameref on input line 68.
 
 (./reportChallenge.out) (./reportChallenge.out)
 \@outlinefile=\write3
@@ -492,17 +564,17 @@ LaTeX Info: Redefining \nameref on input line 76.
 
 (/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count137
-\scratchdimen=\dimen164
-\scratchbox=\box32
-\nofMPsegments=\count138
-\nofMParguments=\count139
-\everyMPshowfont=\toks20
-\MPscratchCnt=\count140
-\MPscratchDim=\dimen165
-\MPnumerator=\count141
-\makeMPintoPDFobject=\count142
-\everyMPtoPDFconversion=\toks21
+\scratchcounter=\count150
+\scratchdimen=\dimen176
+\scratchbox=\box35
+\nofMPsegments=\count151
+\nofMParguments=\count152
+\everyMPshowfont=\toks25
+\MPscratchCnt=\count153
+\MPscratchDim=\dimen177
+\MPnumerator=\count154
+\makeMPintoPDFobject=\count155
+\everyMPtoPDFconversion=\toks26
 ) (/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
@@ -520,33 +592,57 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/ms/ragged2e.sty
+Package: ragged2e 2009/05/21 v2.1 ragged2e Package (MS)
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/ms/everysel.sty
+Package: everysel 2011/10/28 v1.2 EverySelectfont Package (MS)
+
+ABD: EverySelectfont initializing macros
+LaTeX Info: Redefining \selectfont on input line 126.
+)
+\CenteringLeftskip=\skip63
+\RaggedLeftLeftskip=\skip64
+\RaggedRightLeftskip=\skip65
+\CenteringRightskip=\skip66
+\RaggedLeftRightskip=\skip67
+\RaggedRightRightskip=\skip68
+\CenteringParfillskip=\skip69
+\RaggedLeftParfillskip=\skip70
+\RaggedRightParfillskip=\skip71
+\JustifyingParfillskip=\skip72
+\CenteringParindent=\skip73
+\RaggedLeftParindent=\skip74
+\RaggedRightParindent=\skip75
+\JustifyingParindent=\skip76
+)
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <24.88> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 80.
-LaTeX Font Info:    Try loading font information for OT1+pplx on input line 80.
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 72.
+LaTeX Font Info:    Try loading font information for OT1+pplx on input line 72.
 
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ot1pplx.fd
 File: ot1pplx.fd 2004/09/06 font definitions for OT1/pplx.
 )
-LaTeX Font Info:    Try loading font information for OML+zplm on input line 80.
+LaTeX Font Info:    Try loading font information for OML+zplm on input line 72.
 
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/omlzplm.fd
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMS+zplm on input line 80.
+LaTeX Font Info:    Try loading font information for OMS+zplm on input line 72.
 
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/omszplm.fd
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMX+zplm on input line 80.
+LaTeX Font Info:    Try loading font information for OMX+zplm on input line 72.
 
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
-LaTeX Font Info:    Try loading font information for OT1+zplm on input line 80.
+LaTeX Font Info:    Try loading font information for OT1+zplm on input line 72.
 
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ot1zplm.fd
@@ -556,13 +652,33 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `zplm' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 12.50409pt on input line 72.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/mt-msa.cfg
+File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
+)
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 9.37807pt on input line 72.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 7.29405pt on input line 72.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 12.50409pt on input line 72.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/microtype/mt-msb.cfg
+File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
+)
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 9.37807pt on input line 72.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 7.29405pt on input line 72.
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplx/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
-<images/laSapienza.png, id=6, 325.215pt x 342.27875pt>
+<images/laSapienza.png, id=70, 325.215pt x 342.27875pt>
 File: images/laSapienza.png Graphic file (type png)
 <use images/laSapienza.png>
-Package pdftex.def Info: images/laSapienza.png  used on input line 85.
+Package pdftex.def Info: images/laSapienza.png  used on input line 77.
 (pdftex.def)             Requested size: 129.00269pt x 135.77573pt.
  [1
 
@@ -571,63 +687,155 @@ s/laSapienza.png>]
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplx/m/sc/10'.
 (microtype)             Ignoring protrusion settings for this character.
- [2]
-LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <9> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 136.
-<images/YAK1.png, id=31, 632.3625pt x 409.53pt>
-File: images/YAK1.png Graphic file (type png)
-<use images/YAK1.png>
-Package pdftex.def Info: images/YAK1.png  used on input line 137.
-(pdftex.def)             Requested size: 156.49014pt x 101.34492pt.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 10.42007pt on input line 84.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 7.91925pt on input line 84.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 6.25204pt on input line 84.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 10.42007pt on input line 84.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 7.91925pt on input line 84.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 6.25204pt on input line 84.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 8.33606pt on input line 85.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 5.21004pt on input line 85.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 8.33606pt on input line 85.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 5.21004pt on input line 85.
 
-Underfull \hbox (badness 10000) in paragraph at lines 128--138
+Underfull \hbox (badness 10000) in paragraph at lines 113--119
 
  []
 
+<images/YAK1.png, id=82, 632.3625pt x 409.53pt>
+File: images/YAK1.png Graphic file (type png)
+<use images/YAK1.png>
+Package pdftex.def Info: images/YAK1.png  used on input line 121.
+(pdftex.def)             Requested size: 129.00269pt x 83.54176pt.
+LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <9> not available
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 122.
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <10> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 146.
-
-LaTeX Warning: Reference `wrap-fig:1' on page iii undefined on input line 146.
-
-<images/YAK3.png, id=33, 518.93875pt x 480.79625pt>
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 138.
+[2 <./images/YAK1.png>]
+<images/YAK3.png, id=100, 518.93875pt x 480.79625pt>
 File: images/YAK3.png Graphic file (type png)
 <use images/YAK3.png>
-Package pdftex.def Info: images/YAK3.png  used on input line 170.
-(pdftex.def)             Requested size: 156.49014pt x 144.98828pt.
+Package pdftex.def Info: images/YAK3.png  used on input line 161.
+(pdftex.def)             Requested size: 85.9996pt x 79.67276pt.
 
-LaTeX Warning: Reference `wrap-fig:2' on page iii undefined on input line 175.
+Underfull \hbox (badness 2781) in paragraph at lines 162--162
+[][]|\T1/pplx/m/it/9 (+20) DLE55 mo-
+ []
 
-[3 <./images/YAK1.png> <./images/YAK3.png>]
-LaTeX Font Info:    Try loading font information for OMS+pplx on input line 209
+
+Package wrapfig Warning: Collision between wrapping environments on input line 
+180.
+
+<images/extLoop.png, id=102, 691.58376pt x 591.20876pt>
+File: images/extLoop.png Graphic file (type png)
+<use images/extLoop.png>
+Package pdftex.def Info: images/extLoop.png  used on input line 181.
+(pdftex.def)             Requested size: 129.00269pt x 110.27402pt.
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 18
+7.
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 18
+8.
+
+[3 <./images/YAK3.png>]
+<images/intLoop.png, id=112, 686.565pt x 830.10126pt>
+File: images/intLoop.png Graphic file (type png)
+<use images/intLoop.png>
+Package pdftex.def Info: images/intLoop.png  used on input line 204.
+(pdftex.def)             Requested size: 107.50114pt x 129.969pt.
+LaTeX Font Info:    Try loading font information for OMS+pplx on input line 213
 .
-LaTeX Font Info:    No file OMSpplx.fd. on input line 209.
+LaTeX Font Info:    No file OMSpplx.fd. on input line 213.
 
 
 LaTeX Font Warning: Font shape `OMS/pplx/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbullet' on input line 209.
+(Font)              for symbol `textbullet' on input line 213.
 
-./reportChallenge.tex:215: Missing $ inserted.
-<inserted text> 
-                $
-l.215 \begin{array}{lcc}
-                        
-? 
-./reportChallenge.tex:215: Emergency stop.
-<inserted text> 
-                $
-l.215 \begin{array}{lcc}
-                        
-End of file on the terminal!
+[4 <./images/extLoop.png> <./images/intLoop.png>]
+<images/rrt.png, id=125, 716.6775pt x 517.935pt>
+File: images/rrt.png Graphic file (type png)
+<use images/rrt.png>
+Package pdftex.def Info: images/rrt.png  used on input line 243.
+(pdftex.def)             Requested size: 129.00269pt x 93.22427pt.
+<images/artPotFields.png, id=127, 774.895pt x 763.85374pt>
+File: images/artPotFields.png Graphic file (type png)
+<use images/artPotFields.png>
+Package pdftex.def Info: images/artPotFields.png  used on input line 257.
+(pdftex.def)             Requested size: 129.00269pt x 127.161pt.
+<images/noVort.png, id=128, 1001.7425pt x 818.05624pt>
+File: images/noVort.png Graphic file (type png)
+<use images/noVort.png>
+Package pdftex.def Info: images/noVort.png  used on input line 271.
+(pdftex.def)             Requested size: 193.50076pt x 158.01617pt.
+<images/vortex.png, id=129, 980.66376pt x 797.98125pt>
+File: images/vortex.png Graphic file (type png)
+<use images/vortex.png>
+Package pdftex.def Info: images/vortex.png  used on input line 272.
+(pdftex.def)             Requested size: 193.50076pt x 157.45041pt.
+<images/execution.png, id=131, 975.645pt x 819.06pt>
+File: images/execution.png Graphic file (type png)
+<use images/execution.png>
+Package pdftex.def Info: images/execution.png  used on input line 289.
+(pdftex.def)             Requested size: 193.50076pt x 162.43433pt.
+<images/finalPath.png, id=132, 953.5625pt x 798.985pt>
+File: images/finalPath.png Graphic file (type png)
+<use images/finalPath.png>
+Package pdftex.def Info: images/finalPath.png  used on input line 290.
+(pdftex.def)             Requested size: 193.50076pt x 162.13493pt.
+ [5 <./images/artPotFields.png> <./images/rrt.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 295--298
 
- 
+ []
+
+[6 <./images/noVort.png> <./images/vortex.png> <./images/execution.png> <./imag
+es/finalPath.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 357.
+ [7]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 357.
+ (./reportChallenge.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 357.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 357.
+Package rerunfilecheck Info: File `reportChallenge.out' has not changed.
+(rerunfilecheck)             Checksum: B0927481FB36080B38811605CC492526;956.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 357.
+ ) 
 Here is how much of TeX's memory you used:
- 10304 strings out of 492649
- 160363 string characters out of 6129622
- 294150 words of memory out of 5000000
- 13862 multiletter control sequences out of 15000+600000
- 64806 words of font info for 173 fonts, out of 8000000 for 9000
+ 11501 strings out of 492649
+ 175140 string characters out of 6129622
+ 304832 words of memory out of 5000000
+ 14913 multiletter control sequences out of 15000+600000
+ 75658 words of font info for 248 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,10n,43p,280b,356s stack positions out of 5000i,500n,10000p,200000b,80000s
-./reportChallenge.tex:215:  ==> Fatal error occurred, no output PDF file produc
-ed!
+ 36i,10n,48p,342b,454s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/tex
+live/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
+ive/2018/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/local/texlive/
+2018/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/local/texlive/2018/tex
+mf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2018/texmf-dist
+/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/
+type1/urw/palatino/uplri8a.pfb>
+Output written on reportChallenge.pdf (7 pages, 22549096 bytes).
+PDF statistics:
+ 196 PDF objects out of 1000 (max. 8388607)
+ 156 compressed objects within 2 object streams
+ 43 named destinations out of 1000 (max. 500000)
+ 61624 words of extra memory for PDF output out of 61914 (max. 10000000)
+
