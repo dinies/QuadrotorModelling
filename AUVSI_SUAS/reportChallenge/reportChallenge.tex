@@ -80,10 +80,10 @@
 \newpage
 \section{Introduction}
 
-\lettrine[nindent=0em,lines=3]{W}e will present a work made
+\lettrine[nindent=0em,lines=3]{T}his report presents a work made
 for an international challenge\footnote{The challenge is the AUVSI-SUAS hosted
   in united states in summer 2018.} that every year involves several accademic teams.\\
-This report respects the following structure : \\
+The following structure has been respected : \\
 in section \Romannum{2}, we will present the problem statement and in section
 \Romannum{3} we will give tecnical informations on the hardware at our disposal,
 finally in section \Romannum{4}, the adopted solution will be discussed.
@@ -133,10 +133,10 @@ modeling as shown in Figure~\ref{wrap-fig:1}.
 
 
 \subsection{Our task}
-As atomic part of the team which counts several members coming from an
-aeronutical background, we have an uncommon area of expertise that concerns
-\textbf{automation} and \textbf{robotics}.\\ So we engaged the autonomous guidance problem that
-comprehend also the obstacle avoidance clause.\par
+This paper describes the work concerning the area of \textbf{automation} and
+\textbf{robotics} of an atomic part of the full Sapienza Flight team, which
+counts several members coming from an aeronutical background.\\
+With this premises, the autonomous guidance problem that comprehends also the obstacle avoidance clause, has been engaged.\\
 The competition will be organized in such a way that during the various missions
 of the challenge each team will receive pose informations about fixed and mobile
 obstacles that will be \textbf{virtual}.\\
@@ -311,6 +311,26 @@ So, we can neglect the pitch angle, obtaining:\\
 \end{center}
 
 in which the tangential velocity $u_{v}$ and roll rate $u_{\phi}$ are the control inputs.
+As described above, for the path planning we use a mixed approach
+between RRT and Artificial Potential Fields methods.\\\par
+At the beginning, a random value is generated:  if this value is greater or less
+than a factor (that is decremented after each cycle), the RRT generates
+respectively a position biased to the goal or a random one.\\
+Depending from the five primitives of the UAV and it expands a node that
+represents the closest possible position of the UAV to the new confguration.\\
+If this new position collides with an obstacle, the node is not added to the
+tree and becomes unavailble for next nodes generation.\\\par
+In a similar way, if all the children of a parent collide with some obstacle,
+both the children and the parent become unavailable.
+These five primitives are generated and ordered according to another factor
+obtained from the APF method.\\\par
+Particularly, depending from the configuration of the UAV and from the range
+of influence of the obstacles, the total vortex field acting on the UAV is computed.\\
+Since the resultant vector of the vortex fields is directed toward the goal, we
+compute the direction of each primitive and select the one that forms the
+smallest angles with the direction of the vortex.\\
+Thanks to the vortex fields the UAV get around the obstacles avoiding local
+minima and proceeds faster to the goal.
 
 \section{Interoperability integration}
 In order to achieve an efficient communication we where nearly obliged to make
