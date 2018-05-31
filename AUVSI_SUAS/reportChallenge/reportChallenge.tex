@@ -61,7 +61,7 @@
   \and % Uncomment if 2 authors are required, duplicate these 4 lines if more
   \textsc{Gianluca Cerilli} \\[1ex] % Second author's name
   \normalsize \href{mailto:gianlucer@gmail.com}{gianlucer@gmail.com}\\ % Second author's email address
-  \normalsize Dipartimento di Ingegneria dell'Universita di Roma La Sapienza\\
+  \normalsize Dipartimento di Ingegneria dell'Universita' di Roma La Sapienza\\
 }
 \date{\today} % Leave empty to omit a date
 
@@ -82,10 +82,10 @@
 
 \lettrine[nindent=0em,lines=3]{T}his report presents a work made
 for an international challenge\footnote{The challenge is the AUVSI-SUAS hosted
-  in united states in summer 2018.} that every year involves several accademic teams.\\
+  in united states in summer 2018.} that every year involves several academic teams.\\
 The following structure has been respected : \\
 in section \Romannum{2}, we will present the problem statement and in section
-\Romannum{3} we will give tecnical informations on the hardware at our disposal,
+\Romannum{3} we will give technical informations on the hardware at our disposal,
 finally in section \Romannum{4}, the adopted solution will be discussed.
 
 \section{Problem Statement}
@@ -103,16 +103,16 @@ score the greatest number of points among all the tasks proposed which are:
 \end{enumerate}
 
 
-This will be the first partecipation at a competition of this kind for the team
+This will be the first participation at a competition of this kind for the team
 Sapienza, in fact the previous challenges in which our university has already
 been involved required a human controlled guidance system.
 Therefore the autonomous flight constraint has to be faced without previous
 insights on the matter.
 
 \subsection{Starting Points}
-The areonautical research department, in the past decade, has spent a big
-effort working to an autonomous guidance system, that has been thinkered,
-designed and implemented by master students in theyr thesis.\\
+The aeronautical research department, in the past decade, has spent a big
+effort working to an autonomous guidance system, that has been designed
+ and implemented by master students in their thesis.\\
 This system allows to control the complex aerodynamics of the vehicle from an
 higher level of abstraction, its main high level control mode uses a series of
 way points that describes a trajectory.\\
@@ -129,20 +129,20 @@ ground station that will continuously send to and receive from the judges's
 server, telemetrical data and mission objectives.\\
 We will use a fixed-wigs radio controlled aircraft model\footnote{It is a scaled
   reproduction (1:3 ratio) of the YAK 112} commonly used in hobby
-modeling as shown in Figure~\ref{wrap-fig:1}.
+modelling as shown in Figure~\ref{wrap-fig:1}.
 
 
 \subsection{Our task}
 This paper describes the work concerning the area of \textbf{automation} and
 \textbf{robotics} of an atomic part of the full Sapienza Flight team, which
-counts several members coming from an aeronutical background.\\
+counts several members coming from an aeronautical background.\\
 With this premises, the autonomous guidance problem that comprehends also the obstacle avoidance clause, has been engaged.\\
-The competition will be organized in such a way that during the various missions
+The competition will be organised in such a way that during the various missions
 of the challenge each team will receive pose informations about fixed and mobile
 obstacles that will be \textbf{virtual}.\\
 Then the judges will check the success or failure in avoiding obstacles
 according to the \textbf{telemetry} data that they will receive from each team.\\
-In other words, we where supposed to design a \textbf{path planning} algorith
+In other words, we where supposed to design a \textbf{path planning} algorithm
 that will bring the UAV from a start position to a goal position without
 collisions.\\
 Additionally we contributed to the integration of the ground control station
@@ -173,7 +173,7 @@ The engine chosen is a \textbf{DLE55} (in Figure~\ref{wrap-fig:2} ).
 \subsection{On board computing}
 The autonomous guidance architecture, implemented in Matlab and Simulink, is
 converted in compiled high speed C, Cpp language.\\ It will be run by Arduino Due
-and there will be also a Raspberry pi Model 3 that will run a kalman filter in
+and there will be also a Raspberry pi Model 3 that will run a Kalman filter in
 order to process all signals from sensors.
 
 
@@ -189,15 +189,15 @@ Concerning the sensors which are mounted on the aeromodel we have a GPS
 receiver, namely \textit{ Lassen IQ} and an attitude and heading reference
 system ( \textit{MTi} model).\\
 We also find a pressure and temperature sensor which is a \textit{BMP280} and an
-intrestingly complex system to measure the fluid flow velocity (in this case the
+interestingly complex system to measure the fluid flow velocity (in this case the
 fluid measured is the air around the plane body) that is the \textit{Honeywell SSC}.
 \subsection{Communication devices}
 Ensure secure and continuous communication between the aeromodel and the ground
 station is a crucial point, in fact we employed two capable antennas, the
-\textit{Xbee Pro S2C}. They will be placed one on the lower body of the aircraf
+\textit{Xbee Pro S2C}. They will be placed one on the lower body of the aircraft
 and the other on the ground.\\
 These reliable antennas works at 2.4 GHz and are omnidirectional, they support
-an operational range of 1.5 Km and in our case, some extimations made clear to
+an operational range of 1.5 Km and in our case, some estimations made clear to
 use a 96 dB gain in the antenna on the ground.
 
 \begin{wrapfloat}{figure}{o}{0pt}
@@ -231,7 +231,7 @@ The vectorial guidance is controllable through four desired values:
 \item \textbf{IAS}: velocity
 \item \textbf{HDG}: heading (yaw angle $\psi$)
 \end{itemize}
-An oversemplified conceptual map is shown in Figure~\ref{wrap-fig:3} Figure~\ref{wrap-fig:4}.
+An oversimplified conceptual map is shown in Figure~\ref{wrap-fig:3} Figure~\ref{wrap-fig:4}.
 \newpage
 \section{Hybrid planner}
 We implemented two different strategies, since both present some shortcomings
@@ -246,10 +246,10 @@ and advantages, we tried to take the best of the two worlds.
 
 RRT (Rapidly-exploring Random Tree) is a probabilistic planner that randomly builds a space-building tree.\\
 It has been used offline considering some motion primitives (produced by some specific velocity inputs) to define a path for the UAV, biasing it towards the unexplored areas closest to the goal.
-One intresting aspect of this probabilistic approach is that it will eventually
+One interesting aspect of this probabilistic approach is that it will eventually
 find a way to reach the goal if it exists. In Figure~\ref{wrap-fig:5} we can see
 how the algorithm explores all the branches of the tree and expanding unexplored
-nodes and discarding colliding ones it will succed to find the path between the
+nodes and discarding colliding ones it will succeed to find the path between the
 two obstacles.
 \subsection{Artificial potentials}
 \begin{SCfigure}[]
@@ -284,17 +284,10 @@ tangential gradient that follows a circle around the obstacle that will guide
 the aircraft avoiding harmful gradients pointing against the natural direction
 of motion as shown in Figure~\ref{fig:subfig1}.
 \subsection{Implementation}
-\begin{figure}
-\centering
-   {\includegraphics[width=.45\textwidth]{execution}} \quad
-   {\includegraphics[width=.45\textwidth]{finalPath}} \\
-\caption{On the left is shown the dynamic execution of the planning algorithm,
-  on the right there is the path followed by the UAV after that the plannig has been completed.}
-\label{fig:subfig2}
-\end{figure}
+
 We consider the kinematic model of a fixed-wing UAV flying at a constant
 altitude.
-So, we can neglect the pitch angle, obtaining:\\
+So, we can neglect the pitch angle, obtaining:
 \begin{center}
 \[
   \dot{x} = u_{v}cos{\theta} \psi
@@ -313,13 +306,22 @@ So, we can neglect the pitch angle, obtaining:\\
 in which the tangential velocity $u_{v}$ and roll rate $u_{\phi}$ are the control inputs.
 As described above, for the path planning we use a mixed approach
 between RRT and Artificial Potential Fields methods.\\\par
+
+\begin{figure}
+\centering
+   {\includegraphics[width=.45\textwidth]{execution}} \quad
+   {\includegraphics[width=.45\textwidth]{finalPath}} \\
+\caption{On the left is shown the dynamic execution of the planning algorithm,
+  on the right there is the path followed by the UAV after that the planning has been completed.}
+\label{fig:subfig2}
+\end{figure}
 At the beginning, a random value is generated:  if this value is greater or less
 than a factor (that is decremented after each cycle), the RRT generates
 respectively a position biased to the goal or a random one.\\
 Depending from the five primitives of the UAV and it expands a node that
-represents the closest possible position of the UAV to the new confguration.\\
+represents the closest possible position of the UAV to the new configuration.\\
 If this new position collides with an obstacle, the node is not added to the
-tree and becomes unavailble for next nodes generation.\\\par
+tree and becomes unavailable for next nodes generation.\\\par
 In a similar way, if all the children of a parent collide with some obstacle,
 both the children and the parent become unavailable.
 These five primitives are generated and ordered according to another factor
@@ -334,10 +336,10 @@ minima and proceeds faster to the goal.
 
 \section{Interoperability integration}
 In order to achieve an efficient communication we where nearly obliged to make
-use of the python \textbf{API} written by the challenge organizers. In this way the
-communication can be handled with \textit{asyncronous} \textbf{HTTP} requests between each team
+use of the python \textbf{API} written by the challenge organisers. In this way the
+communication can be handled with \textit{asynchronous} \textbf{HTTP} requests between each team
 client and the judge's server.\\
-Since our team has choosen a code base in MATLAB, we implemented an interface
+Since our team has chosen a code base in MATLAB, we implemented an interface
 that allows to invoke the API functions directly from MATLAB code.\\
 Then every significative data received will be saved in a compatible file ( in
 our case in a .mat file) that will be read and used in the execution cycle of the Auto
@@ -345,31 +347,13 @@ Pilot infrastructure.
 
 
 
-\bigskip
-\bigskip
-\bigskip
-\bigskip
-\bigskip
-\bigskip
-\bigskip
-\bigskip
-\bigskip
-\bigskip
-\bigskip
-\bigskip
-\bigskip
-\bigskip
-\bigskip
-
-
-
 \section{Conclusion}
 In the end, we consider the experience that we have made a good way to face
-problems spreaded on a large spectrum.\\
+problems spread on a large spectrum.\\
 In retrospection, it was a very time-taxing challenge and in our opinion it
 demands a lot more time and effort from the team to be able to confront the
-other teams around the world.\\
-In such a way they already  come from past years experinces and results,
+other teams around the world.\\\par
+In such a way they already  come from past years experiences and results,
 and they alse have an accumulated knowledge about the issues that we, instead, have had to
 solve for the first time.\\
 We hope that this work could be a base for the next challenges of our university
