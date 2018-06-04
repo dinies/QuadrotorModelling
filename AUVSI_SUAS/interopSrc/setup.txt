@@ -27,4 +27,12 @@ if count(py.sys.path,'/usr/local/lib/python2.7/site-packages') == 0
    list = py.sys.path
    list.append('/usr/local/lib/python2.7/site-packages');   
 end
+
+
+make sure to call example.m when matlab current folder that is displayed
+in the upper bar is 'pathToAUVSI_SUAS/interopSrc        
+this would affect the import_module in Interoperability.m
+if you want to call the class from another path make sure to modify the
+arg of import_module in the constructor with a path that allows matlab to find
+the InteropApi python file
     

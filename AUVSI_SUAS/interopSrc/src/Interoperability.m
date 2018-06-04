@@ -3,25 +3,25 @@ classdef Interoperability < handle
     api
   end
   methods
-    function self = Interoperability()
+    function self = Interoperability( serverUri, usernameTeam, passwordTeam )
       if count(py.sys.path,'/usr/local/lib/python2.7/site-packages') == 0
         list = py.sys.path
         list.append('/usr/local/lib/python2.7/site-packages');
       end
+      module = py.importlib.import_module('src.InteropApi');
 
-      module = py.importlib.import_module('InteropApi');
-      self.api = module.InteropApi(); %TODO give the url and user and password to the constructor in py
+
+      self.api = module.InteropApi( serverUri, usernameTeam, passwordTeam);
     end
 
-    function missionData =  getMissionData(self)
-      rawMissionData = self.api.getMission();
-      rawStruct = rawMissionData{:}
-      missionData = rawMissionData; %TODO
+    function missionStruct = getMissionData(self)
+        self.api.getMission();
+        missionStruct = load('mission.mat');
     end
 
-    function obstaclesData = getObstaclesData(self)
-      rawObstaclesData = self.api.getObstacles();
-      obstaclesData = rawObstaclesData; %TODO
+    function obstaclesStruct = getObstaclesData(self)
+        self.api.getObstacles();
+        obstaclesStruct = load('obstacles.mat');
     end
   end
 end

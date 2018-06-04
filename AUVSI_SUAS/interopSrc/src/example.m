@@ -1,8 +1,12 @@
-interop =  Interoperability();
 
-m = interop.getObstaclesData();
+server =  'http://localhost:8000';
+username =  'testuser';
+password = 'testpass';
+interop =  Interoperability( server,username,password);
 
-first = char(m{1});
+m = interop.getMissionData();
+
+o = interop.getObstaclesData();
 
 
 
