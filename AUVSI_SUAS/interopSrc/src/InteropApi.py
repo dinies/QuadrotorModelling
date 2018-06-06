@@ -64,7 +64,8 @@ class InteropApi(object):
     # obstacles to differentiate moving obs from non moving one
     @staticmethod
     def addMovingObsField( obsDict ):
-        for (_,v) in obsDict.items():
+        obstacles= obsDict["obsts"];
+        for (_,v) in obstacles.items():
             if "altitude_msl" in v.keys():
                 v["stationary"] = 0
             else:
