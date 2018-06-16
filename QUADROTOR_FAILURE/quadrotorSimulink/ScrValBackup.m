@@ -16,22 +16,22 @@ Izz= 1.16*10-3;
 % Desired state
 xd = 1;
 yd = 1;
-zd = 5;
+zd = 0;
 
 % % Initial state
 
-x0 = 1;
-y0 = 1;
-z0 = 1;
+x0 = 0;
+y0 = 0;
+z0 = 5;
 dx0 = 0;
 dy0 = 0;
 dz0 = 0;
-p0 = 0; %-0.5;
-q0 = 0; %0.5;
+p0 = 0;
+q0 = 0;
 r0 = 0.1177;
 phi0 = 0;
 theta0 = 0;
-psi0 = 0.1;
+psi0 = 0;
 
 % MapMatrix = diag([ 1, -1, -1, -1, -1, 1, 1, -1, -1, -1, -1, 1]);
 
@@ -91,5 +91,47 @@ K_lin = [   15.6000,    0.0000,    7.9000,    0.0000,         0;
     %open_system('quadSimulink');
     %sim('quadSimulink');
 % end
-open_system('QuadCopter_2');
-sim('QuadCopter_2');
+open_system('QuadCopter_3');
+sim('QuadCopter_3');
+
+fig1 = figure(1);
+plot(xPos, 'g', 'LineWidth', 1), hold on,
+plot(yPos, 'b', 'LineWidth', 1),
+plot(zPos, 'r', 'LineWidth', 1)
+title('Position of the quadcopter')
+xlabel('time [s]')
+ylabel(' m' )
+% yaxis([0 60 (min([x_hat3, x_hat4, x_hat5])-0.5) (max([x_hat3, x_hat4, x_hat5])+0.5)]) 
+legend('x', 'y', 'z', 'Location', 'NorthEast')
+% plottools
+% set(gca, 'FontSize', fsz, 'LineWidth', alw);
+ylim([-2 7])
+print('PositionSetPoint', '-dpng', '-r300')
+
+fig1 = figure(2);
+plot(phi, 'g', 'LineWidth', 1), hold on,
+plot(theta, 'b', 'LineWidth', 1),
+title('Angles')
+xlabel('time [s]')
+ylabel(' rad' )
+% yaxis([0 60 (min([x_hat3, x_hat4, x_hat5])-0.5) (max([x_hat3, x_hat4, x_hat5])+0.5)]) 
+legend('\phi', '\theta', 'Location', 'NorthEast')
+% plottools
+% set(gca, 'FontSize', fsz, 'LineWidth', alw);
+axis([-0.1 10 -1 1]);
+% xlim([-0.1 60]);
+print('Angles', '-dpng', '-r300')
+
+fig1 = figure(3);
+plot(f1, 'g', 'LineWidth', 1), hold on,
+plot(f3, 'b', 'LineWidth', 1),
+plot(f4, 'r', 'LineWidth', 1)
+title('Rotor forces')
+xlabel('time [s]')
+ylabel(' N ' )
+% yaxis([0 60 (min([x_hat3, x_hat4, x_hat5])-0.5) (max([x_hat3, x_hat4, x_hat5])+0.5)]) 
+legend('f_1', 'f_3', 'f_4', 'Location', 'SouthEast')
+% plottools
+% set(gca, 'FontSize', fsz, 'LineWidth', alw);
+xlim([0 5])
+print('Forces', '-dpng', '-r300')
