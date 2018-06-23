@@ -16,11 +16,15 @@ classdef TeleSys < handle
   end
 
   methods(Static = true)
-    function drawings = drawLever(xOffset, theta, color)
-      d = Drawer();
+    function drawings = drawLever(xOffset, state, inputTorque, color)
+      theta = state(1,1);
+      thetaDot = state(2,1);
+     d = Drawer();
+
+
       distFromOrigin = abs(xOffset);
       radius = distFromOrigin/10;
-      dBase = drawCircle2D(d, xOffset, 0 , radius, color );
+      dBase = d.drawCircle2D( xOffset, 0 , radius, color );
       relativeBodyPoints = [
                             radius,0 0;
                             radius,distFromOrigin/2, 0;
@@ -43,10 +47,52 @@ classdef TeleSys < handle
       newCenter = rotTheta* relativeCentreCircle;
       relativeCentreCircle = newCenter+transl;
 
-      dBody = drawRectangle2D(d,relativeBodyPoints(:,1:2),color);
+      dBody = d.drawRectangle2D(relativeBodyPoints(:,1:2),color);
       newColor= color * 0.5;
-      dEnd = drawCircle2D(d, relativeCentreCircle(1,1) , relativeCentreCircle(2,1), radius, newColor );
-      drawings = [ dEnd ; dBody ; dBase];
+      dEnd = d.drawCircle2D(relativeCentreCircle(1,1) , relativeCentreCircle(2,1), radius, newColor );
+
+      if thetaDot>0
+        pivotVel = relativeBodyPoints(4,:);
+        edgeVel = relativeBodyPoints(3,:);
+        else
+        pivotVel = relativeBodyPoints(1,:);
+        edgeVel = relativeBodyPoints(2,:);
+      end
+
+      if inputTorque>=0
+        pivotTau = relativeBodyPoints(4,:);
+%        edgeTau = [relativeBodyPoints(3,1)/2,relativeBodyPoints(3,2)/2,relativeBodyPoints(3,3)/2];
+      else
+        pivotTau = relativeBodyPoints(1,:);
+%        edgeTau = [relativeBodyPoints(2,1)/2,relativeBodyPoints(2,2)/2,relativeBodyPoints(2,3)/2];
+      end
+
+      edgeTau = (pivotTau' + [cos(theta)*distFromOrigin/4;sin(theta)*distFromOrigin/4;0])';
+
+      blue=[0,0,1];
+      orange=[1,0.6,0];
+      white=[1,1,1];
+      scaleVel =1;
+      scaleTau =1;
+      arrowWidth = 0.1;
+      angleOffsetVel = scaleVel* thetaDot;
+      angleOffsetTau = scaleTau* inputTorque;
+      epsilon = 0.001;
+
+      if abs(angleOffsetVel) > epsilon
+        colorVel = blue;
+      else
+        colorVel = white;
+      end
+      if abs(angleOffsetTau) > epsilon
+        colorTau = orange;
+      else
+        colorTau = white;
+      end
+
+      velocityArrow = d.drawCurvedArrow(pivotVel,edgeVel, angleOffsetVel, arrowWidth,colorVel);
+      torqueArrow = d.drawCurvedArrow(pivotTau,edgeTau, angleOffsetTau, arrowWidth,colorTau);
+      drawings = [ dEnd ; dBody ; dBase; torqueArrow; velocityArrow];
     end
   end
 
@@ -113,9 +159,9 @@ classdef TeleSys < handle
         delete(self.drawing(i,1));
       end
     end
-    function draw(self, xOffset)
-      self.drawing(1:6,1) = TeleSys.drawLever( -xOffset, self.q(1,1),self.colorM);
-      self.drawing(7:12,1) = TeleSys.drawLever( xOffset, self.q(3,1), self.colorS);
+    function draw(self, xOffset, inputTorques)
+      self.drawing(1:14,1) = TeleSys.drawLever( -xOffset, self.q(1:2,1),inputTorques(1,1),self.colorM);
+      self.drawing(15:28,1) = TeleSys.drawLever( xOffset, self.q(3:4,1),inputTorques(2,1),self.colorS);
     end
  end
 end

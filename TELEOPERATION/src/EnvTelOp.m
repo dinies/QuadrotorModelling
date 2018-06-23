@@ -7,6 +7,23 @@ classdef  EnvTelOp < handle
     width
   end
 
+  methods(Static = true)
+    function corresponding_index = findCorrespondingIndex(frame_number ,desired_frameRate, timeseries_vec)
+      delta_t = 1/desired_frameRate;
+      corresponding_index = 1;
+      t_desired = delta_t * frame_number;
+      found = false;
+      i = 1;
+      while ~found && i<= size(timeseries_vec,1)
+        if timeseries_vec(i) >= t_desired
+          found = true;
+          corresponding_index = i;
+        end
+        i = i + 1;
+      end
+    end
+  end
+
   methods
     function self= EnvTelOp(delta_t, thetaM, thetaS)
 
@@ -75,7 +92,7 @@ classdef  EnvTelOp < handle
         data(i,1:3)= [ self.clock.curr_t, input(1,1), input(2,1)];
         data(i,self.system.stateDim:self.system.stateDim+3)= self.system.q';
         deleteDrawing(self);
-        draw(self);
+        draw(self,input);
         pause(0.0001);
       end
       drawStatistics(self,data);
@@ -86,7 +103,7 @@ classdef  EnvTelOp < handle
       deleteDrawing(self.system);
     end
 
-    function draw(self)
+    function draw(self,inputTorques)
       d = Drawer();
       rectanglePoints= [
                         self.width/2 , self.width/20;
@@ -95,7 +112,7 @@ classdef  EnvTelOp < handle
                         self.width/2 , - self.width/20;
       ];
       self.drawing =  drawRectangle2D(d,rectanglePoints,self.color);
-      draw(self.system, self.width/2 );
+      draw(self.system, self.width/2 , inputTorques);
     end
     function drawStatistics(~,data)
 
@@ -127,5 +144,39 @@ classdef  EnvTelOp < handle
       plot(data(:,1),data(:,7));
       title(ax4,'d_theta s');
    end
+
+
+
+% dataMatrix format: [theta_m,theta_m_dot,theta_s,theta_s_dot,tau_m,tau_s,timeseries_out]
+    function createMovie(self, dataMatrix )
+      video = VideoWriter('teleOp.avi');
+      desired_frameRate = 60;
+      video.FrameRate = desired_frameRate;
+      sim_time = dataMatrix(end,7);
+
+      frames_num = round( sim_time * desired_frameRate );
+
+
+      open(video);
+      figure('Name','Teleoperation System','pos',[10 10 1200 1200]),hold on;
+      axis([ -self.width self.width -self.width self.width]);
+      title('virtual world'), xlabel('x'), ylabel('y')
+
+
+
+      for i = 1:frames_num
+        corresponding_index = EnvTelOp.findCorrespondingIndex(i,desired_frameRate, dataMatrix(:,7));
+
+        self.system.q = dataMatrix(corresponding_index,1:4)';
+        deleteDrawing(self);
+        inputTorques= dataMatrix(i,5:6)';
+        draw(self,inputTorques);
+
+        pause(0.0001);
+        frame = getframe(gcf);
+        video.writeVideo(frame);
+      end
+      close(video);
+    end
   end
 end
