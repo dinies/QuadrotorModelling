@@ -5,6 +5,7 @@ classdef  EnvTelOp < handle
     color
     drawing
     width
+    distFromWall
   end
 
   methods(Static = true)
@@ -25,7 +26,7 @@ classdef  EnvTelOp < handle
   end
 
   methods
-    function self= EnvTelOp(delta_t, thetaM, thetaS)
+    function self= EnvTelOp(delta_t, thetaM, thetaS, distFromWall)
 
       Jm = 0.000005;
       Js = 0.000005;
@@ -33,7 +34,7 @@ classdef  EnvTelOp < handle
       Bv = 0.4;
       Jmv = 0.0007;
       Jsv = 0.0007;
-
+      self.distFromWall = distFromWall;
       self.clock = Clock(delta_t);
       self.system= TeleSys(self.clock, thetaM, thetaS , Jm, Js, Kv, Bv, Jmv, Jsv);
       self.color = [0.7,0.8,0.4];
@@ -99,7 +100,9 @@ classdef  EnvTelOp < handle
     end
 
     function deleteDrawing(self)
-      delete(self.drawing);
+      for i = 1:size(self.drawing,1)
+        delete(self.drawing(i,1));
+      end
       deleteDrawing(self.system);
     end
 
@@ -111,7 +114,15 @@ classdef  EnvTelOp < handle
                         - self.width/2 , - self.width/20;
                         self.width/2 , - self.width/20;
       ];
-      self.drawing =  drawRectangle2D(d,rectanglePoints,self.color);
+      wallPoints= [
+                        self.width/2 + self.distFromWall + self.width/10 , self.width/3;
+                        self.width/2 + self.distFromWall, self.width/3;
+                        self.width/2 + self.distFromWall, - self.width/20;
+                        self.width/2 + self.distFromWall + self.width/10 , -self.width/20;
+      ];
+      r1 = drawRectangle2D(d,rectanglePoints,self.color);
+      r2 = drawRectangle2D(d,wallPoints,self.color);
+      self.drawing = [ r1 , r2 ];
       draw(self.system, self.width/2 , inputTorques);
     end
     function drawStatistics(~,data)
@@ -150,7 +161,7 @@ classdef  EnvTelOp < handle
 % dataMatrix format: [theta_m,theta_m_dot,theta_s,theta_s_dot,tau_m,tau_s,timeseries_out]
     function createMovie(self, dataMatrix )
       video = VideoWriter('teleOp.avi');
-      desired_frameRate = 60;
+      desired_frameRate = 30;
       video.FrameRate = desired_frameRate;
       sim_time = dataMatrix(end,7);
 

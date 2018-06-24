@@ -19,8 +19,14 @@ classdef TeleSys < handle
     function drawings = drawLever(xOffset, state, inputTorque, color)
       theta = state(1,1);
       thetaDot = state(2,1);
-     d = Drawer();
-
+      d = Drawer();
+      blue=[0,0,1];
+      orange=[1,0.6,0];
+      white=[1,1,1];
+      scaleVel =1;
+      scaleTau =1;
+      arrowWidth = 0.1;
+      epsilon = 0.001;
 
       distFromOrigin = abs(xOffset);
       radius = distFromOrigin/10;
@@ -54,7 +60,7 @@ classdef TeleSys < handle
       if thetaDot>0
         pivotVel = relativeBodyPoints(4,:);
         edgeVel = relativeBodyPoints(3,:);
-        else
+      else
         pivotVel = relativeBodyPoints(1,:);
         edgeVel = relativeBodyPoints(2,:);
       end
@@ -67,17 +73,10 @@ classdef TeleSys < handle
 %        edgeTau = [relativeBodyPoints(2,1)/2,relativeBodyPoints(2,2)/2,relativeBodyPoints(2,3)/2];
       end
 
-      edgeTau = (pivotTau' + [cos(theta)*distFromOrigin/4;sin(theta)*distFromOrigin/4;0])';
+      edgeTau = (pivotTau' + [sin(theta)*distFromOrigin/4;cos(theta)*distFromOrigin/4;0])';
 
-      blue=[0,0,1];
-      orange=[1,0.6,0];
-      white=[1,1,1];
-      scaleVel =1;
-      scaleTau =1;
-      arrowWidth = 0.1;
       angleOffsetVel = scaleVel* thetaDot;
       angleOffsetTau = scaleTau* inputTorque;
-      epsilon = 0.001;
 
       if abs(angleOffsetVel) > epsilon
         colorVel = blue;
