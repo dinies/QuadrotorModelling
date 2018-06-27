@@ -8,9 +8,9 @@ d= 2.4*10^-3;
 l= 0.255;% 0.127;vrep measurement
 kr = 0.1;%2*10^3; %extimate for r = 6 (1 rounds /second) 
 kt = 0.1;
-Ixx= 5.9*10-3;
-Iyy= 5.9*10-3;
-Izz= 1.16*10-3;
+Ixx= 5.9*10^-3;
+Iyy= 5.9*10^-3;
+Izz= 1.16*10^-3;
 
 %quadrotorInitialValues;
 
@@ -29,7 +29,7 @@ dz0 = 0;
 p0 = 0.5;
 q0 = 0.5;
 r0 = 2.7;
-phi0 = pi/4;
+phi0 = -pi/4;
 theta0 = pi/4;
 psi0 = pi/4;
 
@@ -73,10 +73,10 @@ plot(f4, 'r', 'LineWidth', 1)
 title('Rotor Forces')
 xlabel('time [s]')
 ylabel(' N' )
-xlim([-0.1 5])
-legend('f_1', 'f_2', 'f_3', 'Location', 'SouthEast')
+xlim([0 5])
+legend('f_1', 'f_3', 'f_4', 'Location', 'SouthEast')
 % plottools
 % set(gca, 'FontSize', fsz, 'LineWidth', alw);
-print('Forces', '-dpng', '-r300')
+print('ForcesInner', '-dpng', '-r300')
 
 

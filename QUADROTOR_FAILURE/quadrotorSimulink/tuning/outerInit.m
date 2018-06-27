@@ -7,9 +7,9 @@ d= 2.4*10^-3;
 l= 0.255;% 0.127;vrep measurement
 kr = 0.1;%2*10^3; %extimate for r = 6 (1 rounds /second) 
 kt = 0.1;
-Ixx= 5.9*10-3;
-Iyy= 5.9*10-3;
-Izz= 1.16*10-3;
+Ixx= 5.9*10^-3;
+Iyy= 5.9*10^-3;
+Izz= 1.16*10^-3;
 
 x0 = 2;
 y0 = 3;
@@ -53,7 +53,7 @@ axis([0 5 -2 inf])
 legend('x', 'y', 'z', 'Location', 'NorthEast')
 % plottools
 % set(gca, 'FontSize', fsz, 'LineWidth', alw);
-print('PositionOuterNO', '-dpng', '-r300')
+print('PositionOuter', '-dpng', '-r300')
 
 fig2 = figure(2);
 plot(phi, 'b','LineWidth', 1), hold on,
@@ -65,7 +65,7 @@ ylabel(' [rad]' )
 legend('\phi', '\theta' , 'Location', 'NorthEast')
 % plottools
 % set(gca, 'FontSize', fsz, 'LineWidth', alw);
-print('AngleOuterNO', '-dpng', '-r300')
+print('AngleOuter', '-dpng', '-r300')
 
 fig3 = figure(3);
 plot(r, 'r','LineWidth', 1),
@@ -76,4 +76,4 @@ ylabel(' [rad/s]' )
 legend('r', 'Location', 'NorthEast')
 % plottools
 % set(gca, 'FontSize', fsz, 'LineWidth', alw);
-print('velOuterNO', '-dpng', '-r300')
+print('velOuter', '-dpng', '-r300')

@@ -23,7 +23,7 @@ xd = 0;
 yd = 0;
 zd = 0;
 
-t = 5;
+t = 50;
 
 A = [0, 0, 0, 1;
     t^3, t^2, t, 1;
@@ -49,11 +49,11 @@ plot(z, 'r', 'LineWidth', 1)
 title('Position')
 xlabel('time [s]')
 ylabel(' [m]' )
-axis([0 5 -2 inf])
+% axis([0 5 -2 inf])
 legend('x', 'y', 'z', 'Location', 'NorthEast')
 % plottools
 % set(gca, 'FontSize', fsz, 'LineWidth', alw);
-print('PositionOuterNO', '-dpng', '-r300')
+print('PositionOuter', '-dpng', '-r300')
 
 fig2 = figure(2);
 plot(phi, 'b','LineWidth', 1), hold on,
@@ -65,7 +65,7 @@ ylabel(' [rad]' )
 legend('\phi', '\theta' , 'Location', 'NorthEast')
 % plottools
 % set(gca, 'FontSize', fsz, 'LineWidth', alw);
-print('AngleOuterNO', '-dpng', '-r300')
+print('AngleOuter', '-dpng', '-r300')
 
 fig3 = figure(3);
 plot(r, 'r','LineWidth', 1),
@@ -76,4 +76,4 @@ ylabel(' [rad/s]' )
 legend('r', 'Location', 'NorthEast')
 % plottools
 % set(gca, 'FontSize', fsz, 'LineWidth', alw);
-print('velOuterNO', '-dpng', '-r300')
+print('velOuter', '-dpng', '-r300')

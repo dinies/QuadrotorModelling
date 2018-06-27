@@ -21,42 +21,54 @@ zd = 0;
 
 %% Initial state
 
-x0 = 2;
-y0 = 3;
+x0 = 5;
+y0 = 5;
 z0 = 5;
-dx0 = 0;
-dy0 = 0;
-dz0 = 0;
-p0 = 0.01;
-q0 = -0.01;
-r0 = 0.1177;
-phi0 = 5e-4;
-theta0 = -3e-4;
-psi0 = 0;
 % dx0 = 0;
 % dy0 = 0;
 % dz0 = 0;
-% p0 = 0.2;
-% q0 = -0.2;
-% r0 = 0.1177;
-% phi0 = 0.1;
-% theta0 = -0.1;
+% p0 = 0;
+% q0 = 0;
+% r0 = m*g*d/kr;
+% phi0 = 0;
+% theta0 = 0;
 % psi0 = 0;
+dx0 = 0;
+dy0 = 0;
+dz0 = 0;
+p0 = 0.2;
+q0 = -0.2;
+r0 = 0.15;
+phi0 = 0.1;
+theta0 = -0.1;
+psi0 = 0.1;
 
 % MapMatrix = diag([ 1, -1, -1, -1, -1, 1, 1, -1, -1, -1, -1, 1]);
 
 %% Compute cubic trajectory
 
-t = 60;
+t = 100;
 
 A = [0, 0, 0, 1;
     t^3, t^2, t, 1;
     0, 0, 1, 0;
     3*t^2, 2*t, 1, 0];
 
+% A = [0,     0,      0,     0,   0, 1;
+%     t^5,    t^4,    t^3,   t^2, t, 1;
+%     0,      0,      0,     0,   1, 0;
+%     5*t^4,  4*t^3,  3*t^2, 2*t, 1, 0;
+%     0,      0,      0,     2,   0, 0;
+%     20*t^3, 12*t^2, 6*t,   2,   0, 0];
+
+
 x_constr = [x0, xd, 0, 0]';
 y_constr = [y0, yd, 0, 0]';
-z_constr = [z0+0.001, zd, 0, 0]';
+z_constr = [z0, zd, 0, 0]';
+
+% x_constr = [x0, xd, 0, 0, 0, 0]';
+% y_constr = [y0, yd, 0, 0, 0, 0]';
+% z_constr = [z0+0.001, zd, 0, 0, 0, 0]';
 
 x_coeff = A^-1*x_constr;
 y_coeff = A^-1*y_constr;
@@ -118,9 +130,9 @@ legend('x', 'y', 'z', 'Location', 'NorthEast')
 % plottools
 % set(gca, 'FontSize', fsz, 'LineWidth', alw);
 ylim([-2 7])
-print('PositionSetPoint', '-dpng', '-r300')
+print('Position', '-dpng', '-r300')
 
-fig1 = figure(2);
+fig2 = figure(2);
 plot(phi, 'g', 'LineWidth', 1), hold on,
 plot(theta, 'b', 'LineWidth', 1),
 title('Angles')
@@ -130,11 +142,11 @@ ylabel(' rad' )
 legend('\phi', '\theta', 'Location', 'NorthEast')
 % plottools
 % set(gca, 'FontSize', fsz, 'LineWidth', alw);
-axis([-0.1 10 -0.2 0.2]);
+axis([0 10 -0.15 0.15]);
 % xlim([-0.1 60]);
 print('Angles', '-dpng', '-r300')
 
-fig1 = figure(3);
+fig3 = figure(3);
 plot(f1, 'g', 'LineWidth', 1), hold on,
 plot(f3, 'b', 'LineWidth', 1),
 plot(f4, 'r', 'LineWidth', 1)
@@ -145,5 +157,30 @@ ylabel(' N ' )
 legend('f_1', 'f_3', 'f_4', 'Location', 'SouthEast')
 % plottools
 % set(gca, 'FontSize', fsz, 'LineWidth', alw);
-xlim([0 5])
+axis([0 100 -2 7]);
 print('Forces', '-dpng', '-r300')
+
+fig4 = figure(4);
+plot(phi_error, 'g', 'LineWidth', 1), hold on,
+plot(theta_error, 'b', 'LineWidth', 1),
+title('Angles error')
+xlabel('time [s]')
+ylabel(' rad ' )
+% yaxis([0 60 (min([x_hat3, x_hat4, x_hat5])-0.5) (max([x_hat3, x_hat4, x_hat5])+0.5)]) 
+legend('e_{\phi}', 'e_{\theta}', 'Location', 'SouthEast')
+% plottools
+% set(gca, 'FontSize', fsz, 'LineWidth', alw);
+xlim([0 5])
+print('Angles_error', '-dpng', '-r300')
+
+fig5 = figure(5);
+plot(f4, 'r', 'LineWidth', 1), hold on,
+title('M_4 force')
+xlabel('time [s]')
+ylabel(' N ' )
+% yaxis([0 60 (min([x_hat3, x_hat4, x_hat5])-0.5) (max([x_hat3, x_hat4, x_hat5])+0.5)]) 
+legend('f_4', 'Location', 'SouthEast')
+% plottools
+% set(gca, 'FontSize', fsz, 'LineWidth', alw);
+axis([0 100 -0.0005 0.0005]);
+print('r4force', '-dpng', '-r300')
