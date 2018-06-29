@@ -1,0 +1,31 @@
+{
+'one' : 1,
+'two' : [12,2,4,4,4],
+'emergent_last_known_pos'  :  GpsPosition(latitude=38.145823, longitude=-76.422396),
+'fly_zones': [  
+	FlyZone( 
+		boundary_pts = [
+			Waypoint( order=1, latitude=38.142544, longitude=-76.434088, altitude_msl=None),
+			Waypoint( order=2, latitude=38.141833, longitude=-76.425263, altitude_msl=None),
+			Waypoint( order=3, latitude=38.144678, longitude=-76.427995, altitude_msl=None),
+		],
+		altitude_msl_min=0.0,
+		altitude_msl_max=750.0
+	)
+],
+'mission_waypoints': [
+	Waypoint(order=1, latitude=38.142544, longitude=-76.434088, altitude_msl=200.0)
+], 
+'off_axis_odlc_pos': GpsPosition(latitude=38.142544, longitude=-76.434088),
+'search_grid_points': [
+	Waypoint(order=1, latitude=38.142544, longitude=-76.434088, altitude_msl=200.0)
+	], 
+'active': True,
+'id': 1,
+'home_pos': GpsPosition(latitude=38.14792, longitude=-76.427995),
+'air_drop_pos': GpsPosition(latitude=38.141833, longitude=-76.425263)
+}
+
+{
+	
+}

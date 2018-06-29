@@ -1,0 +1,38 @@
+%pip install -r ~/..  ../interop/client/requirements.txt   we need requests and futures among others
+%list = py.sys.path;
+% append the path to the target module which is found by this passages in python interpreter
+% >> import requests    < target module >
+% >> import os
+% >> path = os.path.dirname( request.__file__)
+%list.append('/usr/local/lib/python2.7/site-packages'); %arg path
+% import callable python functions, be sure that the current matlab folder is the one with the fun
+%if count(py.sys.path,'') == 0
+%  insert(py.sys.path,int32(0),'');
+%end
+                                %mod = py.importlib.import_module('myModule');
+mod = py.importlib.import_module('InteropApi');
+                         % useful commands :
+                         % clear workspace and imported modules :  clear classes
+                         % reload module :  py.reload(mod)
+                         % x =mod.myfunc();
+
+b = mod.InteropApi();
+m = b.getMis()
+obs = b.getObsta()
+
+
+Actually the matlab setup resets after each restart of the application,
+so there will be the need to append the path for the additional python libs with this lines:
+if count(py.sys.path,'/usr/local/lib/python2.7/site-packages') == 0
+   list = py.sys.path
+   list.append('/usr/local/lib/python2.7/site-packages');   
+end
+
+
+make sure to call example.m when matlab current folder that is displayed
+in the upper bar is 'pathToAUVSI_SUAS/interopSrc        
+this would affect the import_module in Interoperability.m
+if you want to call the class from another path make sure to modify the
+arg of import_module in the constructor with a path that allows matlab to find
+the InteropApi python file
+    

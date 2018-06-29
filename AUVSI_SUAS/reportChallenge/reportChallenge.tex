@@ -19,10 +19,6 @@
 \usepackage{enumitem} % Customized lists
 \setlist[itemize]{noitemsep} % Make itemize lists more compact
 
-\usepackage{abstract} % Allows abstract customization
-\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
-\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
-
 \usepackage{titlesec} % Allows customization of titles
 \renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
 \renewcommand\thesubsection{\roman{subsection}} % roman numerals for subsections
@@ -44,14 +40,16 @@
 \usepackage{graphicx}
 \usepackage{wrapfig}
 \graphicspath{ {images/} }
-\usepackage{wrapfig}
 \usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{sidecap}
 
 % ----------------------------------------------------------------------------------------
 %	TITLE SECTION
 % ----------------------------------------------------------------------------------------
 
-\setlength{\droptitle}{-4\baselineskip} % Move the title up
+\setlength{\droptitle}{-2\baselineskip} % Move the title up
 
 \pretitle{\begin{center}\Huge\bfseries} % Article title formatting
   \posttitle{\end{center}} % Article title closing formatting
@@ -63,15 +61,9 @@
   \and % Uncomment if 2 authors are required, duplicate these 4 lines if more
   \textsc{Gianluca Cerilli} \\[1ex] % Second author's name
   \normalsize \href{mailto:gianlucer@gmail.com}{gianlucer@gmail.com}\\ % Second author's email address
-  \normalsize Dipartimento di Ingegneria dell'Universita di Roma La Sapienza\\
+  \normalsize Dipartimento di Ingegneria dell'Universita' di Roma La Sapienza\\
 }
 \date{\today} % Leave empty to omit a date
-% \renewcommand{\maketitlehookd}{%
-% \begin{abstract}
-%   \noindent  This is the abstract, try to be concise !
-% \end{abstract}
-% }
-% ----------------------------------------------------------------------------------------
 
 \begin{document}
 
@@ -85,22 +77,16 @@
   \includegraphics[width=0.3\textwidth]{laSapienza}
 \end{center}
 
-
-% ----------------------------------------------------------------------------------------
-%	ARTICLE CONTENTS
-% ----------------------------------------------------------------------------------------
 \newpage
 \section{Introduction}
 
-\lettrine[nindent=0em,lines=3]{W}e will present a work made
+\lettrine[nindent=0em,lines=3]{T}his report presents a work made
 for an international challenge\footnote{The challenge is the AUVSI-SUAS hosted
-  in united states in summer 2018.} that every year involves several accademic teams.\\
-This report respects the following structure : \\
+  in united states in summer 2018.} that every year involves several academic teams.\\
+The following structure has been respected : \\
 in section \Romannum{2}, we will present the problem statement and in section
-\Romannum{3} we will give tecnical informations on the hardware at our disposal,
+\Romannum{3} we will give technical informations on the hardware at our disposal,
 finally in section \Romannum{4}, the adopted solution will be discussed.
-
-% ------------------------------------------------
 
 \section{Problem Statement}
 All the joining teams to the challenge will have to compete on several tasks
@@ -117,65 +103,66 @@ score the greatest number of points among all the tasks proposed which are:
 \end{enumerate}
 
 
-This will be the first partecipation at a competition of this kind for the team
+This will be the first participation at a competition of this kind for the team
 Sapienza, in fact the previous challenges in which our university has already
 been involved required a human controlled guidance system.
 Therefore the autonomous flight constraint has to be faced without previous
 insights on the matter.
-\newpage
 
 \subsection{Starting Points}
-The areonautical research department, in the past decade, has spent a big
-effort working to an autonomous guidance system, that has been thinkered,
-designed and implemented by master students in theyr thesis.\\
+The aeronautical research department, in the past decade, has spent a big
+effort working to an autonomous guidance system, that has been designed
+ and implemented by master students in their thesis.\\
 This system allows to control the complex aerodynamics of the vehicle from an
 higher level of abstraction, its main high level control mode uses a series of
 way points that describes a trajectory.\\
-\bigskip
-\begin{wrapfigure}{r}{5.5cm}
-\caption{YAK scaled aero model}\label{wrap-fig:1}
-\includegraphics[width=5.5cm]{YAK1}
-\end{wrapfigure} 
+
+\begin{wrapfloat}{figure}{o}{0pt}
+  \includegraphics[width=0.3\textwidth]{YAK1}
+  \caption{YAK scaled aero model}\label{wrap-fig:1}
+\end{wrapfloat} 
+
 
 In this way the aircraft will likely follow a path made of lines that intersects subsequent waypoints.\\
 The system is designed to work on an on-board computer and to communicate with a
 ground station that will continuously send to and receive from the judges's
 server, telemetrical data and mission objectives.\\
-
-
 We will use a fixed-wigs radio controlled aircraft model\footnote{It is a scaled
   reproduction (1:3 ratio) of the YAK 112} commonly used in hobby
-modeling as shown in Figure~\ref{wrap-fig:1}.
+modelling as shown in Figure~\ref{wrap-fig:1}.
 
 
 \subsection{Our task}
-As atomic part of the team which counts several members coming from an
-aeronutical background, we have an uncommon area of expertise that concerns
-\textbf{automation} and \textbf{robotics}.\\ So we engaged the autonomous guidance problem that
-comprehend also the obstacle avoidance clause.\par
-The competition will be organized in such a way that during the various missions
+This paper describes the work concerning the area of \textbf{automation} and
+\textbf{robotics} of an atomic part of the full Sapienza Flight team, which
+counts several members coming from an aeronautical background.\\
+With this premises, the autonomous guidance problem that comprehends also the obstacle avoidance clause, has been engaged.\\
+The competition will be organised in such a way that during the various missions
 of the challenge each team will receive pose informations about fixed and mobile
 obstacles that will be \textbf{virtual}.\\
 Then the judges will check the success or failure in avoiding obstacles
 according to the \textbf{telemetry} data that they will receive from each team.\\
-In other words, we where supposed to design a \textbf{path planning} algorith
-that will bring the UAV from a start position to a goal position without collisions.
-
-
+In other words, we where supposed to design a \textbf{path planning} algorithm
+that will bring the UAV from a start position to a goal position without
+collisions.\\
+Additionally we contributed to the integration of the ground control station
+with the interoperability protocols that allows an efficient communication with
+the judge's server, both for receiving mission information, obstacle position
+and sending the telemetry of the aircraft.
 
 
 \section{Hardware components}
-
+All the components described in this section, left aside the propulsive module,
+will work with two different voltages ( around 3 and 5 Volts ). For this reason
+two converters have been adopted, in particular the \textit{Tracopower TSR 1-2433
+ } and the \textit{Recom R-78B5.0-1.5}.
 \subsection{Propulsion}
-\begin{wrapfigure}{r}{5.5cm}
-\caption{DLE55 motor}\label{wrap-fig:2}
-\includegraphics[width=5.5cm]{YAK3}
-\end{wrapfigure} 
+\begin{wrapfloat}{figure}{o}{0pt}
+  \includegraphics[width=0.2\textwidth]{YAK3}
+  \caption{DLE55 motor}\label{wrap-fig:2}
+\end{wrapfloat} 
 
-
-
-The engine chosen is a \textbf{DLE55} (in Figure~\ref{wrap-fig:2} ) :
-
+The engine chosen is a \textbf{DLE55} (in Figure~\ref{wrap-fig:2} ).
 \begin{enumerate}
 \item 50 cc monocylinder petrol engine
 \item reservoir capable of containing 950cc of petrol
@@ -186,84 +173,190 @@ The engine chosen is a \textbf{DLE55} (in Figure~\ref{wrap-fig:2} ) :
 \subsection{On board computing}
 The autonomous guidance architecture, implemented in Matlab and Simulink, is
 converted in compiled high speed C, Cpp language.\\ It will be run by Arduino Due
-and there will be also a Raspberry pi Model 3 that will run a kalman filter in
+and there will be also a Raspberry pi Model 3 that will run a Kalman filter in
 order to process all signals from sensors.
 
-\bigskip I am arrived here  % TODO at the end we will focus on layouts and image positions
+
+\begin{wrapfloat}{figure}{o}{0pt}
+  \includegraphics[width=0.3\textwidth]{extLoop}
+  \caption{External loop}\label{wrap-fig:3}
+\end{wrapfloat} 
+
 
 
 \subsection{Sensing instruments}
-Maecenas sed ultricies felis. Sed imperdiet dictum arcu a egestas. 
+Concerning the sensors which are mounted on the aeromodel we have a GPS
+receiver, namely \textit{ Lassen IQ} and an attitude and heading reference
+system ( \textit{MTi} model).\\
+We also find a pressure and temperature sensor which is a \textit{BMP280} and an
+interestingly complex system to measure the fluid flow velocity (in this case the
+fluid measured is the air around the plane body) that is the \textit{Honeywell SSC}.
 \subsection{Communication devices}
-Maecenas sed ultricies felis. Sed imperdiet dictum arcu a egestas. 
+Ensure secure and continuous communication between the aeromodel and the ground
+station is a crucial point, in fact we employed two capable antennas, the
+\textit{Xbee Pro S2C}. They will be placed one on the lower body of the aircraft
+and the other on the ground.\\
+These reliable antennas works at 2.4 GHz and are omnidirectional, they support
+an operational range of 1.5 Km and in our case, some estimations made clear to
+use a 96 dB gain in the antenna on the ground.
+
+\begin{wrapfloat}{figure}{o}{0pt}
+  \includegraphics[width=0.25\textwidth]{intLoop}
+  \caption{Internal loop}\label{wrap-fig:4}
+\end{wrapfloat} 
+
+
 \subsection{Auto pilot framework}
-Maecenas sed ultricies felis. Sed imperdiet dictum arcu a egestas. 
+
+The system supports six modes :
+\begin{itemize}
+\item Boot and pre-flight checklist
+\item Calibration of sensor 
+\item Ready before mission start
+\item Manual guidance
+\item Stand by (transition state)
+\item Autonomous guidance
+\end{itemize}
+
+Talking about the last mode, there are two main approaches supported by the
+\textbf{Auto Pilot} : \textit{Vectorial} guidance and \textit{Waypoint-based}
+navigation.
+
+
+
+The vectorial guidance is controllable through four desired values:
+\begin{itemize}
+\item \textbf{ALT}: altitude
+\item \textbf{RC}: rate of climb (roll angle $\phi$)
+\item \textbf{IAS}: velocity
+\item \textbf{HDG}: heading (yaw angle $\psi$)
+\end{itemize}
+An oversimplified conceptual map is shown in Figure~\ref{wrap-fig:3} Figure~\ref{wrap-fig:4}.
+\newpage
 \section{Hybrid planner}
 We implemented two different strategies, since both present some shortcomings
-and advantages, we tried to take the best of the two worlds
+and advantages, we tried to take the best of the two worlds.
 
 \subsection{RRT}
+
+\begin{wrapfloat}{figure}{o}{0pt}
+  \includegraphics[width=0.3\textwidth]{rrt}
+  \caption{Behaviour of RRT search near obstacles}\label{wrap-fig:5}
+\end{wrapfloat} 
+
 RRT (Rapidly-exploring Random Tree) is a probabilistic planner that randomly builds a space-building tree.\\
 It has been used offline considering some motion primitives (produced by some specific velocity inputs) to define a path for the UAV, biasing it towards the unexplored areas closest to the goal.
+One interesting aspect of this probabilistic approach is that it will eventually
+find a way to reach the goal if it exists. In Figure~\ref{wrap-fig:5} we can see
+how the algorithm explores all the branches of the tree and expanding unexplored
+nodes and discarding colliding ones it will succeed to find the path between the
+two obstacles.
 \subsection{Artificial potentials}
+\begin{SCfigure}[]
+\centering
+\includegraphics[width=0.3\textwidth]{artPotFields}
+\caption{Example of the potentials distribution on a map with three obstacles
+    and the goal on the lower right corner}
+\label{wrap-fig:6}
+\end{SCfigure}
+
 Artificial Potential Fields (APF) have been considered for two main reasons:
 \begin{itemize}
-	\item the world can be approximated to a "world of spheres" (since there are cylindrical obstacles that we consider in 2D), that prevents the UAV entering the basin of attraction of some local minima
-	\item when the UAV faces an obstacle, RRT must expand many branches before getting around it. This leads to a significant slowdown
+\item the world can be approximated to a "world of spheres" (since there are cylindrical obstacles that we consider in 2D), that prevents the UAV entering the basin of attraction of some local minima
+\item when the UAV faces an obstacle, RRT must expand many branches before getting around it. This leads to a significant slowdown
 \end{itemize}
-Using APF the UAV can react as soon as entering the range of influence of the obstacle, with a smooth movement. This also because an implementation with vertex fields has been made, replacing repulsive actions with actions forcing the robot to get around it.
+
+\begin{figure}
+\centering
+   {\includegraphics[width=.45\textwidth]{noVort}} \quad
+   {\includegraphics[width=.45\textwidth]{vortex}} \\
+\caption{Map with vectors pointing in the gradient of the artificial potential
+  fields: the difference between the two images is that in the right the vortex
+  was implemented while in the left wasn't.}
+\label{fig:subfig1}
+\end{figure}
+
+Using APF the UAV can react as soon as entering the range of influence of the
+obstacle, with a smooth movement. This result has been made possible thanks to
+the implementation of vortex fields, replacing repulsive actions with actions
+forcing the robot to get around each obstacles, in practice generating a
+tangential gradient that follows a circle around the obstacle that will guide
+the aircraft avoiding harmful gradients pointing against the natural direction
+of motion as shown in Figure~\ref{fig:subfig1}.
 \subsection{Implementation}
-We consider the kinematic model of a fixed-wing UAV flying at a constant altitude. So, we can neglect the pitch angle, obtaining:\\
-\begin{array}{lcc}
-$ \dot{x} $ & = & $vcos \psi $ \\
-$ \dot{y} $ & = & $vsin \psi $ \\
-$ \dot{\psi} $ & = & -$ \frac{g}{v} tan \phi $ \\
-$ \dot{\phi} $ & = & $ u_{\phi } $
-\end{array}\\
-in which the speed $v$ and roll rate $u_{\phi}$ are the control inputs.
 
-%% \footnote{Example footnote}.
+We consider the kinematic model of a fixed-wing UAV flying at a constant
+altitude.
+So, we can neglect the pitch angle, obtaining:
+\begin{center}
+\[
+  \dot{x} = u_{v}cos{\theta} \psi
+\]
+\[
+  \dot{y} = u_{v}sin{\theta} \psi
+\]
+\[
+  \dot{\psi} = - \frac{g}{u_{v}} tan \phi 
+\]
+\[
+  \dot{\phi} = u_{\phi}
+\]
+\end{center}
 
-% ------------------------------------------------
+in which the tangential velocity $u_{v}$ and roll rate $u_{\phi}$ are the control inputs.
+As described above, for the path planning we use a mixed approach
+between RRT and Artificial Potential Fields methods.\\\par
+
+\begin{figure}
+\centering
+   {\includegraphics[width=.45\textwidth]{execution}} \quad
+   {\includegraphics[width=.45\textwidth]{finalPath}} \\
+\caption{On the left is shown the dynamic execution of the planning algorithm,
+  on the right there is the path followed by the UAV after that the planning has been completed.}
+\label{fig:subfig2}
+\end{figure}
+At the beginning, a random value is generated:  if this value is greater or less
+than a factor (that is decremented after each cycle), the RRT generates
+respectively a position biased to the goal or a random one.\\
+Depending from the five primitives of the UAV and it expands a node that
+represents the closest possible position of the UAV to the new configuration.\\
+If this new position collides with an obstacle, the node is not added to the
+tree and becomes unavailable for next nodes generation.\\\par
+In a similar way, if all the children of a parent collide with some obstacle,
+both the children and the parent become unavailable.
+These five primitives are generated and ordered according to another factor
+obtained from the APF method.\\\par
+Particularly, depending from the configuration of the UAV and from the range
+of influence of the obstacles, the total vortex field acting on the UAV is computed.\\
+Since the resultant vector of the vortex fields is directed toward the goal, we
+compute the direction of each primitive and select the one that forms the
+smallest angles with the direction of the vortex.\\
+Thanks to the vortex fields the UAV get around the obstacles avoiding local
+minima and proceeds faster to the goal.
+
+\section{Interoperability integration}
+In order to achieve an efficient communication we where nearly obliged to make
+use of the python \textbf{API} written by the challenge organisers. In this way the
+communication can be handled with \textit{asynchronous} \textbf{HTTP} requests between each team
+client and the judge's server.\\
+Since our team has chosen a code base in MATLAB, we implemented an interface
+that allows to invoke the API functions directly from MATLAB code.\\
+Then every significative data received will be saved in a compatible file ( in
+our case in a .mat file) that will be read and used in the execution cycle of the Auto
+Pilot infrastructure.
+
+
 
 \section{Conclusion}
-
-% \begin{table}
-%   \caption{Example table}
-%   \centering
-%   \begin{tabular}{llr}
-%     \toprule
-%     \multicolumn{2}{c}{Name} \\
-%     \cmidrule(r){1-2}
-%     First name & Last Name & Grade \\
-%     \midrule
-%     John & Doe & $7.5$ \\
-%     Richard & Miles & $2$ \\
-%     \bottomrule
-%   \end{tabular}
-% \end{table}
-
-
-\begin{equation}
-  \label{eq:emc}
-  e = mc^2
-\end{equation}
-
-
-% ----------------------------------------------------------------------------------------
-% REFERENCE LIST
-% ----------------------------------------------------------------------------------------
-
-\begin{thebibliography}{99} % Bibliography - this is intentionally simple in this template
-
-\bibitem[Figueredo and Wolf, 2009]{Figueredo:2009dg}
-  Figueredo, A.~J. and Wolf, P. S.~A. (2009).
-  \newblock Assortative pairing and life history strategy - a cross-cultural
-  study.
-  \newblock {\em Human Nature}, 20:317--330.
-  
-\end{thebibliography}
-
-% ----------------------------------------------------------------------------------------
-
+In the end, we consider the experience that we have made a good way to face
+problems spread on a large spectrum.\\
+In retrospection, it was a very time-taxing challenge and in our opinion it
+demands a lot more time and effort from the team to be able to confront the
+other teams around the world.\\\par
+In such a way they already  come from past years experiences and results,
+and they alse have an accumulated knowledge about the issues that we, instead, have had to
+solve for the first time.\\
+We hope that this work could be a base for the next challenges of our university
+and that the competition in June will score good results.
 \end{document}
+

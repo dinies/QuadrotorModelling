@@ -91,11 +91,11 @@ classdef  GraphTestDirected < matlab.unittest.TestCase
       graph = Graph( testCase.vertices, testCase.edges);
       res = graph.laplacianMatrix();
       truth = [
-               1 -1  0  0  0;
-              -1  3 -1  0 -1;
-               0 -1  3 -1 -1;
+               0  0  0  0  0;
+              -1  2 -1  0  0;
+               0  0  1  0 -1;
                0  0 -1  2 -1;
-               0 -1 -1 -1  3
+               0 -1  0  0 1
       ];
       testCase.verifyEqual( res, truth);
     end
