@@ -3,6 +3,7 @@
  (lambda ()
    (LaTeX-add-labels
     "simParams"
+    "virtParams"
     "fig:bodo"
     "fig:10Htz"
     "fig:100Htz"
