@@ -1,0 +1,15 @@
+\frametitle{Bilateral Controller}
+
+Hybrid parameters $ H_{ij} $:
+\begin{align*}
+	H_{11} &= \frac{1}{Z_s}[Z_m Z_s - (B_v s + K_v)^2] \\
+	H_{12} &= -\frac{1}{Z_s}[B_v s + K_v] \\
+	H_{21} &= \frac{1}{Z_s}[B_v s + K_v] \\
+	H_{22} &= \frac{1}{Z_s}
+\end{align*}
+where:
+\begin{align*}
+	Z_m &= (J_m + J_{mv}) s^2 + B_v s + K_v \\
+	Z_s &= (J_s + J_{sv}) s^2 + B_v s + K_v
+\end{align*}
+
