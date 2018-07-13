@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.26)  10 JUL 2018 18:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.26)  13 JUL 2018 18:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -735,11 +735,11 @@ File: Images/vibr100Htz.png Graphic file (type png)
 <use Images/vibr100Htz.png>
 Package pdftex.def Info: Images/vibr100Htz.png  used on input line 117.
 (pdftex.def)             Requested size: 418.22235pt x 121.28209pt.
-<Images/vibr1000Htz.png, id=170, 3358.5475pt x 1298.8525pt>
+<Images/vibr1000Htz.png, id=170, 3342.4875pt x 1830.84pt>
 File: Images/vibr1000Htz.png Graphic file (type png)
 <use Images/vibr1000Htz.png>
 Package pdftex.def Info: Images/vibr1000Htz.png  used on input line 124.
-(pdftex.def)             Requested size: 418.22874pt x 121.29146pt.
+(pdftex.def)             Requested size: 418.21793pt x 121.27162pt.
  [10 <./Images/vibr10Htz.png> <./Images/vibr100Htz.png> <./Images/vibr1000Htz.p
 ng>]
 <Images/rCoupFreeTot50htznoiseRect.png, id=180, 1674.255pt x 624.3325pt>
@@ -774,13 +774,13 @@ e.png>]
 File: Images/freerigidTot20HtznoiseRect.png Graphic file (type png)
 <use Images/freerigidTot20HtznoiseRect.png>
 Package pdftex.def Info: Images/freerigidTot20HtznoiseRect.png  used on input l
-ine 210.
+ine 207.
 (pdftex.def)             Requested size: 418.25436pt x 200.75883pt.
 <Images/freerigidPart20Htznoise.png, id=205, 1675.25874pt x 643.40375pt>
 File: Images/freerigidPart20Htznoise.png Graphic file (type png)
 <use Images/freerigidPart20Htznoise.png>
 Package pdftex.def Info: Images/freerigidPart20Htznoise.png  used on input line
- 217.
+ 214.
 (pdftex.def)             Requested size: 418.25128pt x 200.75883pt.
  [13 <./Images/freerigidTot20HtznoiseRect.png> <./Images/freerigidPart20Htznois
 e.png>]
@@ -788,13 +788,13 @@ e.png>]
 File: Images/freeSet20Tot20HtznoiseRect.png Graphic file (type png)
 <use Images/freeSet20Tot20HtznoiseRect.png>
 Package pdftex.def Info: Images/freeSet20Tot20HtznoiseRect.png  used on input l
-ine 238.
+ine 235.
 (pdftex.def)             Requested size: 418.2306pt x 200.75293pt.
 <Images/freeSet20Part20Htznoise.png, id=219, 1672.2475pt x 741.77126pt>
 File: Images/freeSet20Part20Htznoise.png Graphic file (type png)
 <use Images/freeSet20Part20Htznoise.png>
 Package pdftex.def Info: Images/freeSet20Part20Htznoise.png  used on input line
- 245.
+ 242.
 (pdftex.def)             Requested size: 418.23947pt x 200.75629pt.
  [14 <./Images/freeSet20Tot20HtznoiseRect.png> <./Images/freeSet20Part20Htznois
 e.png>]
@@ -802,13 +802,13 @@ e.png>]
 File: Images/setPointContactReacPosArrow.png Graphic file (type png)
 <use Images/setPointContactReacPosArrow.png>
 Package pdftex.def Info: Images/setPointContactReacPosArrow.png  used on input 
-line 269.
+line 266.
 (pdftex.def)             Requested size: 418.24063pt x 188.21393pt.
 <Images/setPointContactReacTorArrow.png, id=230, 1679.27374pt x 846.16125pt>
 File: Images/setPointContactReacTorArrow.png Graphic file (type png)
 <use Images/setPointContactReacTorArrow.png>
 Package pdftex.def Info: Images/setPointContactReacTorArrow.png  used on input 
-line 276.
+line 273.
 (pdftex.def)             Requested size: 418.25436pt x 188.20895pt.
  [15 <./Images/setPointContactReacPosArrow.png> <./Images/setPointContactReacTo
 rArrow.png>]
@@ -816,13 +816,13 @@ rArrow.png>]
 File: Images/rigidContactReacPosArrow.png Graphic file (type png)
 <use Images/rigidContactReacPosArrow.png>
 Package pdftex.def Info: Images/rigidContactReacPosArrow.png  used on input lin
-e 297.
+e 294.
 (pdftex.def)             Requested size: 418.23483pt x 188.20581pt.
 <Images/rigidContactReacTorArrow.png, id=243, 1680.2775pt x 836.12375pt>
 File: Images/rigidContactReacTorArrow.png Graphic file (type png)
 <use Images/rigidContactReacTorArrow.png>
 Package pdftex.def Info: Images/rigidContactReacTorArrow.png  used on input lin
-e 304.
+e 301.
 (pdftex.def)             Requested size: 418.24799pt x 188.20903pt.
  [16 <./Images/rigidContactReacPosArrow.png> <./Images/rigidContactReacTorArrow
 .png>]) [17]
@@ -863,7 +863,7 @@ e/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texli
 ve/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
 e/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/
 2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on Report.pdf (18 pages, 2674678 bytes).
+Output written on Report.pdf (18 pages, 2942916 bytes).
 PDF statistics:
  329 PDF objects out of 1000 (max. 8388607)
  249 compressed objects within 3 object streams
