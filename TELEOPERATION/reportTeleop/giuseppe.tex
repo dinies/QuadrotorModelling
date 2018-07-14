@@ -46,7 +46,7 @@ The report is organized as follow: in the first part we model the inertia-spring
 	\item $ \theta_s $ = slave displacement, $ \text{rad} $;
 \end{itemize}
 
-\subsection*{Modeling}
+\subsection{Modeling}
 
 \begin{figure}[h]
 	\centering
@@ -149,7 +149,7 @@ and, to achieve the perfect transparency condition shown in \eqref{transparencY_
 
 The performance of a teleoperation in evaluated in \emph{free} and \emph{contact} motion. For free motion the external torque on the slave is usually equal to zero, and hence the only parameters affecting the transparency are $ H_{11} $ and $ H_{12} $. For contact motion, instead, all the hybrid parameters affect the performance.
 
-\subsection*{Parameter selection and design}
+\subsection{Parameter selection and design}\label{ParamSelect} 
 
 The system is assumed to be disturbed by external vibration noise from the environment. We want to know how the slave position is affected by the external noise. This analysis can be achieved inspecting the hybrid parameter $ H_{22} $, representing how the position responds to external torque:
 \begin{equation}
