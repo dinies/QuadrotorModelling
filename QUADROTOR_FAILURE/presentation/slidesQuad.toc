@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{Vattela a pesca1}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{ Di nuovo1}{4}{0}{1}
+\beamer@sectionintoc {2}{Vattela a pesca2}{5}{0}{2}
+\beamer@subsectionintoc {2}{1}{ Di nuovo2}{6}{0}{2}
+\beamer@sectionintoc {3}{Vattela a pesca3}{7}{0}{3}
+\beamer@subsectionintoc {3}{1}{ Di nuovo3}{8}{0}{3}
