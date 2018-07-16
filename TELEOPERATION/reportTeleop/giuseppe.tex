@@ -2,11 +2,11 @@
 
 %This work deals with the development of a controller able to suppress the vibration and unwanted inputs in a bilateral control system.
 
-Teleoperation extends the human capability to manipulating objects remotely. An important aspect deals with necessity to obtain, on operator side, similar condition as those at the remote location, in other words, a \emph{properly(?)} feedback. 
+Teleoperation extends the human capability to manipulating objects remotely. An important aspect deals with necessity to obtain, on operator side, similar condition as those at the remote location, in other words, a proper feedback. 
 
 A bilateral system is composed by a joystick, called \emph{master}, on the human side, connected to a \emph{slave} on the environment side.
 
-The human imposes a force on the master, that results in a displacement. This displacement is then transmitted to the slave. On the other side, literally (ahah!), the slave has a force sensor used to "send back" to the master the reflection forces at the environment side. For these reasons we can call it \emph{bilateral teleoperation}.
+The human imposes a force on the master, that results in a displacement. This displacement is then transmitted to the slave. On the other side, the slave has a force sensor used to "send back" to the master the reflection forces at the environment side. For these reasons we can call it \emph{bilateral teleoperation}.
 
 Two important goals of the teleoperation are \cite{hokayem2006bilateral}:
 \begin{itemize}
@@ -24,7 +24,7 @@ This report deals with the development of a controller able to suppress the vibr
 
 In particular, the work is based on the concept of one degree of freedom inertia-spring-damper system. This concept comes from the design of shock absorbers used in vehicle suspension (which is composed by a spring and damper), and is usually applied in bilateral control system for \emph{soft manipulation}.
 
-Here, it is used a spring-damper system with an additional inertia.
+In this work we investigate the concept of \textit{virtual} spring-damper system with an additional inertia.
 The disturbance suppression performances depends on the value of these virtual parameters, determined from the desired cut-off frequencies.
 
 The report is organized as follow: in the first part we model the inertia-spring-damper system, analyzing the proposed control and the hybrid matrix. Then is the described the virtual parameter selection process. Finally, we present the results obtained in the simulations, performed with Matlab and Simulink.
@@ -147,7 +147,7 @@ and, to achieve the perfect transparency condition shown in \eqref{transparencY_
 	\end{bmatrix}
 \end{equation}
 
-The performance of a teleoperation in evaluated in \emph{free} and \emph{contact} motion. For free motion the external torque on the slave is usually equal to zero, and hence the only parameters affecting the transparency are $ H_{11} $ and $ H_{12} $. For contact motion, instead, all the hybrid parameters affect the performance.
+The performances of a teleoperation are evaluated in \emph{free} and \emph{contact} motion. For free motion the external torque on the slave is usually equal to zero, and hence the only parameters affecting the transparency are $ H_{11} $ and $ H_{21} $. For contact motion, instead, all the hybrid parameters affect the performance.
 
 \subsection{Parameter selection and design}\label{ParamSelect} 
 
@@ -163,7 +163,7 @@ The virtual parameter in \eqref{H_22} are determined from the second-order chara
 	(s + g_1)(s + g_2) = 0
 	\label{charact_equation}
 \end{equation}  
-where the poles $ g_1 $ and $ g_2 $ represent the cut-off frequencies of the system for disturbance suppression purpose
+where the poles $ g_1 $ and $ g_2 $ represent the cut-off frequencies of the system for disturbance suppression purpose.
 
 We can determine the virtual parameters comparing the characteristic equation of \eqref{H_22} with \eqref{charact_equation}.
 

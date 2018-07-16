@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.5.26)  14 JUL 2018 20:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.5.26)  16 JUL 2018 15:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -37,17 +37,17 @@ Package tocbasic Info: omitting babel extension for `lof'
 Package tocbasic Info: omitting babel extension for `lot'
 (tocbasic)             because of feature `nobabel' available
 (tocbasic)             for `lot' on input line 136.
-Package scrartcl Info: You've used standard option `11pt'.
+Package scrartcl Info: You've used standard option `12pt'.
 (scrartcl)             This is correct!
-(scrartcl)             Internally I'm using `fontsize=11pt'.
+(scrartcl)             Internally I'm using `fontsize=12pt'.
 (scrartcl)             If you'd like to set the option with \KOMAoptions,
-(scrartcl)             you'd have to use `fontsize=11pt' there
-(scrartcl)             instead of `11pt', too.
-Class scrartcl Info: File `scrsize11pt.clo' used to setup font sizes on input l
+(scrartcl)             you'd have to use `fontsize=12pt' there
+(scrartcl)             instead of `12pt', too.
+Class scrartcl Info: File `scrsize12pt.clo' used to setup font sizes on input l
 ine 2080.
 
-(/usr/share/texlive/texmf-dist/tex/latex/koma-script/scrsize11pt.clo
-File: scrsize11pt.clo 2017/09/07 v3.24 KOMA-Script font size class option (11pt
+(/usr/share/texlive/texmf-dist/tex/latex/koma-script/scrsize12pt.clo
+File: scrsize12pt.clo 2017/09/07 v3.24 KOMA-Script font size class option (12pt
 )
 )
 (/usr/share/texlive/texmf-dist/tex/latex/koma-script/typearea.sty
@@ -65,21 +65,21 @@ Package typearea Info: You've used standard option `a4paper'.
 \ta@temp=\skip45
 \footheight=\skip46
 Package typearea Info: These are the values describing the layout:
-(typearea)             DIV  = 10
+(typearea)             DIV  = 12
 (typearea)             BCOR = 0.0pt
 (typearea)             \paperwidth      = 597.50793pt
-(typearea)              \textwidth      = 418.25555pt
+(typearea)              \textwidth      = 448.13095pt
 (typearea)              DIV departure   = -6%
-(typearea)              \evensidemargin = 17.3562pt
-(typearea)              \oddsidemargin  = 17.3562pt
+(typearea)              \evensidemargin = 2.4185pt
+(typearea)              \oddsidemargin  = 2.4185pt
 (typearea)             \paperheight     = 845.04694pt
-(typearea)              \textheight     = 595.80026pt
-(typearea)              \topmargin      = -25.16531pt
-(typearea)              \headheight     = 17.0pt
-(typearea)              \headsep        = 20.40001pt
-(typearea)              \topskip        = 11.0pt
-(typearea)              \footskip       = 47.6pt
-(typearea)              \baselineskip   = 13.6pt
+(typearea)              \textheight     = 635.5pt
+(typearea)              \topmargin      = -41.72441pt
+(typearea)              \headheight     = 18.125pt
+(typearea)              \headsep        = 21.75pt
+(typearea)              \topskip        = 12.0pt
+(typearea)              \footskip       = 50.75pt
+(typearea)              \baselineskip   = 14.5pt
 (typearea)              on input line 1686.
 )
 \c@part=\count80
@@ -1008,133 +1008,135 @@ LaTeX Font Info:    Try loading font information for OMS+cmr on input line 13.
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 13.
  [3
 
 ]
-<Images/spring_damper_inertia_system.png, id=89, 1267.73625pt x 562.1pt>
+<Images/spring_damper_inertia_system.png, id=87, 1267.73625pt x 562.1pt>
 File: Images/spring_damper_inertia_system.png Graphic file (type png)
 <use Images/spring_damper_inertia_system.png>
 Package pdftex.def Info: Images/spring_damper_inertia_system.png  used on input
  line 53.
-(pdftex.def)             Requested size: 292.7776pt x 129.81204pt.
+(pdftex.def)             Requested size: 313.69029pt x 139.08372pt.
  [4 <./Images/spring_damper_inertia_system.png>]
-<Images/Block_diagram.png, id=105, 1209.51875pt x 564.1075pt>
+<Images/Block_diagram.png, id=103, 1209.51875pt x 564.1075pt>
 File: Images/Block_diagram.png Graphic file (type png)
 <use Images/Block_diagram.png>
 Package pdftex.def Info: Images/Block_diagram.png  used on input line 83.
-(pdftex.def)             Requested size: 292.7776pt x 136.54198pt.
+(pdftex.def)             Requested size: 313.69029pt x 146.30296pt.
  [5 <./Images/Block_diagram.png>] [6] [7])
 (./edoardo.tex [8]
-<Images/bodo.png, id=165, 2662.94875pt x 1442.38875pt>
+<Images/bodo.png, id=163, 2662.94875pt x 1442.38875pt>
 File: Images/bodo.png Graphic file (type png)
 <use Images/bodo.png>
 Package pdftex.def Info: Images/bodo.png  used on input line 68.
-(pdftex.def)             Requested size: 418.25555pt x 226.53917pt.
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
+(pdftex.def)             Requested size: 448.13095pt x 242.71582pt.
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 106.
  [9 <./Images/bodo.png>]
-<Images/vibr10Htz.png, id=179, 1675.25874pt x 845.1575pt>
+<Images/vibr10Htz.png, id=177, 1675.25874pt x 845.1575pt>
 File: Images/vibr10Htz.png Graphic file (type png)
 <use Images/vibr10Htz.png>
 Package pdftex.def Info: Images/vibr10Htz.png  used on input line 120.
-(pdftex.def)             Requested size: 418.25128pt x 121.28732pt.
-<Images/vibr100Htz.png, id=180, 3360.555pt x 1296.845pt>
+(pdftex.def)             Requested size: 448.10812pt x 129.95348pt.
+<Images/vibr100Htz.png, id=178, 3360.555pt x 1296.845pt>
 File: Images/vibr100Htz.png Graphic file (type png)
 <use Images/vibr100Htz.png>
 Package pdftex.def Info: Images/vibr100Htz.png  used on input line 128.
-(pdftex.def)             Requested size: 418.22235pt x 121.28209pt.
-<Images/vibr1000Htz.png, id=181, 3342.4875pt x 1830.84pt>
+(pdftex.def)             Requested size: 448.11734pt x 129.94934pt.
+<Images/vibr1000Htz.png, id=179, 3342.4875pt x 1830.84pt>
 File: Images/vibr1000Htz.png Graphic file (type png)
 <use Images/vibr1000Htz.png>
 Package pdftex.def Info: Images/vibr1000Htz.png  used on input line 136.
-(pdftex.def)             Requested size: 418.21793pt x 121.27162pt.
+(pdftex.def)             Requested size: 448.10521pt x 129.93188pt.
  [10 <./Images/vibr10Htz.png>]
 [11 <./Images/vibr100Htz.png> <./Images/vibr1000Htz.png>]
-<Images/set20freeTot50HtznoiseRect.png, id=203, 1673.25125pt x 627.34375pt>
+<Images/set20freeTot50HtznoiseRect.png, id=200, 1673.25125pt x 627.34375pt>
 File: Images/set20freeTot50HtznoiseRect.png Graphic file (type png)
 <use Images/set20freeTot50HtznoiseRect.png>
 Package pdftex.def Info: Images/set20freeTot50HtznoiseRect.png  used on input l
-ine 170.
-(pdftex.def)             Requested size: 418.26073pt x 200.76367pt.
-<Images/set20freePart50Htznoise.png, id=204, 1677.26625pt x 628.3475pt>
+ine 168.
+(pdftex.def)             Requested size: 448.13284pt x 215.10324pt.
+<Images/set20freePart50Htznoise.png, id=201, 1677.26625pt x 628.3475pt>
 File: Images/set20freePart50Htznoise.png Graphic file (type png)
 <use Images/set20freePart50Htznoise.png>
 Package pdftex.def Info: Images/set20freePart50Htznoise.png  used on input line
- 178.
-(pdftex.def)             Requested size: 418.24063pt x 200.75891pt.
-<Images/rCoupFreeTot50htznoiseRect.png, id=207, 1674.255pt x 624.3325pt>
+ 176.
+(pdftex.def)             Requested size: 448.13324pt x 215.09267pt.
+ [12]
+<Images/rCoupFreeTot50htznoiseRect.png, id=211, 1674.255pt x 624.3325pt>
 File: Images/rCoupFreeTot50htznoiseRect.png Graphic file (type png)
 <use Images/rCoupFreeTot50htznoiseRect.png>
 Package pdftex.def Info: Images/rCoupFreeTot50htznoiseRect.png  used on input l
-ine 188.
-(pdftex.def)             Requested size: 418.2306pt x 200.75266pt.
-<Images/rCoupFree50htznoise.png, id=208, 1677.26625pt x 620.3175pt>
+ine 186.
+(pdftex.def)             Requested size: 448.12065pt x 215.09962pt.
+<Images/rCoupFree50htznoise.png, id=212, 1677.26625pt x 620.3175pt>
 File: Images/rCoupFree50htznoise.png Graphic file (type png)
 <use Images/rCoupFree50htznoise.png>
-Package pdftex.def Info: Images/rCoupFree50htznoise.png  used on input line 196
+Package pdftex.def Info: Images/rCoupFree50htznoise.png  used on input line 194
 .
-(pdftex.def)             Requested size: 418.24063pt x 200.75839pt.
- [12 <./Images/set20freeTot50HtznoiseRect.png>] [13 <./Images/set20freePart50Ht
-znoise.png> <./Images/rCoupFreeTot50htznoiseRect.png>]
-<Images/freeSet20Tot20HtznoiseRect.png, id=230, 1674.255pt x 738.76pt>
+(pdftex.def)             Requested size: 448.13324pt x 215.09827pt.
+ [13 <./Images/set20freeTot50HtznoiseRect.png> <./Images/set20freePart50Htznois
+e.png>] [14 <./Images/rCoupFreeTot50htznoiseRect.png> <./Images/rCoupFree50htzn
+oise.png>]
+<Images/freeSet20Tot20HtznoiseRect.png, id=232, 1674.255pt x 738.76pt>
 File: Images/freeSet20Tot20HtznoiseRect.png Graphic file (type png)
 <use Images/freeSet20Tot20HtznoiseRect.png>
 Package pdftex.def Info: Images/freeSet20Tot20HtznoiseRect.png  used on input l
-ine 220.
-(pdftex.def)             Requested size: 418.2306pt x 200.75293pt.
-<Images/freeSet20Part20Htznoise.png, id=231, 1672.2475pt x 741.77126pt>
+ine 218.
+(pdftex.def)             Requested size: 448.12065pt x 215.10289pt.
+<Images/freeSet20Part20Htznoise.png, id=233, 1672.2475pt x 741.77126pt>
 File: Images/freeSet20Part20Htznoise.png Graphic file (type png)
 <use Images/freeSet20Part20Htznoise.png>
 Package pdftex.def Info: Images/freeSet20Part20Htznoise.png  used on input line
- 228.
-(pdftex.def)             Requested size: 418.23947pt x 200.75629pt.
-<Images/freerigidTot20HtznoiseRect.png, id=234, 1679.27374pt x 643.40375pt>
+ 226.
+(pdftex.def)             Requested size: 448.11919pt x 215.09683pt.
+<Images/freerigidTot20HtznoiseRect.png, id=236, 1679.27374pt x 643.40375pt>
 File: Images/freerigidTot20HtznoiseRect.png Graphic file (type png)
 <use Images/freerigidTot20HtznoiseRect.png>
 Package pdftex.def Info: Images/freerigidTot20HtznoiseRect.png  used on input l
-ine 238.
-(pdftex.def)             Requested size: 418.25436pt x 200.75883pt.
-<Images/freerigidPart20Htznoise.png, id=235, 1675.25874pt x 643.40375pt>
+ine 236.
+(pdftex.def)             Requested size: 448.1315pt x 215.10225pt.
+<Images/freerigidPart20Htznoise.png, id=237, 1675.25874pt x 643.40375pt>
 File: Images/freerigidPart20Htznoise.png Graphic file (type png)
 <use Images/freerigidPart20Htznoise.png>
 Package pdftex.def Info: Images/freerigidPart20Htznoise.png  used on input line
- 246.
-(pdftex.def)             Requested size: 418.25128pt x 200.75883pt.
- [14 <./Images/rCoupFree50htznoise.png> <./Images/freeSet20Tot20HtznoiseRect.pn
-g>] [15 <./Images/freeSet20Part20Htznoise.png> <./Images/freerigidTot20Htznoise
-Rect.png>]
-<Images/setPointContactReacPosArrow.png, id=258, 1677.26625pt x 859.21pt>
+ 244.
+(pdftex.def)             Requested size: 448.10812pt x 215.10225pt.
+
+[15 <./Images/freeSet20Tot20HtznoiseRect.png> <./Images/freeSet20Part20Htznoise
+.png>] [16 <./Images/freerigidTot20HtznoiseRect.png> <./Images/freerigidPart20H
+tznoise.png>]
+<Images/setPointContactReacPosArrow.png, id=260, 1677.26625pt x 859.21pt>
 File: Images/setPointContactReacPosArrow.png Graphic file (type png)
 <use Images/setPointContactReacPosArrow.png>
 Package pdftex.def Info: Images/setPointContactReacPosArrow.png  used on input 
-line 277.
-(pdftex.def)             Requested size: 418.24063pt x 188.21393pt.
-<Images/setPointContactReacTorArrow.png, id=259, 1679.27374pt x 846.16125pt>
+line 273.
+(pdftex.def)             Requested size: 448.13324pt x 201.65216pt.
+<Images/setPointContactReacTorArrow.png, id=261, 1679.27374pt x 846.16125pt>
 File: Images/setPointContactReacTorArrow.png Graphic file (type png)
 <use Images/setPointContactReacTorArrow.png>
 Package pdftex.def Info: Images/setPointContactReacTorArrow.png  used on input 
-line 285.
-(pdftex.def)             Requested size: 418.25436pt x 188.20895pt.
- [16 <./Images/freerigidPart20Htznoise.png>]
-<Images/rigidContactReacPosArrow.png, id=271, 1678.27pt x 857.2025pt>
+line 281.
+(pdftex.def)             Requested size: 448.1315pt x 201.64969pt.
+ [17 <./Images/setPointContactReacPosArrow.png>]
+<Images/rigidContactReacPosArrow.png, id=274, 1678.27pt x 857.2025pt>
 File: Images/rigidContactReacPosArrow.png Graphic file (type png)
 <use Images/rigidContactReacPosArrow.png>
 Package pdftex.def Info: Images/rigidContactReacPosArrow.png  used on input lin
-e 307.
-(pdftex.def)             Requested size: 418.23483pt x 188.20581pt.
-<Images/rigidContactReacTorArrow.png, id=272, 1680.2775pt x 836.12375pt>
+e 303.
+(pdftex.def)             Requested size: 448.11974pt x 201.65189pt.
+<Images/rigidContactReacTorArrow.png, id=275, 1680.2775pt x 836.12375pt>
 File: Images/rigidContactReacTorArrow.png Graphic file (type png)
 <use Images/rigidContactReacTorArrow.png>
 Package pdftex.def Info: Images/rigidContactReacTorArrow.png  used on input lin
-e 315.
-(pdftex.def)             Requested size: 418.24799pt x 188.20903pt.
- [17 <./Images/setPointContactReacPosArrow.png> <./Images/setPointContactReacTo
-rArrow.png>] [18 <./Images/rigidContactReacPosArrow.png> <./Images/rigidContact
-ReacTorArrow.png>]) [19] (./Report.bbl)
+e 311.
+(pdftex.def)             Requested size: 448.11734pt x 201.65617pt.
+ [18 <./Images/setPointContactReacTorArrow.png> <./Images/rigidContactReacPosAr
+row.png>] [19 <./Images/rigidContactReacTorArrow.png>]) [20] (./Report.bbl)
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 57.
- [20
+ [21
 
 ]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 57.
@@ -1146,36 +1148,33 @@ Package rerunfilecheck Info: File `Report.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 57.
  ) 
 Here is how much of TeX's memory you used:
- 15529 strings out of 492982
- 245634 string characters out of 6134896
- 473366 words of memory out of 5000000
- 18683 multiletter control sequences out of 15000+600000
- 16667 words of font info for 96 fonts, out of 8000000 for 9000
+ 15545 strings out of 492982
+ 245811 string characters out of 6134896
+ 473402 words of memory out of 5000000
+ 18689 multiletter control sequences out of 15000+600000
+ 16722 words of font info for 102 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,16n,51p,8844b,548s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fon
+ 42i,16n,51p,8844b,549s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmti10.pfb>
-Output written on Report.pdf (20 pages, 2979384 bytes).
+1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on Report.pdf (21 pages, 2951309 bytes).
 PDF statistics:
- 381 PDF objects out of 1000 (max. 8388607)
- 295 compressed objects within 3 object streams
- 84 named destinations out of 1000 (max. 500000)
- 21176 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 374 PDF objects out of 1000 (max. 8388607)
+ 290 compressed objects within 3 object streams
+ 85 named destinations out of 1000 (max. 500000)
+ 21688 words of extra memory for PDF output out of 24883 (max. 10000000)
 
