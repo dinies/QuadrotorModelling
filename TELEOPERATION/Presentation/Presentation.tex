@@ -16,13 +16,25 @@
 
 \usepackage{xspace}
 \newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+\definecolor{Orange}{HTML}{cc3300}
+\definecolor{LightBlue}{HTML}{237FD4}
+
+\definecolor{Purple}{HTML}{911146}
+\definecolor{White}{HTML}{FFFFFF}
+\definecolor{Black}{HTML}{000000}
+\definecolor{Gray}{HTML}{F2F2F2}
+\definecolor{Sapienza}{HTML}{640c18}
+% \setbeamercolor{alerted text}{fg=Orange}
+\setbeamercolor{frametitle}{bg=Sapienza,fg=White}
+\setbeamercolor{background canvas}{bg=White}
+
 
 \title{Vibration Suppression Design for Virtual Compliance Control in Bilateral Teleoperation}
 % \date{\today}
 \date{}
 \author{Edoardo Ghini, Gianluca Cerilli, Giuseppe L'Erario}
 \institute{La Sapienza University}
-% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+\titlegraphic{\hfill\includegraphics[height=1.5cm]{Images/SapienzaLogo}}
 
 \begin{document}
 	
@@ -199,26 +211,153 @@ and
 % \end{frame}	
 
 \section{Simulations}
-\subsection{Vibration Suppression Performance Analysis}
 
-\begin{frame}{}
+\subsection*{Vibration Suppression Performances}
+\begin{frame}{Disturbance response}
+	
+  \begin{equation*}
+    \dfrac{\theta_s}{\tau_{ext}} = \dfrac{1}{(J_s + J_{sv}) s^2 + B_v s + K_v}
+  \end{equation*}\\
+  \begin{center}
+    \includegraphics[width=\textwidth, height=0.45\textwidth]{../reportTeleop/Images/bodo}\\
+    \bigskip
+    \begin{tabular}{c|c c c c c}
+       & Set I & Set II & Set III & Set IV & Rigid coupling \\
+      \midrule 
+	    $K_{v}$ & 20 & 10 & 5 & 2.5 & 100 \\
+    \end{tabular}
+  \end{center}
 
 \end{frame}
 
-\begin{frame}{}
-	
+\begin{frame}{Vibration suppression}
+  \begin{center}
+    \includegraphics[width=\textwidth, height=0.21\textwidth]{../reportTeleop/Images/vibr10Htz}\\
+    \smallskip
+    \includegraphics[width=\textwidth, height=0.21\textwidth]{../reportTeleop/Images/vibr100Htz}\\
+    \smallskip
+    \includegraphics[width=\textwidth, height=0.21\textwidth]{../reportTeleop/Images/vibr1000Htz}\\
+    \begin{tabular}{c  c | c | c }
+      \textbf{ Noise frequency :} & 10 Hz & $10^2$ Hz & $10^3$ Hz \\
+    \end{tabular}
+ \end{center}
 \end{frame}
 
-\begin{frame}{}
-	
-	VIDEO
-	
+\subsection*{Task execution performances}
+
+\begin{frame}{Task execution:  Free Motion}
+  \begin{columns}
+    \column{.75\textwidth}
+    \includegraphics[width=\textwidth,
+    height=0.45\textwidth]{../reportTeleop/Images/rCoupFreeTot50htznoise}\\
+    \smallskip
+    \includegraphics[width=\textwidth,
+    height=0.45\textwidth]{../reportTeleop/Images/set20freeTot50Htznoise}
+    \column{.30\textwidth}
+
+    \textbf{Rigid coupling}:\\
+    \begin{itemize}
+    \item{High transparency}
+    \item{A lot of vibrations}
+    \end{itemize}
+    \smallskip
+
+    \textbf{Virtual compliance}:\\
+    \begin{itemize}
+    \item{ A bit less \textsl{responsive}}
+    \item{\textsl{Smoother} (vibrations damped)}
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Task execution: In contact}
+  \smallskip
+  \begin{columns}
+    \column{.20\textwidth}
+    \color{Orange}\textbf{Rigid coupling:}\\
+    lower error (good)\\
+    \bigskip
+    \bigskip
+    \bigskip
+    \color{black}\textbf{Position tracking error }\\
+    \bigskip
+    \bigskip
+    \bigskip
+    \color{LightBlue}\textbf{Virtual compliance:}\\
+    higher error (bad)
+
+    \column{.85\textwidth}
+    \includegraphics[width=\textwidth,
+    height=0.43\textwidth]{../reportTeleop/Images/rigidContactReacPosArrow}
+    \smallskip
+    \includegraphics[width=\textwidth,
+    height=0.43\textwidth]{../reportTeleop/Images/setPointContactReacPosArrow}\\
+
+ \end{columns}
+\end{frame}
+
+\begin{frame}{Task execution: In contact}
+  \smallskip
+  \begin{columns}
+    \column{.20\textwidth}
+    \color{Orange}\textbf{Rigid coupling:}\\
+    higher effort (bad)\\
+    \bigskip
+    \bigskip
+    \color{black}\textbf{Control effort:}\\
+    \textsl{torque exerted}\\
+    \bigskip
+    \bigskip
+    \color{LightBlue}\textbf{Virtual compliance:}\\
+    lower effort (good)
+
+    \column{.85\textwidth}
+    \includegraphics[width=\textwidth,
+    height=0.43\textwidth]{../reportTeleop/Images/rigidContactReacTorArrow}
+    \smallskip
+    \includegraphics[width=\textwidth,
+    height=0.43\textwidth]{../reportTeleop/Images/setPointContactReacTorArrow}\\
+
+ \end{columns}
+\end{frame}
+
+
+\begin{frame}{Task execution: In contact}
+  \begin{center}
+    \movie[height = 0.6\textwidth, width = 0.72\textwidth]{}{./teleOp.mov}
+  \end{center}
+  \begin{columns}
+    \column{.33\textwidth}
+    \textbf{Legend:}
+    \column{.33\textwidth}
+    \color{LightBlue} Tangential velocity
+    \column{.33\textwidth}
+    \color{Orange} Torque
+  \end{columns}
 \end{frame}
 
 \section{Conclusion}
 
-\begin{frame}{Summary}
+\begin{frame}{Conclusions}
 
+  \textbf{Proposed solution:} 
+  \begin{itemize}
+  \item
+    Inertia spring-dumper \textbf{virtual} system to augment the original system.
+  \item 
+    Having chosen a virtual \textbf{stiffness}, desired \textbf{cut-off} frequencies can be imposed
+    to the original system.
+  \end{itemize}
+
+  \textbf{Consequences:} 
+  \begin{itemize}
+  \item
+    It shows a \textbf{trade-off} between control effort and tracking error in
+    task execution.
+  \item
+    Rejects high frequency signals, namely \textbf{noise} and preserves low frequency ones
+    like \textbf{control inputs}.
+  \end{itemize}
 \end{frame}
 
 {\definecolor{BlueTOL}{HTML}{222255}
@@ -229,5 +368,105 @@ Thank you for your attention!
 }
 
 \appendix
+
+\begin{frame}{Free Motion: High frequency noise}
+  \smallskip
+  \begin{columns}
+    \column{.20\textwidth}
+    \color{Orange}\textbf{Rigid coupling:}\\
+    \bigskip
+    \bigskip
+    \bigskip
+    \color{black}\textbf{High frequency:} 50 Hz\\
+    \bigskip
+    \bigskip
+    \bigskip
+    \color{LightBlue}\textbf{Virtual compliance:}\\
+
+    \column{.85\textwidth}
+ 
+   \includegraphics[width=\textwidth,
+    height=0.45\textwidth]{../reportTeleop/Images/rCoupFreeTot50htznoiseRect}\\
+    \smallskip
+    \includegraphics[width=\textwidth,
+    height=0.45\textwidth]{../reportTeleop/Images/set20freeTot50HtznoiseRect}
+    \end{columns}
+  
+\end{frame}
+
+\begin{frame}{Free Motion: High frequency noise. Detail}
+  \smallskip
+  \begin{columns}
+    \column{.20\textwidth}
+    \color{Orange}\textbf{Rigid coupling:}\\
+    \bigskip
+    \bigskip
+    \bigskip
+    \color{black}\textbf{High frequency:} 50 Hz\\
+    \bigskip
+    \bigskip
+    \bigskip
+    \color{LightBlue}\textbf{Virtual compliance:}\\
+
+    \column{.85\textwidth}
+ 
+   \includegraphics[width=\textwidth,
+    height=0.45\textwidth]{../reportTeleop/Images/rCoupFree50htznoise}\\
+    \smallskip
+    \includegraphics[width=\textwidth,
+    height=0.45\textwidth]{../reportTeleop/Images/set20freePart50Htznoise}
+    \end{columns}
+  
+
+\end{frame}
+
+\begin{frame}{Free Motion: Low frequency noise 20 Hz}
+  \smallskip
+  \begin{columns}
+    \column{.20\textwidth}
+    \color{Orange}\textbf{Rigid coupling:}\\
+    \bigskip
+    \bigskip
+    \bigskip
+    \color{black}\textbf{Low frequency:} 20 Hz\\
+    \bigskip
+    \bigskip
+    \bigskip
+    \color{LightBlue}\textbf{Virtual compliance:}\\
+
+    \column{.85\textwidth}
+    
+    \includegraphics[width=\textwidth,
+    height=0.45\textwidth]{../reportTeleop/Images/freerigidTot20HtznoiseRect}\\
+    \smallskip
+    \includegraphics[width=\textwidth,
+    height=0.45\textwidth]{../reportTeleop/Images/freeSet20Tot20HtznoiseRect}
+  \end{columns}
+  
+\end{frame}
+
+\begin{frame}{Free Motion: Low frequency noise 20 Hz detail}
+  \smallskip
+  \begin{columns}
+    \column{.20\textwidth}
+    \color{Orange}\textbf{Rigid coupling:}\\
+    \bigskip
+    \bigskip
+    \bigskip
+    \color{black}\textbf{Low frequency:} 20 Hz\\
+    \bigskip
+    \bigskip
+    \bigskip
+    \color{LightBlue}\textbf{Virtual compliance:}\\
+
+    \column{.85\textwidth}
+    
+    \includegraphics[width=\textwidth,
+    height=0.45\textwidth]{../reportTeleop/Images/freerigidPart20Htznoise}\\
+    \smallskip
+    \includegraphics[width=\textwidth,
+    height=0.45\textwidth]{../reportTeleop/Images/freeSet20Part20Htznoise}
+  \end{columns}
+\end{frame}
 
 \end{document}
