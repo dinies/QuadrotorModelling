@@ -1,0 +1,8 @@
+\beamer@slide {force_mapping}{10}
+\beamer@slide {fig:controlscheme}{12}
+\beamer@slide {forceTorqueMappingFailure}{13}
+\beamer@slide {completeQuadModel}{16}
+\beamer@slide {OuterInputs}{20}
+\beamer@slide {outerControl_}{21}
+\beamer@slide {rotation_matrix_outer}{23}
+\beamer@slide {LinearizingControlLaw}{29}
