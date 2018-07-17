@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {2}{Quadrotor Model}{6}{0}{2}
+\beamer@sectionintoc {3}{Control Architecture}{11}{0}{3}
+\beamer@subsectionintoc {3}{1}{Quadrotor model in case of rotor loss}{13}{0}{3}
+\beamer@sectionintoc {6}{Vattela a pesca3}{32}{0}{4}
+\beamer@subsectionintoc {6}{1}{ Di nuovo3}{33}{0}{4}

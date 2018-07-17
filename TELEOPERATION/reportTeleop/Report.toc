@@ -9,4 +9,4 @@
 \contentsline {subsubsection}{\numberline {2.3.1}Free motion with high frequency input}{12}{subsubsection.2.3.1}
 \contentsline {subsubsection}{\numberline {2.3.2}Free motion with low frequency input}{15}{subsubsection.2.3.2}
 \contentsline {subsubsection}{\numberline {2.3.3}Contact motion}{17}{subsubsection.2.3.3}
-\contentsline {section}{\numberline {3}Conclusions}{20}{section.3}
+\contentsline {section}{\numberline {3}Conclusions}{19}{section.3}
