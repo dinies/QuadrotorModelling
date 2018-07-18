@@ -123,11 +123,11 @@ represented by the \emph{transparency condition}:
 \begin{align}
 	\tau_m = \tau_s \\
 	\theta_m = \theta_s
-	\label{transparencY_condition}
 \end{align}
 is expressed in terms of transmitted impedance $ Z_t $, which is transferred to the human, and environment impedance $ Z_{env} $:
 \begin{equation}
 	\frac{\tau_m}{\theta_m} = Z_t = Z_{env} = \frac{\tau_s}{\theta_s}
+	\label{transparencY_condition}
 \end{equation}
 
 The relationship between the transmitted and environment impedance comes from the hybrid matrix of \eqref{hybrid_matrix}:
@@ -151,7 +151,7 @@ The performances of a teleoperation are evaluated in \emph{free} and \emph{conta
 
 \subsection{Parameter selection and design}\label{ParamSelect} 
 
-The system is assumed to be disturbed by external vibration noise from the environment. We want to know how the slave position is affected by the external noise. This analysis can be achieved inspecting the hybrid parameter $ H_{22} $, representing how the position responds to external torque:
+The system is assumed to be disturbed by external vibration noise from the environment. We want to know how the slave position is affected by the external noise. This analysis can be achieved inspecting the hybrid parameter $ H_{22} $, representing how the slave position responds to external torque:
 \begin{equation}
 	\dfrac{\theta_s}{\tau_{ext}} = \dfrac{1}{(J_s + J_{sv}) s^2 + B_v s + K_v}
 	\label{H_22}
