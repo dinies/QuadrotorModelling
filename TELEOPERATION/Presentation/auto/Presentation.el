@@ -26,13 +26,22 @@
     "esint"
     "amsmath"
     "pgfplots"
+    "fancybox"
     "xspace")
    (TeX-add-symbols
     "themename")
    (LaTeX-add-labels
     "hybrid_matrix"
-    "H_22")
+    "H_22"
+    "virtParams")
    (LaTeX-add-xcolor-definecolors
+    "Orange"
+    "LightBlue"
+    "Purple"
+    "White"
+    "Black"
+    "Gray"
+    "Sapienza"
     "BlueTOL"))
  :latex)
 

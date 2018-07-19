@@ -11,7 +11,7 @@ delta_t = 1;%unused
 
 %dataMatrix = [ theta_m, theta_m_dot, theta_s, theta_s_dot, tau_m, tau_s, tout];
 
-data = load('realData.mat');
+data = load('realData1.mat');
 dataMatrix = data.dataMatrix;
 
 for i = 1:size( dataMatrix,2)-1

@@ -16,8 +16,8 @@
 \usepackage{fancybox}
 
 % If you want to usa fira sans font decomment the two following lines
-\setsansfont[BoldFont={Fira Sans}]{Fira Sans Light}
-\setmonofont{Fira Mono}
+% \setsansfont[BoldFont={Fira Sans}]{Fira Sans Light}
+% \setmonofont{Fira Mono}
 
 \usepackage{xspace}
 \newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
@@ -271,7 +271,7 @@ and
   \end{equation*}\\
   \begin{figure}
   	\centering
-  	\includegraphics[width=1\linewidth]{Images/bodeplot2}
+  	\includegraphics[width=1\linewidth]{../reportTeleop/Images/bodo}
 %  	\caption{}
 %  	\label{fig:bodeplot2}
   \end{figure}
@@ -477,20 +477,20 @@ height=0.45\textwidth]{../reportTeleop/Images/freeSet20Part20Htznoise}
 
 
 \begin{frame}{Task execution: In contact}
-
-Qui ci sta il film.
-%  \begin{center}
-%    \movie[height = 0.6\textwidth, width = 0.72\textwidth]{}{./teleOp.mov}
-%  \end{center}
-%  \begin{columns}
-%    \column{.33\textwidth}
-%    \textbf{Legend:}
-%    \column{.33\textwidth}
-%    \color{LightBlue} Tangential velocity
-%    \column{.33\textwidth}
-%    \color{Orange} Torque
-%  \end{columns}
+  \color{LightBlue} Virtual compliance :
+ \begin{center}
+   \movie[height = 0.6\textwidth, width = 0.72\textwidth]{}{./virtualComplK20.mov}
+ \end{center}
 \end{frame}
+
+\begin{frame}{Task execution: In contact}
+  \color{Orange} Rigid coupling:
+ \begin{center}
+   \movie[height = 0.6\textwidth, width = 0.72\textwidth]{}{./rigidCoupling.mov}
+ \end{center}
+\end{frame}
+
+
 
 \section{Conclusions}
 

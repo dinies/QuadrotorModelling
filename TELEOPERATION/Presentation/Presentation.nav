@@ -64,20 +64,22 @@
 \headcommand {\beamer@framepages {26}{26}}
 \headcommand {\slideentry {4}{2}{7}{27/27}{Task execution performances}{0}}
 \headcommand {\beamer@framepages {27}{27}}
-\headcommand {\beamer@sectionpages {17}{27}}
-\headcommand {\beamer@subsectionpages {21}{27}}
-\headcommand {\sectionentry {5}{Conclusions}{28}{Conclusions}{0}}
-\headcommand {\slideentry {5}{0}{1}{28/28}{}{0}}
+\headcommand {\slideentry {4}{2}{8}{28/28}{Task execution performances}{0}}
 \headcommand {\beamer@framepages {28}{28}}
-\headcommand {\slideentry {5}{0}{2}{29/29}{}{0}}
+\headcommand {\beamer@sectionpages {17}{28}}
+\headcommand {\beamer@subsectionpages {21}{28}}
+\headcommand {\sectionentry {5}{Conclusions}{29}{Conclusions}{0}}
+\headcommand {\slideentry {5}{0}{1}{29/29}{}{0}}
 \headcommand {\beamer@framepages {29}{29}}
-\headcommand {\slideentry {5}{0}{3}{30/30}{}{0}}
+\headcommand {\slideentry {5}{0}{2}{30/30}{}{0}}
 \headcommand {\beamer@framepages {30}{30}}
-\headcommand {\gdef \insertmainframenumber {21}}
-\headcommand {\beamer@partpages {31}{30}}
-\headcommand {\beamer@subsectionpages {31}{30}}
-\headcommand {\beamer@sectionpages {31}{30}}
-\headcommand {\beamer@documentpages {30}}
+\headcommand {\slideentry {5}{0}{3}{31/31}{}{0}}
+\headcommand {\beamer@framepages {31}{31}}
+\headcommand {\gdef \insertmainframenumber {22}}
+\headcommand {\beamer@partpages {32}{31}}
+\headcommand {\beamer@subsectionpages {32}{31}}
+\headcommand {\beamer@sectionpages {32}{31}}
+\headcommand {\beamer@documentpages {31}}
 \headcommand {\gdef \inserttotalframenumber {0}}
-\headcommand {\gdef \inserttotalframenumber {21}}
+\headcommand {\gdef \inserttotalframenumber {22}}
 \headcommand {\gdef \appendixtotalframenumber {0}}

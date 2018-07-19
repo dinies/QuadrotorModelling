@@ -115,8 +115,8 @@ classdef  EnvTelOp < handle
                         self.width/2 , - self.width/20;
       ];
       wallPoints= [
-                        self.width/2 + self.distFromWall + self.width/10 , self.width/3;
-                        self.width/2 + self.distFromWall, self.width/3;
+                        self.width/2 + self.distFromWall + self.width/10 , self.width*0.7;
+                        self.width/2 + self.distFromWall, self.width*0.7;
                         self.width/2 + self.distFromWall, - self.width/20;
                         self.width/2 + self.distFromWall + self.width/10 , -self.width/20;
       ];
@@ -160,7 +160,7 @@ classdef  EnvTelOp < handle
 
 % dataMatrix format: [theta_m,theta_m_dot,theta_s,theta_s_dot,tau_m,tau_s,timeseries_out]
     function createMovie(self, dataMatrix )
-      video = VideoWriter('teleOp.avi');
+      video = VideoWriter('teleOp1.avi');
       desired_frameRate = 30;
       video.FrameRate = desired_frameRate;
       sim_time = dataMatrix(end,7);
