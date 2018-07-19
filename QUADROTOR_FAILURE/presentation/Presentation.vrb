@@ -1,4 +1,36 @@
-\frametitle{Whatever3}
+\frametitle{Conclusions }
+\color{LightBlue}
+  \textbf{Problem statement:}
+  \color{Black}
+  \begin{itemize}
+  \item
+    Control a quadcopter in case off loss off one of the actuators
+  \end{itemize}
 
-  Do it
+  \color{LightBlue}
+  \textbf{Proposed solution:}
+  \color{Black}
+  \begin{itemize}
+  \item
+    Adopted strategy: \color{Orange}double loop \color{Black}architecture
+  \item
+    Sacrified state: yaw angle
+  \end{itemize}
+
+  \color{LightBlue}
+  \textbf{Consequences:}
+  \color{Black}
+  \begin{itemize}
+  \item
+    Horizontal positions oscillates around the desired trajectory, allowing only
+    slow recovering manouvers
+  \end{itemize}
+
+  \color{LightBlue}
+  \textbf{Issues:}
+  \color{Black}
+  \begin{itemize}
+  \item
+    Motors force saturation, considered as uncertainty in the model
+  \end{itemize}
 

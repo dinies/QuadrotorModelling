@@ -71,18 +71,45 @@
 \headcommand {\beamer@framepages {31}{31}}
 \headcommand {\beamer@sectionpages {26}{31}}
 \headcommand {\beamer@subsectionpages {26}{31}}
-\headcommand {\sectionentry {6}{Vattela a pesca3}{32}{Vattela a pesca3}{0}}
+\headcommand {\sectionentry {6}{Simulations}{32}{Simulations}{0}}
 \headcommand {\slideentry {6}{0}{1}{32/32}{}{0}}
 \headcommand {\beamer@framepages {32}{32}}
 \headcommand {\beamer@subsectionpages {32}{32}}
-\headcommand {\beamer@subsectionentry {0}{6}{1}{33}{ Di nuovo3}}
-\headcommand {\slideentry {6}{1}{1}{33/33}{ Di nuovo3}{0}}
+\headcommand {\beamer@subsectionentry {0}{6}{1}{33}{Outer loop}}
+\headcommand {\slideentry {6}{1}{1}{33/33}{Outer loop}{0}}
 \headcommand {\beamer@framepages {33}{33}}
-\headcommand {\gdef \insertmainframenumber {22}}
-\headcommand {\beamer@partpages {34}{33}}
-\headcommand {\beamer@subsectionpages {34}{33}}
-\headcommand {\beamer@sectionpages {34}{33}}
-\headcommand {\beamer@documentpages {33}}
+\headcommand {\slideentry {6}{1}{2}{34/34}{Outer loop}{0}}
+\headcommand {\beamer@framepages {34}{34}}
+\headcommand {\slideentry {6}{1}{3}{35/35}{Outer loop}{0}}
+\headcommand {\beamer@framepages {35}{35}}
+\headcommand {\beamer@subsectionpages {33}{35}}
+\headcommand {\beamer@subsectionentry {0}{6}{2}{36}{Inner loop}}
+\headcommand {\slideentry {6}{2}{1}{36/36}{Inner loop}{0}}
+\headcommand {\beamer@framepages {36}{36}}
+\headcommand {\slideentry {6}{2}{2}{37/37}{Inner loop}{0}}
+\headcommand {\beamer@framepages {37}{37}}
+\headcommand {\slideentry {6}{2}{3}{38/38}{Inner loop}{0}}
+\headcommand {\beamer@framepages {38}{38}}
+\headcommand {\beamer@subsectionpages {36}{38}}
+\headcommand {\beamer@subsectionentry {0}{6}{3}{39}{Complete loop}}
+\headcommand {\slideentry {6}{3}{1}{39/39}{Complete loop}{0}}
+\headcommand {\beamer@framepages {39}{39}}
+\headcommand {\slideentry {6}{3}{2}{40/40}{Complete loop}{0}}
+\headcommand {\beamer@framepages {40}{40}}
+\headcommand {\slideentry {6}{3}{3}{41/41}{Complete loop}{0}}
+\headcommand {\beamer@framepages {41}{41}}
+\headcommand {\beamer@sectionpages {32}{41}}
+\headcommand {\beamer@subsectionpages {39}{41}}
+\headcommand {\sectionentry {7}{Conclusions}{42}{Conclusions}{0}}
+\headcommand {\slideentry {7}{0}{1}{42/42}{}{0}}
+\headcommand {\beamer@framepages {42}{42}}
+\headcommand {\slideentry {7}{0}{2}{43/43}{}{0}}
+\headcommand {\beamer@framepages {43}{43}}
+\headcommand {\gdef \insertmainframenumber {31}}
+\headcommand {\beamer@partpages {44}{43}}
+\headcommand {\beamer@subsectionpages {44}{43}}
+\headcommand {\beamer@sectionpages {44}{43}}
+\headcommand {\beamer@documentpages {43}}
 \headcommand {\gdef \inserttotalframenumber {0}}
-\headcommand {\gdef \inserttotalframenumber {22}}
+\headcommand {\gdef \inserttotalframenumber {31}}
 \headcommand {\gdef \appendixtotalframenumber {0}}
