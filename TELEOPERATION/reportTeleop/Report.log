@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.5.26)  18 JUL 2018 11:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.5.26)  19 JUL 2018 09:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1017,13 +1017,13 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 File: Images/spring_damper_inertia_system.png Graphic file (type png)
 <use Images/spring_damper_inertia_system.png>
 Package pdftex.def Info: Images/spring_damper_inertia_system.png  used on input
- line 53.
+ line 55.
 (pdftex.def)             Requested size: 313.69029pt x 139.08372pt.
  [4 <./Images/spring_damper_inertia_system.png>]
 <Images/Block_diagram.png, id=103, 1209.51875pt x 564.1075pt>
 File: Images/Block_diagram.png Graphic file (type png)
 <use Images/Block_diagram.png>
-Package pdftex.def Info: Images/Block_diagram.png  used on input line 83.
+Package pdftex.def Info: Images/Block_diagram.png  used on input line 85.
 (pdftex.def)             Requested size: 313.69029pt x 146.30296pt.
  [5 <./Images/Block_diagram.png>] [6] [7])
 (./edoardo.tex [8]
@@ -1149,11 +1149,11 @@ Package rerunfilecheck Info: File `Report.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 57.
  ) 
 Here is how much of TeX's memory you used:
- 15544 strings out of 492982
- 245804 string characters out of 6134896
+ 15538 strings out of 492982
+ 245760 string characters out of 6134896
  473402 words of memory out of 5000000
  18689 multiletter control sequences out of 15000+600000
- 16722 words of font info for 102 fonts, out of 8000000 for 9000
+ 16575 words of font info for 99 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,16n,51p,8844b,549s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
@@ -1172,7 +1172,7 @@ usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/tex
 live/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/te
 xmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on Report.pdf (20 pages, 2950913 bytes).
+Output written on Report.pdf (20 pages, 2950908 bytes).
 PDF statistics:
  369 PDF objects out of 1000 (max. 8388607)
  286 compressed objects within 3 object streams

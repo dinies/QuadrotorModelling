@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99998 (TeX Live 2017/Debian) (preloaded format=xelatex 2018.5.26)  18 JUL 2018 12:46
+This is XeTeX, Version 3.14159265-2.6-0.99998 (TeX Live 2017/Debian) (preloaded format=xelatex 2018.5.26)  19 JUL 2018 10:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1777,10 +1777,10 @@ File: ../reportTeleop/Images/Block_diagram.png Graphic file (type bmp)
  [18
 
 ]
-File: ../reportTeleop/Images/bodo.png Graphic file (type bmp)
-<../reportTeleop/Images/bodo.png>
+File: Images/bodeplot2.png Graphic file (type bmp)
+<Images/bodeplot2.png>
 
-Overfull \vbox (19.01056pt too high) detected at line 282
+Overfull \vbox (8.89223pt too high) detected at line 289
  []
 
 [19
@@ -1793,7 +1793,7 @@ File: ../reportTeleop/Images/vibr100Htz.png Graphic file (type bmp)
 File: ../reportTeleop/Images/vibr1000Htz.png Graphic file (type bmp)
 <../reportTeleop/Images/vibr1000Htz.png>
 
-Overfull \vbox (13.9788pt too high) detected at line 295
+Overfull \vbox (13.9788pt too high) detected at line 302
  []
 
 [20
@@ -1806,7 +1806,7 @@ File: ../reportTeleop/Images/set20freeTot50HtznoiseRect.png Graphic file (type
 bmp)
 <../reportTeleop/Images/set20freeTot50HtznoiseRect.png>
 
-Overfull \vbox (23.26619pt too high) detected at line 347
+Overfull \vbox (23.26619pt too high) detected at line 354
  []
 
 [21
@@ -1818,7 +1818,7 @@ File: ../reportTeleop/Images/set20freePart50Htznoise.png Graphic file (type bmp
 )
 <../reportTeleop/Images/set20freePart50Htznoise.png>
 
-Overfull \vbox (23.2639pt too high) detected at line 373
+Overfull \vbox (23.2639pt too high) detected at line 380
  []
 
 [22
@@ -1831,7 +1831,7 @@ File: ../reportTeleop/Images/freeSet20Tot20HtznoiseRect.png Graphic file (type
 bmp)
 <../reportTeleop/Images/freeSet20Tot20HtznoiseRect.png>
 
-Overfull \vbox (23.25981pt too high) detected at line 398
+Overfull \vbox (23.25981pt too high) detected at line 405
  []
 
 [23
@@ -1844,7 +1844,7 @@ File: ../reportTeleop/Images/freeSet20Part20Htznoise.png Graphic file (type bmp
 )
 <../reportTeleop/Images/freeSet20Part20Htznoise.png>
 
-Overfull \vbox (23.26349pt too high) detected at line 422
+Overfull \vbox (23.26349pt too high) detected at line 429
  []
 
 [24
@@ -1857,7 +1857,7 @@ File: ../reportTeleop/Images/setPointContactReacPosArrow.png Graphic file (type
  bmp)
 <../reportTeleop/Images/setPointContactReacPosArrow.png>
 
-Overfull \vbox (11.81369pt too high) detected at line 448
+Overfull \vbox (11.81369pt too high) detected at line 455
  []
 
 [25
@@ -1870,7 +1870,7 @@ File: ../reportTeleop/Images/setPointContactReacTorArrow.png Graphic file (type
  bmp)
 <../reportTeleop/Images/setPointContactReacTorArrow.png>
 
-Overfull \vbox (11.80663pt too high) detected at line 469
+Overfull \vbox (11.80663pt too high) detected at line 476
  []
 
 [26
@@ -1883,7 +1883,7 @@ Overfull \vbox (11.80663pt too high) detected at line 469
 LaTeX Font Info:    Font shape `TU/FiraSansLight(1)/m/sl' in size <10> not avai
 lable
 (Font)              Font shape `TU/FiraSansLight(1)/m/it' tried instead on inpu
-t line 506.
+t line 513.
  [29
 
 ] [30
@@ -1891,7 +1891,7 @@ t line 506.
 ]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\translate ' on input line 515.
+(hyperref)                removing `\translate ' on input line 522.
 
 \tf@nav=\write7
 \openout7 = `Presentation.nav'.
@@ -1902,15 +1902,15 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 \tf@snm=\write9
 \openout9 = `Presentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 519.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 519.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 526.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 526.
 (./Presentation.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 519.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 519.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 526.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 526.
  ) 
 Here is how much of TeX's memory you used:
  44236 strings out of 493007
- 1036360 string characters out of 6136719
+ 1036332 string characters out of 6136719
  1253025 words of memory out of 5000000
  47435 multiletter control sequences out of 15000+600000
  533709 words of font info for 71 fonts, out of 8000000 for 9000

@@ -22,10 +22,12 @@ Stability of the system can be ruined by unwanted disturbance, internal and exte
 
 This report deals with the development of a controller able to suppress the vibration and unwanted inputs in a bilateral control system \cite{trakarnchaiyo2017vibration}.
 
-In particular, the work is based on the concept of one degree of freedom inertia-spring-damper system. This concept comes from the design of shock absorbers used in vehicle suspension (which is composed by a spring and damper), and is usually applied in bilateral control system for \emph{soft manipulation}.
+%In particular, the work is based on the concept of one degree of freedom inertia-spring-damper system. 
+In this work we investigate the concept of \textit{virtual} spring-damper system with an additional inertia. This concept comes from the design of shock absorbers used in vehicle suspension (which is composed by a spring and damper), and is usually applied in bilateral control system for \emph{soft manipulation}. The disturbance suppression performances depends on the value of these virtual parameters, determined from the desired cut-off frequencies.
 
-In this work we investigate the concept of \textit{virtual} spring-damper system with an additional inertia.
-The disturbance suppression performances depends on the value of these virtual parameters, determined from the desired cut-off frequencies.
+
+%In this work we investigate the concept of \textit{virtual} spring-damper system with an additional inertia.
+%The disturbance suppression performances depends on the value of these virtual parameters, determined from the desired cut-off frequencies.
 
 The report is organized as follow: in the first part we model the inertia-spring-damper system, analyzing the proposed control and the hybrid matrix. Then is the described the virtual parameter selection process. Finally, we present the results obtained in the simulations, performed with Matlab and Simulink.
 
@@ -56,7 +58,7 @@ The report is organized as follow: in the first part we model the inertia-spring
 \end{figure}
 
 
-The inertia-spring-damping system is shown in Fig.\ref{fig:springdamperinertiasystem}: the master and the slave have the real inertia $ J_m $ and $ J_s $ and the virtual ones $ J_{mv} $ and $ J_{sv} $. Master and slave are interconnected with the virtual damper $ B_v $ and the virtual spring $ K_v $.
+The inertia-spring-damper system is shown in Fig.\ref{fig:springdamperinertiasystem}: the master and the slave have the real inertia $ J_m $ and $ J_s $ and the virtual ones $ J_{mv} $ and $ J_{sv} $. Master and slave are interconnected with the virtual damper $ B_v $ and the virtual spring $ K_v $.
 
 The dynamic equation of the system are:
 \begin{align}
@@ -124,7 +126,8 @@ represented by the \emph{transparency condition}:
 	\tau_m = \tau_s \\
 	\theta_m = \theta_s
 \end{align}
-is expressed in terms of transmitted impedance $ Z_t $, which is transferred to the human, and environment impedance $ Z_{env} $:
+
+It is expressed in terms of transmitted impedance $ Z_t $, which is transferred to the human, and environment impedance $ Z_{env} $:
 \begin{equation}
 	\frac{\tau_m}{\theta_m} = Z_t = Z_{env} = \frac{\tau_s}{\theta_s}
 	\label{transparencY_condition}
