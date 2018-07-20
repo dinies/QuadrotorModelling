@@ -55,7 +55,7 @@ the virtual coefficients computed as explained in section \ref{ParamSelect}.
 	\caption{Sets of chosen virtual parameters.}
 	\label{virtParams}
 \end{table}
-\newpage
+%\newpage
 
 \subsection{Disturbance rejection performances}
 
@@ -65,7 +65,7 @@ transmitted by the environment on the slave-side will be felt almost with the sa
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=1\linewidth]{Images/bodo}
+	\includegraphics[width=1\linewidth]{Images/bodeplot2.png}
 	\caption{Frequency response relative to $ H_{22} $ hybrid parameter.}
 	\label{fig:bodo}
 \end{figure}
@@ -150,7 +150,7 @@ The operator is modeled as spring-damper system ($ K=200.0 \ \text{N/m} $ and $ 
 The environment with which the slave manipulator comes into contact is modeled as:
 \begin{itemize}
 	\item free motion: the environment has no stiffness but just a small damping $ B_{env}=0.01 \ \text{N}\cdot\text{s}/\text{m} $;
-	\item contact motion: the environment has large stiffness $ K_{env} = 4000.0 \ \text{N/m} $ after a chosen value of displacement.
+	\item contact motion: the environment has spring stiffness $ K_{env} = 100.0 \ \text{N/m} $ after a chosen value of displacement, modeling a not totally rigid body.
 \end{itemize}
 
 The simulation are performed with the \textbf{control set 4} ($ K_v = 20.0 \frac{\text{N m}}{\text{rad}} $, $ B_v = 4.4\cdot 10^{-1} \ \frac{\text{N m}}{\text{rad/s}}$, $ J_v = 3\cdot 10^{-4} \ \text{kg m\textsuperscript{2}}$) and are compared with the \textbf{rigid coupling control} ($K_v = 10^{2} \ \frac{\text{N m}}{\text{rad}} $, $B_v = 1.5\cdot 10^{-1} \ \frac{\text{N m}}{\text{rad/s}}$, $J_v =  0 \ \text{kg m\textsuperscript{2}} $).
