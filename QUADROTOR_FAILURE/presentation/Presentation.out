@@ -1,0 +1,11 @@
+\BOOKMARK [2][]{Outline0.1}{Introduction}{}% 1
+\BOOKMARK [2][]{Outline0.2}{Quadrotor Model}{}% 2
+\BOOKMARK [2][]{Outline0.3}{Control Architecture}{}% 3
+\BOOKMARK [3][]{Outline0.3.1.13}{Quadrotor model in case of rotor loss}{Outline0.3}% 4
+\BOOKMARK [2][]{Outline0.4}{Outer control loop}{}% 5
+\BOOKMARK [2][]{Outline0.5}{Inner control loop}{}% 6
+\BOOKMARK [2][]{Outline0.6}{Simulations}{}% 7
+\BOOKMARK [3][]{Outline0.6.1.33}{Outer loop}{Outline0.6}% 8
+\BOOKMARK [3][]{Outline0.6.2.36}{Inner loop}{Outline0.6}% 9
+\BOOKMARK [3][]{Outline0.6.3.39}{Complete loop}{Outline0.6}% 10
+\BOOKMARK [2][]{Outline0.7}{Conclusions}{}% 11

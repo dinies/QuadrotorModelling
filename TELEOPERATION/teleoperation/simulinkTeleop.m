@@ -36,12 +36,12 @@ end
 % J_v = K_v/(g1*g2)-J_s;
 % J_v = 0.0;
 % Human-env impedance
-K_h = 200.0;
-B_h = 4.0;
+K_h = 20.0;
+B_h = 0.4;
 
 % Environment
 B_e = 0.01; 
-K_e = 50;
+K_e = 1000;
 
 theta_s_contact = -0.0; % change the value of the angle for which the conctact holds.
 

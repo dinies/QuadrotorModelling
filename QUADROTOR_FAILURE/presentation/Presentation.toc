@@ -1,0 +1,9 @@
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {2}{Quadrotor Model}{6}{0}{2}
+\beamer@sectionintoc {3}{Control Architecture}{11}{0}{3}
+\beamer@subsectionintoc {3}{1}{Quadrotor model in case of rotor loss}{13}{0}{3}
+\beamer@sectionintoc {6}{Simulations}{32}{0}{4}
+\beamer@subsectionintoc {6}{1}{Outer loop}{33}{0}{4}
+\beamer@subsectionintoc {6}{2}{Inner loop}{36}{0}{4}
+\beamer@subsectionintoc {6}{3}{Complete loop}{39}{0}{4}
+\beamer@sectionintoc {7}{Conclusions}{42}{0}{5}

@@ -33,11 +33,11 @@ classdef TeleSys < handle
       dBase = d.drawCircle2D( xOffset, 0 , radius, color );
       relativeBodyPoints = [
                             radius,0 0;
-                            radius,distFromOrigin/2, 0;
-                            -radius,distFromOrigin/2, 0;
+                            radius,distFromOrigin, 0;
+                            -radius,distFromOrigin, 0;
                             -radius,0,0
       ];
-      relativeCentreCircle = [0;distFromOrigin/2;0];
+      relativeCentreCircle = [0;distFromOrigin;0];
                                 %rotTheta defined in clockwise convention
       rotTheta = [
                   cos(theta) ,  sin(theta), 0;
@@ -90,8 +90,8 @@ classdef TeleSys < handle
       end
 
       velocityArrow = d.drawCurvedArrow(pivotVel,edgeVel, angleOffsetVel, arrowWidth,colorVel);
-      torqueArrow = d.drawCurvedArrow(pivotTau,edgeTau, angleOffsetTau, arrowWidth,colorTau);
-      drawings = [ dEnd ; dBody ; dBase; torqueArrow; velocityArrow];
+     % torqueArrow = d.drawCurvedArrow(pivotTau,edgeTau, angleOffsetTau, arrowWidth,colorTau);
+      drawings = [ dEnd ; dBody ; dBase; velocityArrow];
     end
   end
 
@@ -159,8 +159,8 @@ classdef TeleSys < handle
       end
     end
     function draw(self, xOffset, inputTorques)
-      self.drawing(1:14,1) = TeleSys.drawLever( -xOffset, self.q(1:2,1),inputTorques(1,1),self.colorM);
-      self.drawing(15:28,1) = TeleSys.drawLever( xOffset, self.q(3:4,1),inputTorques(2,1),self.colorS);
+      self.drawing(1:10,1) = TeleSys.drawLever( -xOffset, self.q(1:2,1),inputTorques(1,1),self.colorM);
+      self.drawing(11:20,1) = TeleSys.drawLever( xOffset, self.q(3:4,1),inputTorques(2,1),self.colorS);
     end
  end
 end

@@ -1,0 +1,63 @@
+\documentclass[10pt]{beamer}
+
+\usetheme[progressbar=frametitle]{metropolis}
+\usepackage{appendixnumberbeamer}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+\usepackage{multimedia}
+\usepackage{wrapfig}
+\usepackage{tabularx}
+\usepackage{esint}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+\usepackage{fancybox}
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\definecolor{Orange}{HTML}{cc3300}
+\definecolor{LightBlue}{HTML}{237FD4}
+
+\definecolor{Purple}{HTML}{911146}
+\definecolor{White}{HTML}{FFFFFF}
+\definecolor{Black}{HTML}{000000}
+\definecolor{Gray}{HTML}{F2F2F2}
+\definecolor{Sapienza}{HTML}{640c18}
+\setbeamercolor{alerted text}{fg=LightBlue,bg=White}
+\setbeamercolor{frametitle}{bg=Sapienza,fg=White}
+\setbeamercolor{background canvas}{bg=White}
+
+
+
+% \setsansfont[BoldFont={Fira Sans}]{Fira Sans Light}
+% \setmonofont{Fira Mono}
+
+%\usepackage[bold-style=ISO]{unicode-math}                    
+%\setmathfont{Latin Modern Math}
+%\setmathfont[range={\mathscr,\mathbfscr}]{XITS Math}
+
+\title{Flight control of a Quadrotor Vehicle Subsequent to a	Rotor Failure}
+\date{}
+\author{Edoardo Ghini, Gianluca Cerilli, Giuseppe L'Erario}
+\institute{Modeling and control of multi-rotor UAVs}
+\titlegraphic{\hfill\includegraphics[height=1.0cm]{Images/SapienzaLogo.pdf}}
+
+\begin{document}
+	
+	\maketitle
+	
+\begin{frame}{Table of contents}
+	\setbeamertemplate{section in toc}[sections numbered]
+	\tableofcontents[hideallsubsections]
+\end{frame}
+
+\input{gianluca.tex}
+
+\input{giuseppe.tex}
+
+\input{edoardo.tex}	
+
+\appendix
+
+\end{document}

@@ -397,7 +397,7 @@ To linearize the nonlinear dynamics we use the following control inputs:
 \end{equation}
 where the new control inputs $ \tilde{\tilde{u}}_1, \tilde{\tilde{u}}_2 $ are premultiplied by the rotation matrix.
 
-Substituting $ \tilde{\tilde{u}}_1, \tilde{\tilde{u}}_2 $ in \eqref{outerControl_}, the lateral and longitudinal dynamics become linear and decoupled and thus can be controlled with a simple linear control technique.
+Substituting \eqref{rotation_matrix_outer} in \eqref{outerControl_}, the lateral and longitudinal dynamics become linear and decoupled and thus can be controlled with a simple linear control technique.
 
 \begin{subequations}
 	\begin{align}
@@ -426,7 +426,7 @@ The equations in \eqref{completeQuadModel} relative to $ \psi, \theta, p, q, r $
 
 The state is\footnote{In the previous section we have seen that at equilibrium $ r \rightarrow \dfrac{mgd}{k_r} $. }:
 \begin{equation}
-	\mathbf{\hat{x}} = [ \ \hat{x}_1 \quad \hat{x}_2 \quad \hat{x}_3 \quad \hat{x}_4 \quad \hat{x}_5 \ ] = \Big[ \ x_1 \quad x_1 \quad x_2 \quad x_3 \quad x_4 \quad (x_6-\dfrac{mgd}{k_r}) \ \Big]	
+	\mathbf{\hat{x}} = [ \ \hat{x}_1 \quad \hat{x}_2 \quad \hat{x}_3 \quad \hat{x}_4 \quad \hat{x}_5 \ ] = \Big[ \  x_1 \quad x_2 \quad x_4 \quad x_5 \quad (x_6-\dfrac{mgd}{k_r}) \ \Big]	
 \end{equation}
 while the inputs are:
 \begin{equation}
@@ -469,7 +469,7 @@ where:
 
 \subsubsection{Feedback Linearization}
 
-The system fulfills the condition for the feedback linearization:
+The system fulfills the conditions for the feedback linearization:
 \begin{itemize}
 	\item the relative degrees are $ r_1 = 2 $ ($ h_1 $), $ r_2 = 2 $ ($ h_2 $), $ r_3 = 1 $ ($ h_5 $). $ r_1 + r_2 + r_3 = n = 5 $, the dimension of the state vector;
  
@@ -808,7 +808,7 @@ In this case the vehicle follows the vertical trajectory (fig.\ref{fig:positions
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\linewidth]{Images/Forces_SetPoint}
-	\caption{Forces required by the double-loop architecture (force saturation active) - only the first 5 seconds.}
+	\caption{Forces required by the double-loop architecture (force saturation active).}
 	\label{fig:forcessetpoint}
 \end{figure}
 

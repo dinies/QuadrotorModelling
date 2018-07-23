@@ -1,0 +1,12 @@
+\babel@toc {english}{}
+\contentsline {section}{\numberline {1}System Modeling}{4}{section.1}
+\contentsline {subsection}{\numberline {1.1}Modeling}{4}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Parameter selection and design}{7}{subsection.1.2}
+\contentsline {section}{\numberline {2}Simulations}{8}{section.2}
+\contentsline {subsection}{\numberline {2.1}Chosen parameters}{8}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Disturbance rejection performances}{9}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Task execution analysis}{12}{subsection.2.3}
+\contentsline {subsubsection}{\numberline {2.3.1}Free motion with high frequency input}{12}{subsubsection.2.3.1}
+\contentsline {subsubsection}{\numberline {2.3.2}Free motion with low frequency input}{15}{subsubsection.2.3.2}
+\contentsline {subsubsection}{\numberline {2.3.3}Contact motion}{17}{subsubsection.2.3.3}
+\contentsline {section}{\numberline {3}Conclusions}{19}{section.3}
