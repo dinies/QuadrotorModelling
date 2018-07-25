@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.5.26)  20 JUL 2018 09:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.5.26)  25 JUL 2018 15:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1025,67 +1025,67 @@ Package pdftex.def Info: Images/ControlScheme.png  used on input line 200.
 (pdftex.def)             Requested size: 376.42744pt x 120.40498pt.
  [7 <./Images/ControlScheme.png>]
 [8] [9] [10] [11] [12]
-Overfull \hbox (24.40433pt too wide) detected at line 503
+Overfull \hbox (24.40433pt too wide) detected at line 511
 []
  []
 
 [13] [14] [15]
-<Images/PositionOuter.png, id=256, 429.0429pt x 317.7471pt>
+<Images/PositionOuter.png, id=260, 429.0429pt x 317.7471pt>
 File: Images/PositionOuter.png Graphic file (type png)
 <use Images/PositionOuter.png>
-Package pdftex.def Info: Images/PositionOuter.png  used on input line 614.
+Package pdftex.def Info: Images/PositionOuter.png  used on input line 622.
 (pdftex.def)             Requested size: 250.95587pt x 185.85947pt.
-<Images/AngleOuter.png, id=257, 421.575pt x 316.3017pt>
+<Images/AngleOuter.png, id=261, 421.575pt x 316.3017pt>
 File: Images/AngleOuter.png Graphic file (type png)
 <use Images/AngleOuter.png>
-Package pdftex.def Info: Images/AngleOuter.png  used on input line 622.
+Package pdftex.def Info: Images/AngleOuter.png  used on input line 630.
 (pdftex.def)             Requested size: 209.12778pt x 156.90524pt.
-<Images/velOuter.png, id=258, 429.0429pt x 317.7471pt>
+<Images/velOuter.png, id=262, 429.0429pt x 317.7471pt>
 File: Images/velOuter.png Graphic file (type png)
 <use Images/velOuter.png>
-Package pdftex.def Info: Images/velOuter.png  used on input line 628.
+Package pdftex.def Info: Images/velOuter.png  used on input line 636.
 (pdftex.def)             Requested size: 209.12778pt x 154.87805pt.
 
-Overfull \hbox (2.43333pt too wide) in paragraph at lines 620--632
+Overfull \hbox (2.43333pt too wide) in paragraph at lines 628--640
 []$[]$ $[]$ 
  []
 
-<Images/PositionOuterNO.png, id=260, 429.0429pt x 317.7471pt>
+<Images/PositionOuterNO.png, id=264, 429.0429pt x 317.7471pt>
 File: Images/PositionOuterNO.png Graphic file (type png)
 <use Images/PositionOuterNO.png>
-Package pdftex.def Info: Images/PositionOuterNO.png  used on input line 642.
+Package pdftex.def Info: Images/PositionOuterNO.png  used on input line 650.
 (pdftex.def)             Requested size: 292.7776pt x 216.8312pt.
 [16 <./Images/PositionOuter.png (PNG copy)> <./Images/AngleOuter.png (PNG copy)
 > <./Images/velOuter.png (PNG copy)>]
-<Images/AngleOuterNO.png, id=269, 429.0429pt x 317.7471pt>
+<Images/AngleOuterNO.png, id=273, 429.0429pt x 317.7471pt>
 File: Images/AngleOuterNO.png Graphic file (type png)
 <use Images/AngleOuterNO.png>
-Package pdftex.def Info: Images/AngleOuterNO.png  used on input line 650.
+Package pdftex.def Info: Images/AngleOuterNO.png  used on input line 658.
 (pdftex.def)             Requested size: 209.12778pt x 154.87805pt.
-<Images/velOuterNO.png, id=270, 429.0429pt x 317.7471pt>
+<Images/velOuterNO.png, id=274, 429.0429pt x 317.7471pt>
 File: Images/velOuterNO.png Graphic file (type png)
 <use Images/velOuterNO.png>
-Package pdftex.def Info: Images/velOuterNO.png  used on input line 656.
+Package pdftex.def Info: Images/velOuterNO.png  used on input line 664.
 (pdftex.def)             Requested size: 209.12778pt x 154.87805pt.
 
-Overfull \hbox (2.43333pt too wide) in paragraph at lines 648--660
+Overfull \hbox (2.43333pt too wide) in paragraph at lines 656--668
 []$[]$ $[]$ 
  []
 
 
-Overfull \hbox (8.01556pt too wide) in paragraph at lines 683--683
+Overfull \hbox (8.01556pt too wide) in paragraph at lines 691--691
 [][] 
  []
 
-<Images/innerControlVel.png, id=275, 429.0429pt x 317.7471pt>
+<Images/innerControlVel.png, id=279, 429.0429pt x 317.7471pt>
 File: Images/innerControlVel.png Graphic file (type png)
 <use Images/innerControlVel.png>
-Package pdftex.def Info: Images/innerControlVel.png  used on input line 709.
+Package pdftex.def Info: Images/innerControlVel.png  used on input line 717.
 (pdftex.def)             Requested size: 292.7776pt x 216.8312pt.
-<Images/innerControlAngles.png, id=276, 429.0429pt x 317.7471pt>
+<Images/innerControlAngles.png, id=280, 429.0429pt x 317.7471pt>
 File: Images/innerControlAngles.png Graphic file (type png)
 <use Images/innerControlAngles.png>
-Package pdftex.def Info: Images/innerControlAngles.png  used on input line 715.
+Package pdftex.def Info: Images/innerControlAngles.png  used on input line 723.
 
 (pdftex.def)             Requested size: 292.7776pt x 216.8312pt.
 [17 <./Images/PositionOuterNO.png (PNG copy)> <./Images/AngleOuterNO.png (PNG c
@@ -1095,64 +1095,82 @@ Overfull \vbox (59.06207pt too high) has occurred while \output is active []
 
 [18 <./Images/innerControlVel.png (PNG copy)> <./Images/innerControlAngles.png 
 (PNG copy)>]
-<Images/ForcesInner.png, id=290, 421.575pt x 316.3017pt>
+<Images/ForcesInner.png, id=294, 421.575pt x 316.3017pt>
 File: Images/ForcesInner.png Graphic file (type png)
 <use Images/ForcesInner.png>
-Package pdftex.def Info: Images/ForcesInner.png  used on input line 726.
+Package pdftex.def Info: Images/ForcesInner.png  used on input line 734.
 (pdftex.def)             Requested size: 292.7776pt x 219.67218pt.
  [19 <./Images/ForcesInner.png (PNG copy)>]
-<Images/Position.png, id=307, 429.0429pt x 317.7471pt>
+<Images/Position.png, id=315, 429.0429pt x 317.7471pt>
 File: Images/Position.png Graphic file (type png)
 <use Images/Position.png>
-Package pdftex.def Info: Images/Position.png  used on input line 770.
+Package pdftex.def Info: Images/Position.png  used on input line 778.
 (pdftex.def)             Requested size: 292.7776pt x 216.8312pt.
-<Images/Angles_error.png, id=308, 421.575pt x 316.3017pt>
+<Images/3dPosition_normal.png, id=316, 429.0429pt x 317.7471pt>
+File: Images/3dPosition_normal.png Graphic file (type png)
+<use Images/3dPosition_normal.png>
+Package pdftex.def Info: Images/3dPosition_normal.png  used on input line 785.
+(pdftex.def)             Requested size: 292.7776pt x 216.8312pt.
+<Images/OositionError.png, id=317, 429.0429pt x 317.7471pt>
+File: Images/OositionError.png Graphic file (type png)
+<use Images/OositionError.png>
+Package pdftex.def Info: Images/OositionError.png  used on input line 792.
+(pdftex.def)             Requested size: 292.7776pt x 216.8312pt.
+<Images/Angles_error.png, id=318, 421.575pt x 316.3017pt>
 File: Images/Angles_error.png Graphic file (type png)
 <use Images/Angles_error.png>
-Package pdftex.def Info: Images/Angles_error.png  used on input line 777.
+Package pdftex.def Info: Images/Angles_error.png  used on input line 799.
 (pdftex.def)             Requested size: 292.7776pt x 219.67218pt.
-<Images/Forces.png, id=309, 429.0429pt x 317.7471pt>
+<Images/Forces.png, id=319, 429.0429pt x 317.7471pt>
 File: Images/Forces.png Graphic file (type png)
 <use Images/Forces.png>
-Package pdftex.def Info: Images/Forces.png  used on input line 784.
+Package pdftex.def Info: Images/Forces.png  used on input line 806.
 (pdftex.def)             Requested size: 292.7776pt x 216.8312pt.
-<Images/r4force.png, id=310, 429.0429pt x 317.7471pt>
+<Images/r4force.png, id=320, 429.0429pt x 317.7471pt>
 File: Images/r4force.png Graphic file (type png)
 <use Images/r4force.png>
-Package pdftex.def Info: Images/r4force.png  used on input line 791.
+Package pdftex.def Info: Images/r4force.png  used on input line 813.
 (pdftex.def)             Requested size: 292.7776pt x 216.8312pt.
- [20 <./Images/Position.png (PNG copy)>] [21 <./Images/Angles_error.png (PNG co
-py)> <./Images/Forces.png (PNG copy)>]
-<Images/Position_SetPoint.png, id=322, 429.0429pt x 317.7471pt>
+ [20 <./Images/Position.png (PNG copy)>] [21 <./Images/3dPosition_normal.png (P
+NG copy)> <./Images/OositionError.png (PNG copy)>] [22 <./Images/Angles_error.p
+ng (PNG copy)> <./Images/Forces.png (PNG copy)>]
+<Images/3dPosition_spiral.png, id=335, 429.0429pt x 317.7471pt>
+File: Images/3dPosition_spiral.png Graphic file (type png)
+<use Images/3dPosition_spiral.png>
+Package pdftex.def Info: Images/3dPosition_spiral.png  used on input line 824.
+(pdftex.def)             Requested size: 292.7776pt x 216.8312pt.
+ [23 <./Images/r4force.png (PNG copy)> <./Images/3dPosition_spiral.png (PNG cop
+y)>]
+<Images/Position_SetPoint.png, id=343, 429.0429pt x 317.7471pt>
 File: Images/Position_SetPoint.png Graphic file (type png)
 <use Images/Position_SetPoint.png>
-Package pdftex.def Info: Images/Position_SetPoint.png  used on input line 803.
-(pdftex.def)             Requested size: 292.7776pt x 216.8312pt.
-<Images/Forces_SetPoint.png, id=323, 429.0429pt x 317.7471pt>
+Package pdftex.def Info: Images/Position_SetPoint.png  used on input line 835.
+(pdftex.def)             Requested size: 250.95587pt x 185.85947pt.
+<Images/Forces_SetPoint.png, id=344, 429.0429pt x 317.7471pt>
 File: Images/Forces_SetPoint.png Graphic file (type png)
 <use Images/Forces_SetPoint.png>
-Package pdftex.def Info: Images/Forces_SetPoint.png  used on input line 810.
-(pdftex.def)             Requested size: 292.7776pt x 216.8312pt.
- [22 <./Images/r4force.png (PNG copy)> <./Images/Position_SetPoint.png (PNG cop
-y)>] [23 <./Images/Forces_SetPoint.png (PNG copy)>] (./Report.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 833.
- [24
+Package pdftex.def Info: Images/Forces_SetPoint.png  used on input line 842.
+(pdftex.def)             Requested size: 250.95587pt x 185.85947pt.
+ [24 <./Images/Forces_SetPoint.png (PNG copy)> <./Images/Position_SetPoint.png 
+(PNG copy)>] [25] (./Report.bbl)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 867.
+ [26
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 833.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 867.
  (./Report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 833.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 833.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 867.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 867.
 Package rerunfilecheck Info: File `Report.out' has not changed.
 (rerunfilecheck)             Checksum: 5DF311BB8A967E31D478EF3D2C771960;663.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 833.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 867.
  ) 
 Here is how much of TeX's memory you used:
- 15564 strings out of 492982
- 245175 string characters out of 6134896
- 480693 words of memory out of 5000000
- 18675 multiletter control sequences out of 15000+600000
- 17389 words of font info for 101 fonts, out of 8000000 for 9000
+ 15593 strings out of 492982
+ 245811 string characters out of 6134896
+ 480922 words of memory out of 5000000
+ 18690 multiletter control sequences out of 15000+600000
+ 17440 words of font info for 102 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,17n,51p,8844b,556s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
@@ -1173,10 +1191,10 @@ e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmti10.pfb>
-Output written on Report.pdf (24 pages, 1213000 bytes).
+Output written on Report.pdf (26 pages, 1526364 bytes).
 PDF statistics:
- 430 PDF objects out of 1000 (max. 8388607)
- 361 compressed objects within 4 object streams
- 127 named destinations out of 1000 (max. 500000)
- 21163 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 453 PDF objects out of 1000 (max. 8388607)
+ 379 compressed objects within 4 object streams
+ 136 named destinations out of 1000 (max. 500000)
+ 21178 words of extra memory for PDF output out of 24883 (max. 10000000)
 

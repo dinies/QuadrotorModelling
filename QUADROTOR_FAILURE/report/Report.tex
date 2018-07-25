@@ -395,22 +395,30 @@ To linearize the nonlinear dynamics we use the following control inputs:
 	\end{bmatrix}
 	\label{rotation_matrix_outer}
 \end{equation}
-where the new control inputs $ \tilde{\tilde{u}}_1, \tilde{\tilde{u}}_2 $ are premultiplied by the rotation matrix.
+where the new control inputs $ \tilde{\tilde{u}}_1, \tilde{\tilde{u}}_2 $ are premultiplied by the rotation matrix. To have homogeneity in notation we assign also $ \tilde{\tilde{u}}_3 = \tilde{u}_3 $.
 
 Substituting \eqref{rotation_matrix_outer} in \eqref{outerControl_}, the lateral and longitudinal dynamics become linear and decoupled and thus can be controlled with a simple linear control technique.
 
 \begin{subequations}
 	\begin{align}
 		\dot{\tilde{x}}_4 & = \tilde{\tilde{u}}_1 - \dfrac{k_t}{m} \tilde{x}_4 \\
-		\dot{\tilde{x}}_5 & = \tilde{\tilde{u}}_2 - \dfrac{k_t}{m} \tilde{x}_5
+		\dot{\tilde{x}}_5 & = \tilde{\tilde{u}}_2 - \dfrac{k_t}{m} \tilde{x}_5 \\
+		\dot{\tilde{x}}_6 & = \tilde{\tilde{u}}_3 - \dfrac{k_t}{m} \tilde{x}_6 - g
 	\end{align}
 \end{subequations}
 
 The control inputs are chosen as:
-\begin{equation}
-	u_i = \ddot{x}_i + 2\xi_{out}c_{out} \dot{e}_i + c_{out}^2 e_i 
-\end{equation}
-where $ \ddot{x}_i $ is the feed-forward term, $ e_i = x_{di} - x_i $ is the error. $ \xi_{out} $ and $ c_{out} $ are positive constants. 
+%\begin{equation}
+%	u_i = \ddot{x}_i + 2\xi_{out}c_{out} \dot{e}_i + c_{out}^2 e_i 
+%\end{equation}
+\begin{subequations}
+	\begin{align}
+		\tilde{\tilde{u}}_1 &= \ddot{\tilde{x}}_1 + 2\xi_{out}c_{out} \dot{\tilde{e}}_1 + c_{out}^2 \tilde{e}_1 \\
+		\tilde{\tilde{u}}_2 &= \ddot{\tilde{x}}_2 + 2\xi_{out}c_{out} \dot{\tilde{e}}_2 + c_{out}^2 \tilde{e}_2 \\
+		\tilde{\tilde{u}}_3 &= \ddot{\tilde{x}}_3 + 2\xi_{out}c_{out} \dot{\tilde{e}}_3 + c_{out}^2 \tilde{e}_3 + g 
+	\end{align}
+\end{subequations}
+where $ \ddot{\tilde{x}}_i $ is the feed-forward term, $ \tilde{e}_i = \tilde{x}_{di} - \tilde{x}_i $ is the error. $ \xi_{out} $ and $ c_{out} $ are positive constants. 
 
 $ c_{out} $ represents the natural frequency of the dynamical system and must be small: actually the outer control loop must be slower than the inner control loop. 
 
@@ -700,7 +708,7 @@ In the second simulation the task of the inner control loop is to regulate the s
 }
 \end{table}
 
-The simulation time is $ 5 $ seconds. As shown in fig.\ref{fig:innercontrolvel} and fig.\ref{fig:innercontrolangles} the values of both angles and velocities are perfectly regulated. In particular the spinning velocity converges to the value $ \frac{mgd}{k_r} $, relative to the hovering condition.
+The simulation time is $ 10 $ seconds. As shown in fig.\ref{fig:innercontrolvel} and fig.\ref{fig:innercontrolangles} the values of both angles and velocities are perfectly regulated. In particular the spinning velocity converges to the value $ \frac{mgd}{k_r} $, relative to the hovering condition.
 
 \begin{figure}[H]
 	\centering
@@ -724,7 +732,7 @@ The rotor forces, after an initial peak due to the pretty large error, remains c
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\linewidth]{Images/ForcesInner}
-	\caption{Forces computed from the inputs of the inner control loop.}
+	\caption{Forces computed from the inputs of the inner control loop - only first 5 seconds of simulation.}
 	\label{fig:forcesiInner}
 \end{figure}
 
@@ -759,7 +767,7 @@ The simulation time is 100 seconds. The controller must fly the quadrotor from t
 \end{table}
 
 
-As shown in fig.\ref{fig:position}, the vertical trajectory of the vehicle is perfectly tracked (red line). Instead, the horizontal position (green and blue lines) oscillates around the planned trajectory: the outer loop control has small gains so as to be slow enough. It correct the error not aggressively, generating reference angles that do not change quickly.
+As shown in figs \ref{fig:position}-\ref{fig:3dpositionnormal}-\ref{fig:positionerror}, the vertical trajectory of the vehicle is perfectly tracked (red line). Instead, the horizontal position (green and blue lines) oscillates around the planned trajectory: the outer loop control has small gains so as to be slow enough. It correct the error not aggressively, generating reference angles that do not change quickly.
 
 The inner control loop regulates successfully the reference angles. In fig.\ref{fig:angles_error} it is clear how the error between the desired and the actual roll and pitch angles is suddenly reduced to zero.
 
@@ -770,6 +778,20 @@ Also in this case the forces, after an initial peak, become constant. In particu
 	\includegraphics[width=0.7\linewidth]{Images/Position}
 	\caption{Position of the quadcopter in the Earth frame.}
 	\label{fig:position}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Images/3dPosition_normal}
+	\caption{3D representation of the trajectory.}
+	\label{fig:3dpositionnormal}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Images/OositionError}
+	\caption{Position-error.}
+	\label{fig:positionerror}
 \end{figure}
 
 \begin{figure}
@@ -793,6 +815,16 @@ Also in this case the forces, after an initial peak, become constant. In particu
 	\label{fig:r4force}
 \end{figure}
 
+\newpage
+
+In a different simulation the quadrotor tries to perform a elicoidal trajectory around the z-axis of the world frame (fig.\ref{fig:3dpositionspiral}). In this case the simulation time is 500 sec. The quadrotor has to land starting from the initial position $ [x, y, z] = [5, 5, 5] $. As expected, the quadrotor also in this case oscillates around the trajectory, not achieving a perfect tracking.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{Images/3dPosition_spiral}
+	\caption{Spiral trajectory in 3D representation.}
+	\label{fig:3dpositionspiral}
+\end{figure}
 
 The performances of the double-loop controller decrease when the constraints on motors force saturation are applied. The controller behaves correctly when the vehicle starts with zero error conditions. 
 
@@ -800,17 +832,19 @@ In this case the vehicle follows the vertical trajectory (fig.\ref{fig:positions
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{Images/Position_SetPoint}
+	\includegraphics[width=0.6\linewidth]{Images/Position_SetPoint}
 	\caption{Position of the quadcopter in Earth frame (force saturation active).}
 	\label{fig:positionsetpoint}
 \end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{Images/Forces_SetPoint}
+	\includegraphics[width=0.6\linewidth]{Images/Forces_SetPoint}
 	\caption{Forces required by the double-loop architecture (force saturation active).}
 	\label{fig:forcessetpoint}
 \end{figure}
+
+\newpage
 
 \section{Conclusions}
 

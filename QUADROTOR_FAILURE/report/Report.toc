@@ -8,4 +8,4 @@
 \contentsline {subsection}{\numberline {2.3}Inner control loop}{12}{subsection.2.3}
 \contentsline {subsubsection}{\numberline {2.3.1}Feedback Linearization}{13}{subsubsection.2.3.1}
 \contentsline {section}{\numberline {3}Simulations}{15}{section.3}
-\contentsline {section}{\numberline {4}Conclusions}{23}{section.4}
+\contentsline {section}{\numberline {4}Conclusions}{25}{section.4}

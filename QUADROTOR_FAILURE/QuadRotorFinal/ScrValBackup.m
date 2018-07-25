@@ -21,8 +21,8 @@ zd = 0;
 
 %% Initial state
 
-x0 = 5;
-y0 = 5;
+x0 = 10;
+y0 = 10;
 z0 = 5;
 % dx0 = 0;
 % dy0 = 0;
@@ -47,7 +47,7 @@ psi0 = 0.1;
 
 %% Compute cubic trajectory
 
-t = 100;
+t = 1000;
 
 A = [0, 0, 0, 1;
     t^3, t^2, t, 1;
@@ -118,22 +118,38 @@ sim('QuadCopter_3');
 
 %% plots
 
+% fig1 = figure(1);
+% plot(xPos, 'g', 'LineWidth', 1), hold on,
+% plot(yPos, 'b', 'LineWidth', 1),
+% plot(zPos, 'r', 'LineWidth', 1)
+% title('Position of the quadcopter')
+% xlabel('time [s]')
+% ylabel(' m' )
+% % yaxis([0 60 (min([x_hat3, x_hat4, x_hat5])-0.5) (max([x_hat3, x_hat4, x_hat5])+0.5)]) 
+% legend('x', 'y', 'z', 'Location', 'NorthEast')
+% % plottools
+% % set(gca, 'FontSize', fsz, 'LineWidth', alw);
+% ylim([-2 7])
+% print('Position', '-dpng', '-r300')
+
+
 fig1 = figure(1);
-plot(xPos, 'g', 'LineWidth', 1), hold on,
-plot(yPos, 'b', 'LineWidth', 1),
-plot(zPos, 'r', 'LineWidth', 1)
-title('Position of the quadcopter')
+plot(xErr, 'g', 'LineWidth', 1), hold on, 
+plot(yErr, 'b', 'LineWidth', 1),
+plot(zErr, 'r', 'LineWidth', 1)
+title('Position error')
 xlabel('time [s]')
 ylabel(' m' )
 % yaxis([0 60 (min([x_hat3, x_hat4, x_hat5])-0.5) (max([x_hat3, x_hat4, x_hat5])+0.5)]) 
-legend('x', 'y', 'z', 'Location', 'NorthEast')
+legend('e_x', 'e_y', 'e_z', 'Location', 'NorthEast')
 % plottools
 % set(gca, 'FontSize', fsz, 'LineWidth', alw);
-ylim([-2 7])
-print('Position', '-dpng', '-r300')
+% ylim([-2 7])
+print('OositionError', '-dpng', '-r300')
+
 
 fig2 = figure(2);
-plot(phi, 'g', 'LineWidth', 1), hold on,
+plot(phi, 'g', 'LineWidth', 1), hold on, 
 plot(theta, 'b', 'LineWidth', 1),
 title('Angles')
 xlabel('time [s]')
@@ -147,7 +163,7 @@ axis([0 10 -0.15 0.15]);
 print('Angles', '-dpng', '-r300')
 
 fig3 = figure(3);
-plot(f1, 'g', 'LineWidth', 1), hold on,
+plot(f1, 'g', 'LineWidth', 1), hold on, 
 plot(f3, 'b', 'LineWidth', 1),
 plot(f4, 'r', 'LineWidth', 1)
 title('Rotor forces')
@@ -161,7 +177,7 @@ axis([0 100 -2 7]);
 print('Forces', '-dpng', '-r300')
 
 fig4 = figure(4);
-plot(phi_error, 'g', 'LineWidth', 1), hold on,
+plot(phi_error, 'g', 'LineWidth', 1), hold on, 
 plot(theta_error, 'b', 'LineWidth', 1),
 title('Angles error')
 xlabel('time [s]')
@@ -174,7 +190,7 @@ xlim([0 5])
 print('Angles_error', '-dpng', '-r300')
 
 fig5 = figure(5);
-plot(f4, 'r', 'LineWidth', 1), hold on,
+plot(f4, 'r', 'LineWidth', 1), hold on, 
 title('M_4 force')
 xlabel('time [s]')
 ylabel(' N ' )
@@ -184,3 +200,10 @@ legend('f_4', 'Location', 'SouthEast')
 % set(gca, 'FontSize', fsz, 'LineWidth', alw);
 axis([0 100 -0.0005 0.0005]);
 print('r4force', '-dpng', '-r300')
+
+fig6 = figure(6)
+plot3(xPos, yPos, zPos), hold on, grid on,
+plot3(xDes, yDes, zDes, '--')
+title('3D trajectory')
+legend('Real trajectory', 'Desired trajectory', 'Location', 'SouthEast')
+print('3dPosition', '-dpng', '-r300')
